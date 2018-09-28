@@ -1,8 +1,10 @@
 {
     "name": "@ektx/v5-strip",
-    "version": "0.0.3",
+    "version": "0.0.4-alpha.0",
     "private": false,
     "keywords": [
-        "vue", "H5", "charts"
+        "vue",
+        "H5",
+        "charts"
     ]
 }
