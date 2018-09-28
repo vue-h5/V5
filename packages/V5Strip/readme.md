@@ -4,11 +4,6 @@
 
 ## Demo
 
-路径
-> http://localhost:8080/#/bar
-
-文件
-> views/bar
 
 ## 使用方法
 HTML
