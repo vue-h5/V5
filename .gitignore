@@ -60,3 +60,4 @@ local.properties
 
 # 添加你自己要忽略的文件
 dist/
+lerna-debug.log
