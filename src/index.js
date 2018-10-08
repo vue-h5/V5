@@ -1,7 +1,7 @@
-import Hello from './components/hello'
+import v5Hello from './components/hello'
 
 const components = {
-    Hello
+    v5Hello
 }
 
 const v5 = {
@@ -9,13 +9,9 @@ const v5 = {
 }
 
 const install = function(Vue, opts = {}) {
-    console.log(1)
     if (install.installed) return;
-    console.log(Object.keys(v5))
 
     Object.keys(v5).forEach(key => {
-console.log(key)
-
         Vue.component(key, v5[key])
     })
 }
@@ -24,9 +20,7 @@ if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue);
 }
 
-const API = {
+export default {
     version: process.env.VERSION,
     install
 }
-
-export default API
