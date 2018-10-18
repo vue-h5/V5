@@ -1,0 +1,32 @@
+{
+  "name": "v5",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "webpack --config build/webpack.config.js",
+    "style": "gulp --gulpfile build/style.js"
+  },
+  "main": "dist/V5.js",
+  "style": "dist/v5.css",
+  "dependencies": {
+    "vee-validate": "^2.1.0-beta.11"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-sass": "^4.0.2",
+    "mini-css-extract-plugin": "^0.4.4",
+    "node-sass": "^4.9.4",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "vue-loader": "^15.4.2",
+    "vue-template-compiler": "^2.5.17",
+    "webpack": "^4.20.2",
+    "webpack-cli": "^3.1.2"
+  }
+}

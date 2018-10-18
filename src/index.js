@@ -1,7 +1,9 @@
 import v5Hello from './components/hello'
+import v5Field from './components/field'
 
 const components = {
-    v5Hello
+    v5Hello,
+    v5Field
 }
 
 const v5 = {
@@ -10,8 +12,9 @@ const v5 = {
 
 const install = function(Vue, opts = {}) {
     if (install.installed) return;
-
+    
     Object.keys(v5).forEach(key => {
+        console.log(key)
         Vue.component(key, v5[key])
     })
 }

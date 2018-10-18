@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+		<v5-hello />
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
@@ -8,8 +9,9 @@
   </div>
 </template>
 
-<style lang="less">
-@import '../../src/styles/index.less';
+<style lang="scss">
+@import '@/assets/css/reset.scss';
+@import '../../src/styles/index.scss';
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

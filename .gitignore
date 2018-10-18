@@ -32,7 +32,6 @@ Thumbs.db
 
 # Xcode
 #
-build/
 *.pbxuser
 !default.pbxuser
 *.mode1v3
@@ -52,12 +51,12 @@ project.xcworkspace
 
 # Android/IntelliJ
 #
-build/
 .idea
 .gradle
 local.properties
 *.iml
 
 # 添加你自己要忽略的文件
-dist/
 lerna-debug.log
+package-lock.json
+yarn.lock

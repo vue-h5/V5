@@ -1,0 +1,94 @@
+$vw_base: 750;
+
+@function vw($px) {
+    @return ($px / $vw_base) * 100vw;
+}
+
+.v5-form-item-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: vw(20) 0;
+    background: #fff;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+
+    &.separator {
+        padding: vw(8) 0;
+        background: transparent;
+        border: none;
+    }
+
+    .v5-form-item-body {
+        display: flex;
+        font-size: vw(32);
+
+        .v5-form-item-label {
+            position: relative;
+            display: block;
+            padding: 0 0 0 vw(30);
+            width: vw(350);
+            color: #666;
+            box-sizing: border-box;
+    
+            &.required {
+                &::before {
+                    content: '*';
+                    position: absolute;
+                    left: 0;
+                    padding: 0 vw(10);
+                    color: #f44336;
+                }
+            }
+        }
+        .v5-form-item-content {
+            flex: 1;
+            font-size: 0;
+            padding: 0 vw(20) 0 vw(10);
+
+            &.slot {
+                font-size: inherit
+            }
+
+            & > input,
+            & > select {
+                height: 100%;
+                font-size: vw(32);
+                border: none;
+                outline: none;
+                background: transparent;
+            }
+
+            & > input {
+                width: 100%;
+                margin: 0;
+                text-align: right;
+                box-sizing: border-box;
+
+                &:focus {
+                    color: inherit;
+                }
+            }
+
+            & > select {
+                appearance: none;
+                width: calc(100% - 18px);
+                direction: rtl;
+            }
+            &.select::after {
+                content: '';
+                display: inline-block;
+                margin-left: 5px;
+                border: 5px solid transparent;
+                border-top-color: inherit;
+                border-bottom-width: 2px;
+            }
+        }
+    }
+
+    .v5-form-item-err {
+        padding: 0 5px;
+        font-size: vw(24);
+        color: #f44336;
+        text-align: right;
+    }
+}
