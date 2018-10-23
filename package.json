@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "scripts": {
     "es5": "webpack --config build/webpack.config.js",
+    "es6": "rollup --config build/rollup.config.js",
     "style": "gulp --gulpfile build/style.js"
   },
-  "main": "dist/V5.min.js",
+  "main": "dist/V5.es6.js",
   "style": "dist/v5.css",
   "dependencies": {
     "vee-validate": "^2.1.0-beta.11"
@@ -22,6 +23,8 @@
     "gulp-sass": "^4.0.2",
     "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.9.4",
+    "rollup": "^0.66.6",
+    "rollup-plugin-vue": "^4.3.2",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "vue-loader": "^15.4.2",

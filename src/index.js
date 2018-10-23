@@ -1,5 +1,5 @@
-import v5Hello from './components/hello'
-import v5Field from './components/field'
+import v5Hello from './components/hello/index.js'
+import v5Field from './components/field/index.js'
 
 const version = '0.0.1'
 const components = [
