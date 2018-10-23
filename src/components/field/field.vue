@@ -12,10 +12,10 @@
                             :data-vv-as="label"
                             :value="value"
                             v-validate="formatValidate"
-                            @change="$emit('input', $event.target.value)"
+                            @change="updateSelect($event)"
                         >
                             <option selected disabled>{{placeholder}}</option>
-                            <option v-for="(opt, oi) in options" :key="oi" :value="opt.value">{{opt.label}}</option>
+                            <option v-for="(opt, oi) in options" :key="oi" :value="opt.value" :selected="opt.selected">{{opt.label}}</option>
                         </select>
                         <input 
                             v-else
@@ -114,6 +114,14 @@ export default {
             if (this.type === 'slot') {
                 this.$validator.validate(this.name, val)
             }
+        }
+    },
+    methods: {
+        updateSelect (evt) {
+            this.$emit('input', evt.target.value)
+            this.options.forEach(val => {
+                val.selected = val.value == evt.target.value
+            })
         }
     }
 }
