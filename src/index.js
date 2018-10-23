@@ -1,21 +1,17 @@
 import v5Hello from './components/hello'
 import v5Field from './components/field'
 
-const components = {
+const version = '0.0.1'
+const components = [
     v5Hello,
     v5Field
-}
+]
 
-const v5 = {
-    ...components
-}
-
-const install = function(Vue, opts = {}) {
-    if (install.installed) return;
+const install = Vue => {
+    if (install.installed) return
     
-    Object.keys(v5).forEach(key => {
-        console.log(key)
-        Vue.component(key, v5[key])
+    components.forEach(key => {
+        Vue.component(key.name, key)
     })
 }
 
@@ -23,7 +19,14 @@ if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue);
 }
 
+export {
+    version,
+    install,
+    v5Hello,
+    v5Field
+}
+
 export default {
-    version: process.env.VERSION,
+    version,
     install
 }

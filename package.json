@@ -1,11 +1,11 @@
 {
-  "name": "v5",
+  "name": "@ektx/v5",
   "version": "0.0.1",
   "scripts": {
-    "build": "webpack --config build/webpack.config.js",
+    "es5": "webpack --config build/webpack.config.js",
     "style": "gulp --gulpfile build/style.js"
   },
-  "main": "dist/V5.js",
+  "main": "dist/V5.min.js",
   "style": "dist/v5.css",
   "dependencies": {
     "vee-validate": "^2.1.0-beta.11"

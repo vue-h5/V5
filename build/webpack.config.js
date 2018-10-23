@@ -4,16 +4,16 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
     // development | production | none
-    mode: 'none',
+    mode: 'production',
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: 'V5.js',
+        filename: 'V5.min.js',
         // 暴露 library as V5
         library: 'V5',
         // 在 AMD 或 CommonJS 的 require 之后可访问（libraryTarget:'umd'）
         libraryTarget: 'umd',
-        // umdNamedDefine: true
+        umdNamedDefine: true
     },
     module: {
         rules: [
@@ -23,9 +23,7 @@ module.exports = {
             },
             {
                 test: /\.js$/,
-                use: {
-                    loader: 'babel-loader'
-                },
+                use: 'babel-loader',
                 exclude: /node_modules/
             },
             {
