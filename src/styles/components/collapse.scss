@@ -1,0 +1,42 @@
+.v5-collapse-box {
+    header {
+        display: flex;
+        line-height: vw(84);
+        padding: 0 vw(15);
+        align-items: center;
+        background: #fff;
+        color: #333;
+
+        h3 {
+            flex: 1;
+            text-align: left;
+            font-size: vw(36);
+            font-weight: 400;
+        }
+
+        i {
+            transition: transform .3s ease-in-out;
+
+            &.form {
+                font-size: vw(32);
+                margin: vw(5) vw(10) vw(5) 0;
+            }
+            &.down {
+                font-size: vw(42);
+                color: inherit;
+            }
+            &.open {
+                transform: rotateZ(180deg);
+            }
+        }
+    }
+
+    .v5-collapse-inner {
+        overflow: hidden;
+        border-top: 1px solid rgba(0, 0, 0, .05);
+        border-bottom: 1px solid rgba(0, 0, 0, .05);
+        background-color: #fff;
+        box-sizing: border-box;
+        transition: height .3s ease-in-out;
+    }
+}

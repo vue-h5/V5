@@ -1,10 +1,14 @@
 import v5Hello from './components/hello/index.js'
-import v5Field from './components/field/index.js'
+import V5Field from './components/field/index.js'
+import v5Collapse from './components/collapse/index.js'
+import V5Icon from './components/icon/index.js'
 
 const version = '0.0.1'
 const components = [
     v5Hello,
-    v5Field
+    V5Field,
+    v5Collapse,
+    V5Icon
 ]
 
 const install = Vue => {
@@ -23,7 +27,9 @@ export {
     version,
     install,
     v5Hello,
-    v5Field
+    V5Field,
+    v5Collapse,
+    V5Icon
 }
 
 export default {

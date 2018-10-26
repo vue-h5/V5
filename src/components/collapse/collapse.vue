@@ -1,0 +1,42 @@
+<template>
+    <section class="v5-collapse-box">
+        <header @click="toggle">
+            <v5-icon v-if="icon" :class="icon"></v5-icon>
+            <h3>{{title}}</h3>
+            <v5-icon :class="['down', {open: show}]"></v5-icon>
+        </header>
+        <div class="v5-collapse-inner" :style="style">
+            <slot></slot>
+        </div>
+    </section>
+</template>
+
+<script>
+export default {
+    name: 'v5-collapse',
+    props: {
+        // 标题内容
+        title: String,
+        // 图标库
+        // http://iconfont.cn/manage/index?manage_type=myprojects&projectId=886927
+        icon: String,
+    },
+    data () {
+        return {
+            mes: 'jskajks',
+            // 子集伸缩开关
+            show: false,
+            style: {
+                height: 0
+            }
+        }
+    },
+    methods: {
+        toggle () {
+            let h = this.$el.querySelector('.v5-collapse-inner').scrollHeight
+            this.show = !this.show
+            this.style.height = this.show ? `${h}px` : 0;
+        }
+    }
+}
+</script>

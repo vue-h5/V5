@@ -1,0 +1,43 @@
+@font-face {
+    font-family: 'tq-v5';  /* project id 886927 */
+    src: url('//at.alicdn.com/t/font_886927_utcawxjfbyr.eot');
+    src: url('//at.alicdn.com/t/font_886927_utcawxjfbyr.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_886927_utcawxjfbyr.woff') format('woff'),
+    url('//at.alicdn.com/t/font_886927_utcawxjfbyr.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_886927_utcawxjfbyr.svg#tq-v5') format('svg');
+}
+
+$icons: 
+    ios-cog '\e7a7',
+    spinner '\e606',
+    qrcode '\e605',
+    form '\e60b',
+    down '\e608';
+
+.v5-icon {
+    height: 1em;
+    width: 1em;
+    font-size: vw(32);
+    font-family: 'tq-v5' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    font-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    &::before {
+        color: inherit;
+    }
+}
+
+@each $icon in $icons {
+    $key: nth($icon, 1);
+    $val: nth($icon, 2);
+
+    .v5-icon.#{$key}::before {
+        content: $val
+    }
+}
