@@ -1,8 +1,12 @@
 <template>
 	<div class="home-view">
 		<h1>V5 Home Page</h1>
-		<hi />
-		<v5-collapse title="表单" icon="form">
+		<v5-collapse 
+			v-for="(item ,index) in list"
+			:key="index"
+			:title="item.label" 
+			:icon="item.icon"
+		>
 			<div class="list-inner">
 				sa
 			</div>
@@ -11,12 +15,25 @@
 </template>
 
 <script>
-import hi from '@/modules/hi.vue'
 
 export default {
 	name: 'home',
-	components: {
-		hi
+	components: {},
+	data () {
+		return {
+			list: [
+				{
+					label: '基础组件',
+					icon: 'component',
+					children: []
+				},
+				{
+					label: '表单',
+					icon: 'form',
+					children: []
+				}
+			]
+		}
 	}
 }
 </script>

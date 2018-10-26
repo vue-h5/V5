@@ -1,11 +1,16 @@
+$showColor: rgba(0, 0, 0, .08);
+
 .v5-collapse-box {
+    background: #fff;
+
     header {
         display: flex;
         line-height: vw(84);
-        padding: 0 vw(15);
+        margin: 0 0 0 vw(15);
         align-items: center;
-        background: #fff;
         color: #333;
+        transition: border .3s ease-in-out;
+        border-bottom: 1px solid rgba(0, 0, 0, 0);
 
         h3 {
             flex: 1;
@@ -17,15 +22,19 @@
         i {
             transition: transform .3s ease-in-out;
 
-            &.form {
+            &.v5-icon {
                 font-size: vw(32);
                 margin: vw(5) vw(10) vw(5) 0;
             }
             &.down {
+                margin-right: vw(15);
                 font-size: vw(42);
                 color: inherit;
             }
-            &.open {
+        }
+        &.open {
+            border-bottom-color: $showColor;
+            i.down {
                 transform: rotateZ(180deg);
             }
         }
@@ -33,9 +42,7 @@
 
     .v5-collapse-inner {
         overflow: hidden;
-        border-top: 1px solid rgba(0, 0, 0, .05);
-        border-bottom: 1px solid rgba(0, 0, 0, .05);
-        background-color: #fff;
+        border-bottom: 1px solid $showColor;
         box-sizing: border-box;
         transition: height .3s ease-in-out;
     }

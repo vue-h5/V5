@@ -1,10 +1,10 @@
 @font-face {
     font-family: 'tq-v5';  /* project id 886927 */
-    src: url('//at.alicdn.com/t/font_886927_utcawxjfbyr.eot');
-    src: url('//at.alicdn.com/t/font_886927_utcawxjfbyr.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_886927_utcawxjfbyr.woff') format('woff'),
-    url('//at.alicdn.com/t/font_886927_utcawxjfbyr.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_886927_utcawxjfbyr.svg#tq-v5') format('svg');
+    src: url('//at.alicdn.com/t/font_886927_db92q84n5tr.eot');
+    src: url('//at.alicdn.com/t/font_886927_db92q84n5tr.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_886927_db92q84n5tr.woff') format('woff'),
+    url('//at.alicdn.com/t/font_886927_db92q84n5tr.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_886927_db92q84n5tr.svg#tq-v5') format('svg');
 }
 
 $icons: 
@@ -12,6 +12,7 @@ $icons:
     spinner '\e606',
     qrcode '\e605',
     form '\e60b',
+    component '\e814',
     down '\e608';
 
 .v5-icon {

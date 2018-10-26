@@ -1,12 +1,12 @@
 <template>
     <section class="v5-collapse-box">
-        <header @click="toggle">
+        <header @click="toggle" :class="{open: show}">
             <v5-icon v-if="icon" :class="icon"></v5-icon>
             <h3>{{title}}</h3>
-            <v5-icon :class="['down', {open: show}]"></v5-icon>
+            <v5-icon class="down"></v5-icon>
         </header>
         <div class="v5-collapse-inner" :style="style">
-            <slot></slot>
+            <slot/>
         </div>
     </section>
 </template>
@@ -23,7 +23,6 @@ export default {
     },
     data () {
         return {
-            mes: 'jskajks',
             // 子集伸缩开关
             show: false,
             style: {
