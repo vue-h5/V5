@@ -372,7 +372,7 @@ __vue_render__$1._withStripped = true;
   
 
   
-  var v5Field = __vue_normalize__$1(
+  var V5Field = __vue_normalize__$1(
     { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
     __vue_inject_styles__$1,
     __vue_script__$1,
@@ -383,10 +383,192 @@ __vue_render__$1._withStripped = true;
     undefined
   );
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var script$2 = {
+    name: 'v5-collapse',
+    props: {
+        // 标题内容
+        title: String,
+        // 图标库
+        // http://iconfont.cn/manage/index?manage_type=myprojects&projectId=886927
+        icon: String,
+    },
+    data () {
+        return {
+            mes: 'jskajks'
+        }
+    }
+};
+
+/* script */
+            const __vue_script__$2 = script$2;
+            
+/* template */
+var __vue_render__$2 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "section",
+    { staticClass: "v5-collapse-box" },
+    [
+      _c(
+        "header",
+        [
+          _vm.icon ? _c("v5-icon", [_vm._v(_vm._s(_vm.icon))]) : _vm._e(),
+          _vm._v(" "),
+          _c("h3", [_vm._v(_vm._s(_vm.title))]),
+          _vm._v(" "),
+          _c("v5-icon", [_vm._v("")])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm._t("default")
+    ],
+    2
+  )
+};
+var __vue_staticRenderFns__$2 = [];
+__vue_render__$2._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$2 = undefined;
+  /* scoped */
+  const __vue_scope_id__$2 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$2 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$2 = false;
+  /* component normalizer */
+  function __vue_normalize__$2(
+    template, style, script,
+    scope, functional, moduleIdentifier,
+    createInjector, createInjectorSSR
+  ) {
+    const component = (typeof script === 'function' ? script.options : script) || {};
+
+    // For security concerns, we use only base name in production mode.
+    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/collapse/collapse.vue";
+
+    if (!component.render) {
+      component.render = template.render;
+      component.staticRenderFns = template.staticRenderFns;
+      component._compiled = true;
+
+      if (functional) component.functional = true;
+    }
+
+    component._scopeId = scope;
+
+    return component
+  }
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var v5Collapse = __vue_normalize__$2(
+    { render: __vue_render__$2, staticRenderFns: __vue_staticRenderFns__$2 },
+    __vue_inject_styles__$2,
+    __vue_script__$2,
+    __vue_scope_id__$2,
+    __vue_is_functional_template__$2,
+    __vue_module_identifier__$2,
+    undefined,
+    undefined
+  );
+
+//
+//
+//
+//
+//
+//
+
+var script$3 = {
+    name: 'v5-icon'
+};
+
+/* script */
+            const __vue_script__$3 = script$3;
+            
+/* template */
+var __vue_render__$3 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c("i", { class: ["v5-icon"] }, [_vm._t("default")], 2)
+};
+var __vue_staticRenderFns__$3 = [];
+__vue_render__$3._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$3 = undefined;
+  /* scoped */
+  const __vue_scope_id__$3 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$3 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$3 = false;
+  /* component normalizer */
+  function __vue_normalize__$3(
+    template, style, script,
+    scope, functional, moduleIdentifier,
+    createInjector, createInjectorSSR
+  ) {
+    const component = (typeof script === 'function' ? script.options : script) || {};
+
+    // For security concerns, we use only base name in production mode.
+    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/icon/icon.vue";
+
+    if (!component.render) {
+      component.render = template.render;
+      component.staticRenderFns = template.staticRenderFns;
+      component._compiled = true;
+
+      if (functional) component.functional = true;
+    }
+
+    component._scopeId = scope;
+
+    return component
+  }
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var V5Icon = __vue_normalize__$3(
+    { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
+    __vue_inject_styles__$3,
+    __vue_script__$3,
+    __vue_scope_id__$3,
+    __vue_is_functional_template__$3,
+    __vue_module_identifier__$3,
+    undefined,
+    undefined
+  );
+
 const version = '0.0.1';
 const components = [
     v5Hello,
-    v5Field
+    V5Field,
+    v5Collapse,
+    V5Icon
 ];
 
 const install = Vue => {
@@ -407,4 +589,4 @@ var index = {
 };
 
 export default index;
-export { version, install, v5Hello, v5Field };
+export { version, install, v5Hello, V5Field, v5Collapse, V5Icon };

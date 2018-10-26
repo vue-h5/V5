@@ -1,0 +1,130 @@
+@charset "UTF-8";
+
+/*
+	reset.css
+	重置浏览器的常用样式
+	@author: ektx
+	@version 1.4.0
+*/
+
+/** 
+ * Document
+*/
+
+/**
+ * 1. 设置默认的文字大小为 12 及对应的字体
+ * 2. 防止 IOS 设备在方向变化之后，修改文字的大小
+ * 3. 平滑字体，具体可以参考：https://www.zhangxinxu.com/wordpress/2017/02/font-kerning-font-smoothing-font-variant/
+ */
+html {
+	font: 12px "Microsoft Yahei","HanHei SC","PingHei","PingFang SC","STHeitiSC-Light","Helvetica Neue","Helvetica","Arial",sans-serif; /* 1 */
+	-webkit-text-size-adjust: 100%; /* 2 */
+	-webkit-font-smoothing: antialiased; /* 3 */
+	-moz-osx-font-smoothing: grayscale; /* 3 */
+}
+
+/**
+ * Sections
+ */
+
+/**
+ *	移除 margin padding
+ */
+html, body, div, section, header, span, figure, /* structural elements 结构元素 */
+applet, object, iframe, /* 嵌入元素 */
+h1, h2, h3, h4, h5, h6,  p, q, blockquote, pre,
+a, abbr, address, acronym, big, cite, code,
+del, s, strike,
+dfn, em, font, img, ins, kbd, samp,
+small, strong, sub, sup, tt, var,
+dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
+fieldset, lengend, form, label, hr,
+table, caption, tbody, tfoot, thead, tr, th, td, /* table elements 表格元素 */
+button, input, textarea, select, optgroup /* form elements 表单元素 */
+{ 
+	margin: 0;
+	padding: 0;
+}
+address, cite, dfn, em, var { font-style: normal; } /* 将斜体扶正 */
+
+ul { list-style: none; }
+
+
+/**
+ * Text-level semantics
+ */
+
+/**
+ * 1. Correct the odd `em` font sizing in all browsers.
+ * 2. Correct the inheritance and scaling of font size in all browsers.
+ */
+ code, kbd, pre, samp, tt { 
+	font-size: 1em; /* 1 */
+	font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace; /* 2 */
+} /* 统一等宽字体 */
+
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+a { background-color: transparent }
+a { text-decoration: none; }
+a:hover, a:active { outline: none; } /* 清除轮廓 */
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/**
+ * 1. Remove the border on images inside links in IE 10.
+ * 2. 解决ie7下图片缩放的失真问题
+ */
+img {
+	border-style: none; /* 1 */
+	-ms-interpolation-mode: bicubic; /* 2 */
+}
+
+/* Change the font styles in all browsers. */
+button, input {
+	font-family: inherit;
+	font-size: 100%;
+}
+
+/**
+ * 1. Add the correct box sizing in Firefox
+ * 2. Show the overflow in Edge and IE.
+ */
+hr {
+	box-sizing: content-box; /* 1 */
+	height: 0; /* 1 */
+	overflow: visible; /* 2 */
+}
+
+/* 1. Add the correct display in IE 10+ */
+template {
+	display: none; /* 1 */
+}
+[hidden] {
+	display: none; /* 1 */
+}
+
+/* 
+	备用样式
+	以下样式功能自行选择 使用
+
+	1. webkit 移动端选中去高光
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+	2. ios 设备自定义超出滚动条硬件流畅滚动
+	-webkit-overflow-scrolling: touch;
+
+	3.选择背景无色
+	::selection {
+		background-color: #ccc;
+		color: #fff;
+	}
+	::-moz-selection {
+		color: #fff;
+		background-color: #ccc;
+	}
+ */
