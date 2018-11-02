@@ -21,7 +21,7 @@ $showColor: rgba(0, 0, 0, .08);
 
         i {
             transition: transform .3s ease-in-out;
-
+            
             &.v5-icon {
                 font-size: vw(32);
                 margin: vw(5) vw(10) vw(5) 0;
@@ -29,7 +29,7 @@ $showColor: rgba(0, 0, 0, .08);
             &.down {
                 margin-right: vw(15);
                 font-size: vw(42);
-                color: inherit;
+                color: #ccc;
             }
         }
         &.open {

@@ -1,19 +1,27 @@
 @font-face {
     font-family: 'tq-v5';  /* project id 886927 */
-    src: url('//at.alicdn.com/t/font_886927_db92q84n5tr.eot');
-    src: url('//at.alicdn.com/t/font_886927_db92q84n5tr.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_886927_db92q84n5tr.woff') format('woff'),
-    url('//at.alicdn.com/t/font_886927_db92q84n5tr.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_886927_db92q84n5tr.svg#tq-v5') format('svg');
+    src: url('//at.alicdn.com/t/font_886927_avjv8vxl4st.eot');
+    src: url('//at.alicdn.com/t/font_886927_avjv8vxl4st.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_886927_avjv8vxl4st.woff') format('woff'),
+    url('//at.alicdn.com/t/font_886927_avjv8vxl4st.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_886927_avjv8vxl4st.svg#tq-v5') format('svg');
 }
 
 $icons: 
-    ios-cog '\e7a7',
-    spinner '\e606',
-    qrcode '\e605',
-    form '\e60b',
+    check '\e60d',
+    right '\e60c',
+    up '\e60a',
+    left '\e609',
     component '\e814',
-    down '\e608';
+    form '\e60b',
+    down '\e608',
+    apple '\e607',
+    ios-cog '\e7a7',
+    spinner3 '\e606',
+    qrcode '\e605',
+    spinner2 '\e603',
+    android '\e601'
+    ;
 
 .v5-icon {
     height: 1em;

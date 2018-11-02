@@ -1,0 +1,52 @@
+.v5-cell-mod {
+    display: flex;
+    position: relative;
+    min-height: vw(70);
+    padding: vw(10);
+    font-size: vw(30);
+    color: #333;
+
+    .right-box,
+    .left-box {
+        display: flex;
+        flex: 1;
+        white-space: pre-wrap;
+        word-break: break-all;
+    }
+    
+    .left-box {
+        justify-content: center;
+        flex-direction: column;
+
+        .sub-title {
+            font-size: vw(18);
+            color: #777;
+        }
+    }
+
+    .right-box {
+        align-items: center;
+        flex-direction: row;
+        justify-content: flex-end;
+
+        .v5-icon {
+            font-size: vw(36);
+            color: inherit;
+
+            &.right {
+                color: #ccc;
+            }
+        }
+    }
+
+    &:after {
+        content: ' ';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        pointer-events: none;
+        border-bottom: 1px solid rgba(0, 0, 0, .1);
+        transform: scaleY(.5);
+    }
+}

@@ -8,7 +8,16 @@
 			:icon="item.icon"
 		>
 			<div class="list-inner">
-				sa
+				<v5-cell 
+					v-for="list in item.children"
+					:key="list.title"
+					:title="list.title" 
+					:sub-title="list.subTitel"
+					:href="list.href"
+					:to="list.to"
+					:icon="list.icon"
+				>
+				</v5-cell>
 			</div>
 		</v5-collapse>
 	</div>
@@ -25,7 +34,23 @@ export default {
 				{
 					label: '基础组件',
 					icon: 'component',
-					children: []
+					children: [
+						{
+							title: 'Icon',
+							subTitel: '图标',
+							icon: 'right'
+						},
+						{
+							title: 'Cell',
+							subTitel: '单元格',
+							icon: 'right'
+						},
+						{
+							title: 'Collapse',
+							subTitel: '折叠面板',
+							icon: 'right'
+						},
+					]
 				},
 				{
 					label: '表单',
@@ -40,6 +65,6 @@ export default {
 
 <style lang="scss" scoped>
 .list-inner {
-	padding: 2vw 5vw;
+	padding: 0 0 0 4vw;
 }
 </style>
