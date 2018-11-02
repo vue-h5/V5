@@ -20,6 +20,11 @@ export default {
         // 图标库
         // http://iconfont.cn/manage/index?manage_type=myprojects&projectId=886927
         icon: String,
+        // 状态
+        open: {
+            type: Boolean,
+            default: false
+        }
     },
     data () {
         return {
@@ -28,6 +33,11 @@ export default {
             style: {
                 height: 0
             }
+        }
+    },
+    mounted () {
+        if (this.open) {
+            this.toggle()
         }
     },
     methods: {

@@ -6,6 +6,7 @@
 			:key="index"
 			:title="item.label" 
 			:icon="item.icon"
+			:open="item.open"
 		>
 			<div class="list-inner">
 				<v5-cell 
@@ -34,6 +35,7 @@ export default {
 				{
 					label: '基础组件',
 					icon: 'component',
+					open: true,
 					children: [
 						{
 							title: 'Icon',
