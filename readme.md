@@ -36,3 +36,6 @@ V5
 |---- example 示例
 |---- src 组件开发目录
 ```
+
+## 资源
+[图标库](http://iconfont.cn/manage/index?manage_type=myprojects&projectId=886927)
