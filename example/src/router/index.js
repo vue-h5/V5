@@ -15,7 +15,10 @@ const requireRouter = require.context(
 )
 
 // https://webpack.docschina.org/api/module-methods/#import-
-const loadView = view => () => import(/* webpackChunkName: "[request]" */ `@/views/${view}/index.vue`)
+const loadView = view => () => {
+    console.log(view)
+    return import(/* webpackChunkName: "[request]" */ `@/views/${view}/index.vue`)
+}
 
 
 let routes = {}
@@ -73,7 +76,7 @@ function registered (r) {
 
             let data = {
                 path,
-                component: path === '/home' ? Home : loadView( r.slice(2, -10) )
+                component: loadView( r.slice(2, -10) )
             }
 
             routes[path] = data
