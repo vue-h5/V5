@@ -4,6 +4,14 @@ import Home from '../views/home/index.vue'
 
 Vue.use(Router)
 
+// https://webpack.docschina.org/api/module-methods/#import-
+// https://webpack.docschina.org/api/module-methods/#import-
+const loadView = view =>{
+    console.log(view)
+    return () => import(/* webpackChunkName: "[request]" */ `@/views/${view}/index.vue`)
+} 
+
+
 const requireRouter = require.context(
     // 查询路由的目录
     '@/views',
@@ -13,12 +21,6 @@ const requireRouter = require.context(
     // 对于是以 index.vue 结尾的文件
     /(index\.vue$)|(route\.js$)/
 )
-
-// https://webpack.docschina.org/api/module-methods/#import-
-const loadView = view => () => {
-    console.log(view)
-    return import(/* webpackChunkName: "[request]" */ `@/views/${view}/index.vue`)
-}
 
 
 let routes = {}
@@ -30,6 +32,7 @@ requireRouter.keys().map(r => {
 
 function registered (r) {
     let path = r.slice(1, -10)
+    console.log(requireRouter(r).default, r)
 
     if (r.endsWith('route.js')) {
         routes[path] = requireRouter(r).default
@@ -46,7 +49,7 @@ function registered (r) {
             // 2级路由内容
             let route = {
                 path: pathArr[pathArr.length -1],
-                component: loadView( r.slice(2, -10) )
+                component: requireRouter(r).default
             }
 
             // 判断辅助函数中有没有父级内容
@@ -70,13 +73,14 @@ function registered (r) {
             // 增加到辅助函数中
             helpObj[r] = route
         } else {
-            console.log(path)
             // 过滤已经存在的1级目录
             if (helpObj.hasOwnProperty(r)) return
 
+            path = path === '/home' ? '/' : path
+
             let data = {
                 path,
-                component: loadView( r.slice(2, -10) )
+                component: requireRouter(r).default
             }
 
             routes[path] = data

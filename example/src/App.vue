@@ -1,12 +1,6 @@
 <template>
 	<div id="app">
-		<div id="nav">
-			<router-link 
-				v-for="item in navs" 
-				:key="item.to" 
-				:to="item.to"
-			>{{item.lable}}</router-link>
-		</div>
+		<ilink :list="navs" />
 		<router-view/>
 	</div>
 </template>
@@ -23,7 +17,41 @@ export default {
 				},
 				{
 					lable: 'About',
-					to: '/about'
+					to: '/about',
+					children: [
+						{
+							lable: 'me',
+							to: '/about/me'
+						},
+						{
+							lable: 'friends',
+							to: '/about/friends',
+							children: [
+								{
+									lable: 'tom',
+									to: '/about/friends/tom'
+								},
+								{
+									lable: 'jerry',
+									to: '/about/friends/jerry'
+								}
+							]
+						}
+					]
+				},
+				{
+					lable: 'user',
+					to: '/user',
+					children: [
+						{
+							lable: 'info',
+							to: '/user/info'
+						},
+						{
+							lable: 'safe',
+							to: '/user/safe'
+						}
+					]
 				}
 			]
 		}
