@@ -40,24 +40,40 @@ export default {
 						{
 							title: 'Icon',
 							subTitel: '图标',
-							icon: 'right'
+							icon: 'right',
+							to: '/base/icon'
 						},
 						{
 							title: 'Cell',
 							subTitel: '单元格',
-							icon: 'right'
+							icon: 'right',
+							to: '/base/cell'
 						},
-						{
-							title: 'Collapse',
-							subTitel: '折叠面板',
-							icon: 'right'
-						},
+						
 					]
 				},
 				{
 					label: '表单',
 					icon: 'form',
 					children: []
+				},
+				{
+					label: '复合组件',
+					icon: '',
+					open: true,
+					children: [
+						{
+							title: 'Tree',
+							subTitel: '树',
+							to: ''
+						},
+						{
+							title: 'Collapse',
+							subTitel: '折叠面板',
+							icon: 'right',
+							to: ''
+						},
+					]
 				}
 			]
 		}
