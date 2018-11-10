@@ -4,6 +4,7 @@
 ## 基础组件
 
 ### Icon
+[图标库 - iconfont](http://iconfont.cn/manage/index?manage_type=myprojects&projectId=886927)
 
 ### Cell 单元格
 [使用文档](./base/cell.md)

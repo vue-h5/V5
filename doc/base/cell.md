@@ -3,19 +3,21 @@
 ## 代码示例
 
 ```html
-<v5-cell title="标题"/>
-<v5-cell title="标题" sub-title="二级标题"/>
-<v5-cell title="标题" sub-title="二级标题" icon="apple"/>
+<v5-cell-group>
+    <v5-cell title="标题"/>
+    <v5-cell logo="ios-cog" title="通用" icon="right"/>
+    <v5-cell title="标题" sub-title="二级标题"/>
+    <v5-cell title="标题" sub-title="二级标题" inner="apple"/>
+    <v5-cell title="标题" sub-title="二级标题" icon="apple"/>
+</v5-cell-group>
 ```
 
-**to 跳转**
+**跳转**
 ```html
-<v5-cell title="返回主页" sub-title="/" to="/"/>
-```
-
-**href 跳转**
-```html
-<v5-cell title="跳转百度" sub-title="http://baidu.com" href="http://baidu.com"/>
+<v5-cell-group>
+    <v5-cell title="返回主页" sub-title="/" to="/"/>
+    <v5-cell title="跳转百度" sub-title="http://baidu.com" href="http://baidu.com"/>
+</v5-cell-group>
 ```
 
 ## props 参数

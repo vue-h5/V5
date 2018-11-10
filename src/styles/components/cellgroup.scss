@@ -1,0 +1,26 @@
+.v5-cell-group-mod {
+    position: relative;
+    background: #fff;
+
+    .v5-cell-mod {
+        margin-left: 10px;
+        padding-right: 10px;
+    }
+    .v5-cell-mod:last-child::after {
+        display: none;
+    }
+
+    &::after {
+        content: ' ';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        bottom: -50%;
+        right: -50%;
+        pointer-events: none;
+        box-sizing: border-box;
+        border: 1px solid rgba(0, 0, 0, .1);
+        border-width: 1px 0;
+        transform: scale(.5);
+    }
+}
