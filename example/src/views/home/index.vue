@@ -63,14 +63,14 @@ export default {
 					open: true,
 					children: [
 						{
-							title: 'Tree',
-							subTitel: '树',
-							to: ''
-						},
-						{
 							title: 'Collapse',
 							subTitel: '折叠面板',
 							icon: 'right',
+							to: ''
+						},
+						{
+							title: 'Tree',
+							subTitel: '树',
 							to: ''
 						},
 					]

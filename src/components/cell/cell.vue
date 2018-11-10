@@ -6,7 +6,7 @@
         </div>
         <div class="right-box">
             <p>{{inner}}</p>
-            <v5-icon v-if="icon" :class="icon"></v5-icon>
+            <v5-icon v-if="myIcon" :class="myIcon"></v5-icon>
         </div>
     </a>
 </template>
@@ -30,7 +30,15 @@ export default {
     },
     data () {
         return {
-
+        }
+    },
+    computed: {
+        myIcon () {
+            if (this.to || this.href) {
+                return this.icon || 'right'
+            } else {
+                return this.icon || false
+            }
         }
     },
     methods: {
