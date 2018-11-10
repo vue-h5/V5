@@ -5,6 +5,7 @@
         <h2>基础用法</h2>
         <v5-cell title="标题"/>
         <v5-cell title="标题" sub-title="二级标题"/>
+        <v5-cell title="标题" sub-title="二级标题" inner="apple"/>
         <v5-cell title="标题" sub-title="二级标题" icon="apple"/>
 
         <h2>to 跳转</h2>
