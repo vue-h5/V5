@@ -1,12 +1,15 @@
 <template>
     <a class="v5-cell-mod" :href="href" @click="onClick">
         <div class="left-box">
-            <div class="title">{{title}}</div>
-            <div class="sub-title">{{subTitle}}</div>
+            <v5-icon v-if="logo" :class="logo"/>
+            <main>
+                <div class="title">{{title}}</div>
+                <div class="sub-title">{{subTitle}}</div>
+            </main>
         </div>
         <div class="right-box">
             <p>{{inner}}</p>
-            <v5-icon v-if="myIcon" :class="myIcon"></v5-icon>
+            <v5-icon v-if="myIcon" :class="myIcon"/>
         </div>
     </a>
 </template>
@@ -15,6 +18,8 @@
 export default {
     name: 'v5-cell',
     props: {
+        // logo 图标
+        logo: String,
         // 主标题内容
         title: String,
         // 副标题内容

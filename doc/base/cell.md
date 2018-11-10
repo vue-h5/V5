@@ -21,6 +21,7 @@
 ## props 参数
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
+| logo | 主图标 | `String` | - |s
 | title | 标题 | `String` | - |
 | subTitle | 副标题 | `String` | - |
 | inner | 内容 | `String` | - |
