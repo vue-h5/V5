@@ -39,7 +39,7 @@ V5
 |---- src 组件开发目录
 ```
 
-## 开发环境使用
+## 项目使用
 ```bash
 # 添加到项目 使用dev分支
 yarn add git+ssh://git@gitlab.hztianque.com/cell/V5.git#dev

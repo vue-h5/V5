@@ -40,16 +40,18 @@ export default {
 						{
 							title: 'Icon',
 							subTitel: '图标',
-							icon: 'right',
 							to: '/base/icon'
 						},
 						{
 							title: 'Cell',
 							subTitel: '单元格',
-							icon: 'right',
 							to: '/base/cell'
 						},
-						
+						{
+							title: 'Layer',
+							subTitel: '弹层',
+							to: '/base/layer'
+						},
 					]
 				},
 				{
@@ -63,9 +65,13 @@ export default {
 					open: true,
 					children: [
 						{
+							title: 'Cascader',
+							subTitel: '集联组件',
+							to: '/complex/cascader'
+						},
+						{
 							title: 'Collapse',
 							subTitel: '折叠面板',
-							icon: 'right',
 							to: ''
 						},
 						{

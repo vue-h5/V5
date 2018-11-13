@@ -1,0 +1,71 @@
+.v5-layer-mod {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0);
+    visibility: hidden;
+    transition: 
+        opacity .3s ease-in-out,
+        visibility .3s ease-in-out,
+        background .3s ease-in-out;
+
+    .v5-layer-inner {
+        
+        transition: 
+            transform .3s ease-in-out,
+            opacity .3s ease-in-out,
+            background .3s ease-in-out;
+    }
+    &.top {
+        .v5-layer-inner {
+            transform: translateY(-100%);
+        }
+    }
+    &.bottom {
+        .v5-layer-inner {
+            transform: translateY(100%);
+        }
+    }
+    &.top,
+    &.bottom {
+        &.show {
+            .v5-layer-inner {
+                transform: translateY(0);
+            }
+        }
+    }
+
+    &.right {
+        .v5-layer-inner {
+            transform: translateX(100%);
+        }
+    }
+    &.left {
+        .v5-layer-inner {
+            transform: translateX(-100%);
+        }
+    }
+    &.left,
+    &.right {
+        &.show {
+            .v5-layer-inner {
+                transform: translateX(0);
+            }
+        }
+    }
+
+    &.show {
+        opacity: 1;
+        visibility: visible;
+        background: rgba(0, 0, 0, .5);
+
+        @supports (backdrop-filter: blur(5px)) {
+            background: rgba(0, 0, 0, .3);
+            backdrop-filter: blur(10px);
+        }
+    }
+}
