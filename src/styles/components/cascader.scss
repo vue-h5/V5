@@ -1,0 +1,89 @@
+.v5-cascader-inner-mod {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    overflow: auto;
+    background: #fff;
+
+    header {
+        min-height: 40px;
+        padding: 0 40px 0 0;
+        text-align: center;
+        background: #f2faff;
+        border-bottom: 2px solid #31a4ff;
+        
+        span {
+            display: inline-block;
+            padding: 10px 4px;
+            font-size: 14px;
+            line-height: 1.5em;
+
+            &.child::after {
+                content: '\e60c';
+                font-family: 'tq-v5';
+            }
+        }
+
+        .close-btn {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 1.5em;
+            font-size: 12px;
+            line-height: 1.5em;
+            font-family: 'tq-v5';
+            color: #fff;
+            font-style: normal;
+            background: #ccc;
+            border-radius: 100%;
+        }
+    }
+
+    .current-list-box {
+        flex: 1;
+        overflow: auto;
+
+        &:empty {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            &::after {
+                content: '没有内容了';
+                color: rgba(0, 0, 0, .3);
+            }
+        }
+
+        .v5-cell-mod {
+            padding: 3px 5px 3px 15px;
+        }
+    }
+
+    footer {
+        display: flex;
+        border-top: 1px solid #eee;
+
+        button {
+            display: block;
+            flex: 1; 
+            font-size: 14px; 
+            line-height: 3em; 
+            border: none;
+            outline: none;
+            background: #fff; 
+
+            &:last-child {
+                margin: -1px 0 0;
+                color: #fff;
+                background: #31a4ff;
+            }
+
+            &[disabled] {
+                color: #777;
+                background: #eee;
+                pointer-events: none;
+            }
+        }
+    }
+}
