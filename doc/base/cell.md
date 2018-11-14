@@ -21,12 +21,13 @@
 ```
 
 ## props 参数
-| 参数 | 说明 | 类型 | 默认值 |
+| 参数 | 类型 | 说明 | 默认值 |
 | --- | --- | --- | --- |
-| logo | 主图标 | `String` | - |s
-| title | 标题 | `String` | - |
-| subTitle | 副标题 | `String` | - |
-| inner | 内容 | `String` | - |
-| icon | 图标,图标在 to 与 href 存在时为右箭头 | `String` | - |
-| to | 路由跳转对象，同 vue-router 的 to | `String` | - |
-| href | 跳转地址 | `String` | - |
+| logo | `String` | 主图标 | - |s
+| title | `String` | 标题 | - |
+| subTitle | `String` | 副标题 | - |
+| inner | `String` | 内容 | - |
+| icon | `String` | 图标,图标在 `to` 与 `href` 存在时为**右箭头** | - |
+| to | `String` | 路由跳转对象，同 vue-router 的 to | - |
+| href | `String` | 跳转地址 | - |
+| disabled | `Boolean` | 禁用 | false |

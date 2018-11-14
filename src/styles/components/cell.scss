@@ -49,7 +49,12 @@
         }
     }
 
-    &:after {
+    &[disabled] {
+        color: #999;
+        pointer-events: none;
+    }
+
+    &::after {
         content: ' ';
         position: absolute;
         bottom: 0;

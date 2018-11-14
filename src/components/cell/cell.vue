@@ -1,5 +1,5 @@
 <template>
-    <a class="v5-cell-mod" :href="href" @click="onClick">
+    <a class="v5-cell-mod" :href="href" @click="onClick" v-on="$listeners" :disabled="disabled">
         <div class="left-box">
             <v5-icon v-if="logo" :class="logo"/>
             <main>
@@ -31,7 +31,12 @@ export default {
         // 内容
         inner: String,
         // 图标
-        icon: String
+        icon: String,
+        // 不过使用
+        disabled: {
+            type: Boolean,
+            default: false
+        }
     },
     data () {
         return {
@@ -48,7 +53,7 @@ export default {
     },
     methods: {
         onClick () {
-            if (this.to && this.$router) {
+            if (this.to && this.$router && !this.disabled) {
                 this.$router.push(this.to)
             }
         }
