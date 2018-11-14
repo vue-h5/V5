@@ -24,8 +24,8 @@
 | 参数 | 类型 | 说明 | 默认值 |
 | --- | --- | --- | --- |
 | logo | `String` | 主图标 | - |s
-| title | `String` | 标题 | - |
-| subTitle | `String` | 副标题 | - |
+| title | `String` `Number` | 标题 | - |
+| subTitle | `String` `Number` | 副标题 | - |
 | inner | `String` | 内容 | - |
 | icon | `String` | 图标,图标在 `to` 与 `href` 存在时为**右箭头** | - |
 | to | `String` | 路由跳转对象，同 vue-router 的 to | - |

@@ -21,9 +21,9 @@ export default {
         // logo 图标
         logo: String,
         // 主标题内容
-        title: String,
+        title: [String, Number],
         // 副标题内容
-        subTitle: String,
+        subTitle: [String, Number],
         // 跳转外网地址
         href: String,
         // 内部路由跳转
