@@ -66,7 +66,7 @@ export default {
 					children: [
 						{
 							title: 'Cascader',
-							subTitel: '集联组件',
+							subTitel: '集联选择器',
 							to: '/complex/cascader'
 						},
 						{

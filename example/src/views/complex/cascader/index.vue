@@ -169,8 +169,6 @@ export default {
     },
     methods: {
         filter (item, deep) {
-            console.log(item, deep)
-
             // 如果选择的项目 值大于2000的可以选择确认
             deep = item.value > 2000
 
