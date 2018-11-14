@@ -1,3 +1,11 @@
+@mixin transform($x, $y) {
+    &.show {
+        .v5-layer-inner {
+            transform: translate($x, $y);
+        }
+    }
+}
+
 .v5-layer-mod {
     position: fixed;
     top: 0;
@@ -24,38 +32,26 @@
         .v5-layer-inner {
             transform: translateY(-100%);
         }
+        @include transform(0, 0)
     }
     &.bottom {
         .v5-layer-inner {
             transform: translateY(100%);
         }
-    }
-    &.top,
-    &.bottom {
-        &.show {
-            .v5-layer-inner {
-                transform: translateY(0);
-            }
-        }
+        @include transform(0, 0)
     }
 
     &.right {
         .v5-layer-inner {
             transform: translateX(100%);
         }
+        @include transform(0, 0)
     }
     &.left {
         .v5-layer-inner {
             transform: translateX(-100%);
         }
-    }
-    &.left,
-    &.right {
-        &.show {
-            .v5-layer-inner {
-                transform: translateX(0);
-            }
-        }
+        @include transform(0, 0)
     }
 
     &.show {
