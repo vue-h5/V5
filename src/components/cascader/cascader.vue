@@ -11,16 +11,22 @@
 
                 <i v-show="result.length" class="close-btn" @click="clear">&#xe611;</i>
             </header>
-            <div class="current-list-box">
-                <v5-cell 
-                    v-for="(item, index) in current" 
-                    :key="index" 
-                    :title="item.label"
-                    :subTitle="item.subTitle"
-                    :icon="item.children ? 'right' : ''"
-                    @click="update(item)"
-                    :disabled="item.disabled"
-                />
+            <div :class="['current-list-box', {async}]">
+                <div v-if="showLoading" class="loading-box">
+                    <p><v5-icon class="spinner3"/></p>
+                    <p>加载中...</p>
+                </div>
+                <template v-else>
+                    <v5-cell 
+                        v-for="(item, index) in item.children" 
+                        :key="index" 
+                        :title="item.label"
+                        :subTitle="item.subTitle"
+                        :icon="item.children ? 'right' : ''"
+                        @click="update(item)"
+                        :disabled="item.disabled"
+                    />
+                </template>
             </div>
             <footer>
                 <button @click="cancel">取消</button>
@@ -57,52 +63,74 @@ export default {
         /* 接受用户对确认按钮的控制
          * @return {Boolean}
          */
-        filter: Function
+        filter: Function,
+        // 异步
+        async: Boolean
     },
     data () {
         return {
             result: [],
-            current: [],
             list: {},
+            item: {},
             // 按钮点击控制器
-            confirm: true
+            confirm: true,
+            showLoading: false
         }
     },
     watch: {
-        current (val) {
-            // 如果存在 deep
-            if (this.deep) {
-                // 只有在当前列表没有选择时，才可以返回值
-                this.confirm = val.length <= 0
-            }
+        item: {
+            handler (val) {
+                // 如果存在 deep
+                if (this.deep) {
+                    // 只有在当前列表没有选择时，才可以返回值
+                    this.confirm = !val.hasOwnProperty('children')
+                }
+
+                // 在异步情况下
+                if (this.async) {
+                    if (val.hasOwnProperty('children')) {
+                        console.log('child', val.children)
+                        this.showLoading = !val.children.length
+                    }
+                }
+            },
+            deep: true
         },
         show (val) {
             if (val) {
-                // 清空老数据 
-                this.current = []
-                this.result = []
-
-                this.loop(this.data)
-                this.getLabel()
-        
-                // 处理默认值回填
-                if (this.result.length) {
-                    let child = this.result.slice(-1)[0].children
-                    this.current = child ? child : []
-                } else {
-                    // 没有默认值就使用 data
-                    this.current = this.data
-                }
-        
-                if (this.deep) {
-                    this.confirm = false
-                }
+                this.format()
             }
+        },
+        data (val) {
+            this.format()
         }
     },
-    mounted () {
-    },
     methods: {
+        format () {
+            // 清空老数据 
+            this.result = []
+            this.item = {
+                children: []
+            }
+
+            this.loop(this.data)
+            this.getLabel()
+    
+            // 处理默认值回填
+            if (this.result.length) {
+                this.item = this.result.slice(-1)[0]
+            } else {
+                // 没有默认值就使用 data
+                this.item = {
+                    children: this.data
+                }
+            }
+    
+            if (this.deep) {
+                this.confirm = false
+            }
+        },
+
         /**
          * 处理数据回填使用
          * @param {Array} data 用户传入的数组
@@ -146,8 +174,10 @@ export default {
                 this.confirm = this.filter(item, this.confirm)
             } 
 
+            this.item = item
             this.result.push(item)
-            this.current = item.children ? item.children : []
+
+            this.$emit('update', item)
         },
 
         change (nav, i) {
@@ -156,13 +186,16 @@ export default {
                 this.confirm = this.filter(nav, this.confirm)
             } 
 
-            this.current = nav.children ? nav.children : []
+            this.item = nav
             this.result = this.result.slice(0, i+1)
+            this.$emit('update', nav)
         },
 
         clear () {
             this.result = []
-            this.current = this.data
+            this.item = {
+                children: this.data
+            }
         },
 
         send () {
@@ -173,11 +206,13 @@ export default {
 
                 this.$emit('input', data)
                 this.$emit('update:show', false)
+                this.$emit('confirm', data)
             }
         },
         
         cancel () {
             this.$emit('update:show', false)
+            this.$emit('cancel')
         }
     }
 }

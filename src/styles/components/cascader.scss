@@ -55,6 +55,25 @@
             }
         }
 
+        &.async {
+            .loading-box {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                
+                p {
+                    font-size: 12px;
+                    color: #777;
+
+                    .spinner3 {
+                        animation: ani-circle 1s linear infinite;
+                    }
+                }
+            }
+        }
+
         .v5-cell-mod {
             padding: 3px 5px 3px 15px;
         }

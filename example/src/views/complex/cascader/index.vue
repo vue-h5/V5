@@ -16,6 +16,12 @@
 		<p @click="show3 = !show3">目前选择为: {{value2}}</p>
 
         <v5-cascader :show.sync="show3" :data="data2" v-model="value2" :filter="filter"/>
+        
+        <h3>异步方案</h3>
+        <p>数据动态加载</p>
+		<p @click="asyncEvt">目前选择为: {{asyncVal}}</p>
+
+        <v5-cascader :show.sync="show4" :data="asyncData" v-model="asyncVal" async @update="update"/>
     </div>
 </template>
 
@@ -27,8 +33,10 @@ export default {
             show: false,
             show2: false,
             show3: false,
+            show4: false,
             value2: [],
             value: ['jiangsu', 'nanjing', 'fuzimiao'],
+            asyncVal: [],
             data: [
                 {
                     value: 'beijing',
@@ -164,6 +172,23 @@ export default {
                         }
                     ]
                 }
+            ],
+            asyncData: [],
+            appendData: [
+                {
+                    label: 'A',
+                    value: 'a'
+                },
+                {
+                    label: 'B',
+                    value: 'b',
+                    children: []
+                },
+                {
+                    label: 'C',
+                    value: 'c',
+                    disabled: true
+                }
             ]
         }
     },
@@ -173,6 +198,54 @@ export default {
             deep = item.value > 2000
 
             return deep
+        },
+
+        asyncEvt () {
+            this.show4 = !this.show4
+            this.asyncData = []
+            this.asyncVal = []
+
+            setTimeout(() => {
+                this.asyncData = [
+                {
+                    label: 'A',
+                    value: 'a'
+                },
+                {
+                    label: 'B',
+                    value: 'b',
+                    children: []
+                },
+                {
+                    label: 'C',
+                    value: 'c',
+                    disabled: true
+                }
+            ]
+            }, 3000)
+        },
+
+        update (item) {
+            // 假定有子级
+            if (item.children) {
+                setTimeout(() => {
+                    item.children = [
+                        {
+                            label: 'AA',
+                            value: 'aa'
+                        },
+                        {
+                            label: 'BB',
+                            value: 'bb'
+                        },
+                        {
+                            label: 'CC',
+                            value: 'cc',
+                            disabled: true
+                        }
+                    ]
+                }, 2000)
+            }
         }
     }
 }
