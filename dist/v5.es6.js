@@ -89,7 +89,6 @@ var script = {
                 // 在异步情况下
                 if (this.async) {
                     if (val.hasOwnProperty('children')) {
-                        console.log('child', val.children);
                         this.showLoading = !val.children.length;
                     }
                 }
@@ -206,7 +205,10 @@ var script = {
 
                 this.$emit('input', data);
                 this.$emit('update:show', false);
-                this.$emit('confirm', data);
+                this.$emit('confirm', {
+                    data,
+                    result: this.result
+                });
             }
         },
         

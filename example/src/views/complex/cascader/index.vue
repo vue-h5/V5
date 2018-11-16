@@ -173,23 +173,7 @@ export default {
                     ]
                 }
             ],
-            asyncData: [],
-            appendData: [
-                {
-                    label: 'A',
-                    value: 'a'
-                },
-                {
-                    label: 'B',
-                    value: 'b',
-                    children: []
-                },
-                {
-                    label: 'C',
-                    value: 'c',
-                    disabled: true
-                }
-            ]
+            asyncData: []
         }
     },
     methods: {
@@ -202,6 +186,10 @@ export default {
 
         asyncEvt () {
             this.show4 = !this.show4
+
+            // 如果有数据则不进行添加
+            if (this.asyncData.length) return
+
             this.asyncData = []
             this.asyncVal = []
 
@@ -222,7 +210,7 @@ export default {
                     disabled: true
                 }
             ]
-            }, 3000)
+            }, 1000)
         },
 
         update (item) {
@@ -244,7 +232,7 @@ export default {
                             disabled: true
                         }
                     ]
-                }, 2000)
+                }, 1000)
             }
         }
     }

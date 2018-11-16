@@ -1,6 +1,9 @@
 # Cascader 集联选择器
 
 ## 代码示例
+
+> 更多完整示例地址： example/src/views/complex/cascader/
+
 HTML
 ```html
 <v5-cascader :show.sync="show" :data="data" v-model="value" deep/>
@@ -130,6 +133,7 @@ methods: {
 | show | `Boolean` | 控制弹层显示隐藏 | false |
 | deep | `Boolean` | 控制选择器深度,默认每一级可以确认，true时只能到最后一级才能确认 | false |
 | filter | `Function` | 用于让用户自己控制选择器何时可以确认，接受一个返回值 | - |
+| async | `Boolean` | 异步标签，用于告诉组件，是异步操作，数据要加载后才能返回 |
 
 ## props - data 说明
 | 参数 | 类型 | 说明 | 默认值 |
@@ -139,3 +143,11 @@ methods: {
 | subTitle | `String` `Number` | 二级标题 | - |
 | disabled | `Boolean` | 禁用 | false |
 | children | `Array` | 子级，和data 相同 | - |
+
+## 事件
+| 方法 | 说明 | 默认值 |
+| --- | --- | --- |
+| input | 用于接受值的变化 | - |
+| confirm | 确认按钮事件，返回值 |
+| cancel | 取消按钮事件 |
+| update | 选择发生变化，返回当前选择的内容 |
