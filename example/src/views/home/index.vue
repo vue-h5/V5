@@ -1,6 +1,6 @@
 <template>
 	<div class="home-view">
-		<h1>V5 Home Page</h1>
+		<h1>V5</h1>
 		<v5-collapse 
 			v-for="(item ,index) in list"
 			:key="index"
@@ -8,7 +8,7 @@
 			:icon="item.icon"
 			:open="item.open"
 		>
-			<div class="list-inner">
+			<v5-cell-group class="list-inner">
 				<v5-cell 
 					v-for="list in item.children"
 					:key="list.title"
@@ -17,9 +17,8 @@
 					:href="list.href"
 					:to="list.to"
 					:icon="list.icon"
-				>
-				</v5-cell>
-			</div>
+				></v5-cell>
+			</v5-cell-group>
 		</v5-collapse>
 	</div>
 </template>
@@ -88,7 +87,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.list-inner {
-	padding: 0 0 0 4vw;
+.list-inner::after {
+	border: none;
 }
 </style>

@@ -14,44 +14,6 @@ export default {
 				{
 					lable: 'Home',
 					to: '/'
-				},
-				{
-					lable: 'About',
-					to: '/about',
-					children: [
-						{
-							lable: 'me',
-							to: '/about/me'
-						},
-						{
-							lable: 'friends',
-							to: '/about/friends',
-							children: [
-								{
-									lable: 'tom',
-									to: '/about/friends/tom'
-								},
-								{
-									lable: 'jerry',
-									to: '/about/friends/jerry'
-								}
-							]
-						}
-					]
-				},
-				{
-					lable: 'user',
-					to: '/user',
-					children: [
-						{
-							lable: 'info',
-							to: '/user/info'
-						},
-						{
-							lable: 'safe',
-							to: '/user/safe'
-						}
-					]
 				}
 			]
 		}
