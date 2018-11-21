@@ -1,7 +1,7 @@
 <template>
     <div 
-        :class="['v5-layer-mod', position, classes, {show: show}]" 
-        @click.passive="clickEvt()"
+        :class="['v5-layer-mod', position, {show: show}]" 
+        @click.passive.self="clickEvt()"
         :style="{zIndex}"
     >
         <div class="v5-layer-inner">
@@ -28,10 +28,6 @@ export default {
         animate: {
             type: String,
             default: 'fade'
-        },
-        // 自定义样式
-        classes: {
-            type: String
         }
     },
     data () {

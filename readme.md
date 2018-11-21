@@ -11,6 +11,9 @@ yarn
 
 ## 打包
 ```bash
+# 打包 js css
+yarn run build
+
 # 打包 js
 yarn run es6
 

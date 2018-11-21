@@ -1,13 +1,10 @@
 <template>
-    <i :class="['v5-icon']" :icon="icon"></i>
+    <i :class="['v5-icon']"></i>
 </template>
 
 <script>
 export default {
-    name: 'v5-icon',
-    props: {
-        icon: String
-    }
+    name: 'v5-icon'
 }
 </script>
 

@@ -5,7 +5,7 @@
         <p>基础效果</p>
         <button @click="show = !show">{{show ? '关闭' : '打开'}}</button>
 
-        <v5-layer class="demo-1" :show="show">
+        <v5-layer class="demo-1" :show="show" @click="toggle">
             <h1>Hello World</h1>
             <button @click="show = !show">close</button>
         </v5-layer>
@@ -18,7 +18,7 @@
 
         <button @click="positionShow = !positionShow">打开</button>
 
-        <v5-layer class="demo-1" :show="positionShow" :position="positionVal">
+        <v5-layer class="demo-1" :show="positionShow" :position="positionVal" @click.self="positionShow = !positionShow">
             <h1>Hello World</h1>
             <button @click="positionShow = !positionShow">close</button>
         </v5-layer>
@@ -34,6 +34,12 @@ export default {
             position: ['top', 'right', 'bottom', 'left'],
             positionVal: 'top',
             positionShow: false
+        }
+    },
+    methods: {
+        toggle () {
+            console.log(11, this.show)
+            this.show = !this.show
         }
     }
 }

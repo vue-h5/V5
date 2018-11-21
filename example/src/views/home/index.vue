@@ -54,11 +54,6 @@ export default {
 					]
 				},
 				{
-					label: '表单',
-					icon: 'form',
-					children: []
-				},
-				{
 					label: '复合组件',
 					icon: '',
 					open: true,
@@ -67,6 +62,11 @@ export default {
 							title: 'Cascader',
 							subTitel: '集联选择器',
 							to: '/complex/cascader'
+						},
+						{
+							title: 'CellGroup',
+							subTitel: '单元格组',
+							to: '/complex/cellGroup'
 						},
 						{
 							title: 'Collapse',
@@ -79,7 +79,12 @@ export default {
 							to: ''
 						},
 					]
-				}
+				},
+				{
+					label: '表单',
+					icon: 'form',
+					children: []
+				},
 			]
 		}
 	}
