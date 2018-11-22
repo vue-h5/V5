@@ -74,6 +74,11 @@ export default {
 							to: ''
 						},
 						{
+							title: 'SortBox',
+							subTitel: '排序盒子',
+							to: '/complex/sortBox'
+						},
+						{
 							title: 'Tree',
 							subTitel: '树',
 							to: ''

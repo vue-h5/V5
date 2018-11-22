@@ -6,6 +6,7 @@ import V5Field from './components/field/index.js'
 import v5Hello from './components/hello/index.js'
 import V5Icon from './components/icon/index.js'
 import V5Layer from './components/layer/index.js'
+import V5SortBox from './components/sortBox/index.js'
 
 const version = '0.0.1'
 const components = [
@@ -16,7 +17,8 @@ const components = [
     V5Field,
     v5Hello,
     V5Icon,
-    V5Layer
+    V5Layer,
+    V5SortBox
 ]
 
 const install = Vue => {
@@ -41,7 +43,8 @@ export {
     V5Field,
     v5Hello,
     V5Icon,
-    V5Layer
+    V5Layer,
+    V5SortBox
 }
 
 export default {

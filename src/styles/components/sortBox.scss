@@ -1,0 +1,63 @@
+$sortBoxBorderDefColor: #d8d8d8;
+$sortBoxActiveColor: #333;
+
+.v5-sort-box {
+    font-size: 12px;
+
+    .sort-header {
+        display: flex;
+
+        li {
+            flex: 1;
+            display: flex;
+            padding: 3px 0;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+            background: #fff;
+
+            i {
+                display: inline-block;
+                width: 1em;
+                height: 1em;
+                font-size: 12px;
+                margin-left: 5px;
+
+                &::after,
+                &::before {
+                    content: '';
+                    display: block;
+                    width: 0;
+                    height: 0;
+                    border: 4px solid transparent;
+                }
+                &::before {
+                    border-bottom-color: $sortBoxBorderDefColor;
+                    border-top: 0;
+                    margin-bottom: 2px;
+                }
+                &::after {
+                    border-top-color: $sortBoxBorderDefColor;
+                    border-bottom: 0;
+                }
+
+                &.up {
+                    &::before {
+                        border-bottom-color: $sortBoxActiveColor;
+                    }
+                    &::after {
+                        border-top-color: $sortBoxBorderDefColor;
+                    }
+                }
+                &.down {
+                    &::before {
+                        border-bottom-color: $sortBoxBorderDefColor;
+                    }
+                    &::after {
+                        border-top-color: $sortBoxActiveColor;
+                    }
+                }
+            }
+        }
+    }
+}
