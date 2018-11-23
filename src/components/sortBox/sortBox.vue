@@ -27,6 +27,13 @@ export default {
             current: {}
         }
     },
+    mounted () {
+        let index = null
+        this.sort.forEach((val, i) => {
+            if (val.classes) index = i
+        })
+        this.sortData(this.sort[index])
+    },
     methods: {
         sortList (item, index) {
             if (item !== this.current)
@@ -39,7 +46,10 @@ export default {
             }
             
             this.current = item
+            this.sortData(item)
+        },
 
+        sortData (item) {
             // 支持用户自定义排序方法
             if (typeof item.sort === 'function') {
                 // 提供当前点击对象 方向 当前的数据

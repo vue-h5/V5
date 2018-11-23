@@ -22,12 +22,16 @@ export default {
             sort: [
                 {
                     label: '姓名',
-                    sort: false
+                    sort: false,
+                    // sort 为 false时，排序是没有作用的
+                    classes: 'up'
                 },
                 {
                     label: '年龄',
                     key: 'age',
-                    sort: (item, way, data) => this.sortList(item, way, data, 'age')
+                    // 默认降序排列，注意多个排序时，只使用最后一个
+                    classes: 'up',
+                    sort: this.sortList
                 },
                 {
                     label: '成绩',
@@ -71,7 +75,7 @@ export default {
     },
     methods: {
         /**
-         * 排序方法
+         * 自定义排序方法
          * @param {Object} item 当前点击的对象
         */
         sortList (item) {
