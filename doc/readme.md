@@ -6,6 +6,10 @@
 ### Icon
 [图标库 - iconfont](http://iconfont.cn/manage/index?manage_type=myprojects&projectId=886927)
 
+**todo**
+- [ ] 完善示例中的内容
+- [ ] 添加搜索的功能，方便查看图标
+
 ### Cell 单元格
 [使用文档](./base/cell.md)
 
@@ -44,7 +48,7 @@
 - [ ] 扩展支持唯一展开功能，点击收缩的时，自动展开，已经展开的如果是自己收缩，不是自己的展开收缩，反之自然
 
 
-### SortBox 折叠面板
+### SortBox 排序盒子
 
 **todo**
 - [ ] 添加使用文档
