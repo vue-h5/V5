@@ -1,13 +1,13 @@
 {
   "name": "@ektx/v5",
-  "version": "0.0.1",
+  "version": "0.0.1-beta.1",
   "scripts": {
     "es5": "webpack --config build/webpack.config.js",
     "es6": "rollup --config build/rollup.config.js",
     "style": "gulp --gulpfile build/style.js",
     "build": "rollup --config build/rollup.config.js && gulp --gulpfile build/style.js"
   },
-  "main": "dist/V5.es6.js",
+  "main": "dist/v5.es6.js",
   "style": "dist/v5.css",
   "dependencies": {
     "vee-validate": "^2.1.0-beta.11"

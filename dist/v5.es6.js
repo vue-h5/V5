@@ -1135,10 +1135,7 @@ __vue_render__$5._withStripped = true;
 //
 
 var script$6 = {
-    name: 'v5-icon',
-    props: {
-        icon: String
-    }
+    name: 'v5-icon'
 };
 
 /* script */
@@ -1149,7 +1146,7 @@ var __vue_render__$6 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c("i", { class: ["v5-icon"], attrs: { icon: _vm.icon } })
+  return _c("i", { class: ["v5-icon"] })
 };
 var __vue_staticRenderFns__$6 = [];
 __vue_render__$6._withStripped = true;
@@ -1232,10 +1229,6 @@ var script$7 = {
         animate: {
             type: String,
             default: 'fade'
-        },
-        // 自定义样式
-        classes: {
-            type: String
         }
     },
     data () {
@@ -1266,10 +1259,13 @@ var __vue_render__$7 = function() {
   return _c(
     "div",
     {
-      class: ["v5-layer-mod", _vm.position, _vm.classes, { show: _vm.show }],
+      class: ["v5-layer-mod", _vm.position, { show: _vm.show }],
       style: { zIndex: _vm.zIndex },
       on: {
         "&click": function($event) {
+          if ($event.target !== $event.currentTarget) {
+            return null
+          }
           _vm.clickEvt();
         }
       }
@@ -1328,6 +1324,165 @@ __vue_render__$7._withStripped = true;
     undefined
   );
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var script$8 = {
+    name: 'v5-sort-box',
+    props: {
+        sort: Array,
+        value: Array
+    },
+    data () {
+        return {
+            // 当前排序对象
+            current: {}
+        }
+    },
+    methods: {
+        sortList (item, index) {
+            if (item !== this.current)
+                this.current.classes = '';
+
+            switch (item.classes) {
+                case 'up': item.classes = 'down'; break;
+                case 'down': item.classes = ''; break;
+                default: this.$set(item, 'classes', 'up'); break;
+            }
+            
+            this.current = item;
+
+            // 支持用户自定义排序方法
+            if (typeof item.sort === 'function') {
+                // 提供当前点击对象 方向 当前的数据
+                item.sort(item, this.value);
+            } else {
+                // 默认按用户给定的key先升序后降序
+                if (item.key) {
+                    this.value = this.value.sort((a, b) => {
+                        let result = 0;
+
+                        if (item.classes === 'up') {
+                            result = a[item.key] - b[item.key];
+                        } else if (item.classes === 'down') {
+                            result = b[item.key] - a[item.key];
+                        }
+
+                        return result
+                    });
+
+                    this.$emit('input', this.value);
+                }
+            }
+        }
+    }
+};
+
+/* script */
+            const __vue_script__$8 = script$8;
+            
+/* template */
+var __vue_render__$8 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "div",
+    { staticClass: "v5-sort-box" },
+    [
+      _c(
+        "ul",
+        { staticClass: "sort-header" },
+        _vm._l(_vm.sort, function(item, sIndex) {
+          return _c(
+            "li",
+            {
+              key: sIndex,
+              on: {
+                click: function($event) {
+                  _vm.sortList(item, sIndex);
+                }
+              }
+            },
+            [
+              _c("span", [_vm._v(_vm._s(item.label))]),
+              _vm._v(" "),
+              item.sort ? _c("i", { class: item.classes }) : _vm._e()
+            ]
+          )
+        })
+      ),
+      _vm._v(" "),
+      _vm._t("default")
+    ],
+    2
+  )
+};
+var __vue_staticRenderFns__$8 = [];
+__vue_render__$8._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$8 = undefined;
+  /* scoped */
+  const __vue_scope_id__$8 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$8 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$8 = false;
+  /* component normalizer */
+  function __vue_normalize__$8(
+    template, style, script,
+    scope, functional, moduleIdentifier,
+    createInjector, createInjectorSSR
+  ) {
+    const component = (typeof script === 'function' ? script.options : script) || {};
+
+    // For security concerns, we use only base name in production mode.
+    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/sortBox/sortBox.vue";
+
+    if (!component.render) {
+      component.render = template.render;
+      component.staticRenderFns = template.staticRenderFns;
+      component._compiled = true;
+
+      if (functional) component.functional = true;
+    }
+
+    component._scopeId = scope;
+
+    return component
+  }
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var V5SortBox = __vue_normalize__$8(
+    { render: __vue_render__$8, staticRenderFns: __vue_staticRenderFns__$8 },
+    __vue_inject_styles__$8,
+    __vue_script__$8,
+    __vue_scope_id__$8,
+    __vue_is_functional_template__$8,
+    __vue_module_identifier__$8,
+    undefined,
+    undefined
+  );
+
 const version = '0.0.1';
 const components = [
     v5Cascader,
@@ -1337,7 +1492,8 @@ const components = [
     V5Field,
     v5Hello,
     V5Icon,
-    V5Layer
+    V5Layer,
+    V5SortBox
 ];
 
 const install = Vue => {
@@ -1358,4 +1514,4 @@ var index = {
 };
 
 export default index;
-export { version, install, v5Cascader, v5Cell, v5CellGroup, v5Collapse, V5Field, v5Hello, V5Icon, V5Layer };
+export { version, install, v5Cascader, v5Cell, v5CellGroup, v5Collapse, V5Field, v5Hello, V5Icon, V5Layer, V5SortBox };
