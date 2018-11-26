@@ -8,7 +8,8 @@ import V5Icon from './components/icon/index.js'
 import V5Layer from './components/layer/index.js'
 import V5SortBox from './components/sortBox/index.js'
 
-const version = '0.0.1'
+import v5LoadingBar from './components/loadingBar/index.js'
+
 const components = [
     v5Cascader,
     v5Cell,
@@ -27,6 +28,8 @@ const install = Vue => {
     components.forEach(key => {
         Vue.component(key.name, key)
     })
+
+    Vue.prototype.$v5LoadingBar = v5LoadingBar
 }
 
 if (typeof window !== 'undefined' && window.Vue) {
@@ -34,7 +37,6 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 export {
-    version,
     install,
     v5Cascader,
     v5Cell,
@@ -48,6 +50,6 @@ export {
 }
 
 export default {
-    version,
-    install
+    install,
+    v5LoadingBar
 }

@@ -51,6 +51,11 @@ export default {
 							subTitel: '弹层',
 							to: '/base/layer'
 						},
+						{
+							title: 'LoadingBar',
+							subTitel: '加载进度条',
+							to: '/base/loadingBar'
+						},
 					]
 				},
 				{

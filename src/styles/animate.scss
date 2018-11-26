@@ -3,3 +3,10 @@
         transform: rotateZ(360deg);
     }
 }
+
+.v5-fade-enter-active, .v5-fade-leave-active {
+    transition: opacity .5s;
+}
+.v5-fade-enter, .v5-fade-leave-to {
+    opacity: 0;
+}
