@@ -7,7 +7,7 @@
 [图标库 - iconfont](http://iconfont.cn/manage/index?manage_type=myprojects&projectId=886927)
 
 **todo**
-- [ ] 完善示例中的内容
+- [x] 完善示例中的内容 - `ymy` 2018-11-26
 - [ ] 添加搜索的功能，方便查看图标
 
 ### Cell 单元格

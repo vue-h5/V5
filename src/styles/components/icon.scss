@@ -5,7 +5,7 @@
     url('//at.alicdn.com/t/font_886927_z53aw3p763b.woff') format('woff'),
     url('//at.alicdn.com/t/font_886927_z53aw3p763b.ttf') format('truetype'),
     url('//at.alicdn.com/t/font_886927_z53aw3p763b.svg#tq-v5') format('svg');
-}
+  }
 
 $icons: 
     save '\e612',
@@ -25,7 +25,11 @@ $icons:
     spinner3 '\e606',
     qrcode '\e605',
     spinner2 '\e603',
-    android '\e601'
+    android '\e601',
+    zoom-in '\e615',
+    youtube '\e614',
+    zap '\e613',
+
     ;
 
 .v5-icon {
