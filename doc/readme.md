@@ -7,6 +7,7 @@
 [图标库 - iconfont](http://iconfont.cn/manage/index?manage_type=myprojects&projectId=886927)
 
 **todo**
+[使用文档](./base/icon.md)
 - [x] 完善示例中的内容 - `ymy` 2018-11-26
 - [ ] 添加搜索的功能，方便查看图标
 
