@@ -23,6 +23,25 @@ function auto (data) {
     })
 }
 
+// 数组转驼峰写法
+// ['','abc','edF'] => AbcDef
+function arr2camel (arr) {
+    let result = ''
+
+    arr.forEach(val => {
+        // val 不能是空内容
+        if (val) {
+            if (result) {
+                result += val.slice(0,1).toUpperCase() + val.slice(1).toLocaleLowerCase()
+            } else {
+                result = val
+            }
+        }
+    })
+
+    return result
+}
+
 /**
  * 路由懒加载
  * @param {string} view 页面地址
@@ -49,12 +68,13 @@ async function registered (r) {
 
         if (arrLength > 2) {
             // 处理父级内容
-            let parent = `/${pathArr[arrLength -2]}`
+            let parent = pathArr[arrLength -2]
             let parentPath = pathArr.slice(0, -1)
             parentPath = `.${parentPath.join('/')}/index.vue`
 
             // 路由内容
             let route = {
+                name: arr2camel(pathArr),
                 path: pathArr[arrLength -1],
                 component: () => requireRouter(r)
             }
@@ -74,7 +94,7 @@ async function registered (r) {
                 // 注册父级
                 registered(parentPath)
                 // 更新路由
-                routes[parent].children = [route]
+                routes[`/${parent}`].children = [route]
             }
 
             // 增加到辅助函数中
@@ -82,10 +102,12 @@ async function registered (r) {
         } else {
             // 过滤已经存在的1级目录
             if (helpObj.hasOwnProperty(r)) return
-            // 对home处理
+            // 处理 / 目录，此项目将 project 为根目录
+            let name = path.slice(1)
             path = path === '/home' ? '/' : path
-
+            
             let data = {
+                name,
                 path,
                 component: () => requireRouter(r)
             }
