@@ -1,0 +1,21 @@
+.v5-loading-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    z-index: 9999;
+
+    i {
+        display: block;
+        height: 100%;
+        background: linear-gradient(90deg, #89d0ff, #09f);
+        transition: 
+            width .3s ease-in-out,
+            background .3s ease-in-out;
+    }
+
+    &.error i {
+        background: linear-gradient(90deg, #FF5722, #F44336);
+    }
+}
