@@ -1,7 +1,6 @@
 <template>
     <div class="icon-view">
         <h1>Icon 图标</h1>
-        &#xe614;
 		<ul class="icon-display">
             <li v-for="item in list" :key="item.label">
                 <v5-icon :class="item.label"/>
