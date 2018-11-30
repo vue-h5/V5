@@ -29,9 +29,11 @@ export default {
     },
     mounted () {
         let index = null
+        // 获取默认排序最后一项
         this.sort.forEach((val, i) => {
             if (val.classes) index = i
         })
+        // 设置排序效果
         this.sortData(this.sort[index])
     },
     methods: {
@@ -45,11 +47,12 @@ export default {
                 default: this.$set(item, 'classes', 'up'); break;
             }
             
-            this.current = item
             this.sortData(item)
         },
 
         sortData (item) {
+            this.current = item
+
             // 支持用户自定义排序方法
             if (typeof item.sort === 'function') {
                 // 提供当前点击对象 方向 当前的数据
