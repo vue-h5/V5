@@ -29,40 +29,41 @@ data () {
             }
         ],
         data: [
-                {
-                    name: 'tom',
-                    age: 20,
-                    grade: 80
-                },
-                {
-                    name: 'bob',
-                    age: 22,
-                    grade: 82
-                },
-                {
-                    name: 'alis',
-                    age: 21,
-                    grade: 30
-                },
-                {
-                    name: 'oppo',
-                    age: 20,
-                    grade: 100
-                },
-                {
-                    name: 'limi',
-                    age: 23,
-                    grade: 90
-                },
-                {
-                    name: 'jeri',
-                    age: 19,
-                    grade: 60
-                },
-            ]
-
+            {
+                name: 'tom',
+                age: 20,
+                grade: 80
+            },
+            {
+                name: 'bob',
+                age: 22,
+                grade: 82
+            },
+            {
+                name: 'alis',
+                age: 21,
+                grade: 30
+            },
+            {
+                name: 'oppo',
+                age: 20,
+                grade: 100
+            },
+            {
+                name: 'limi',
+                age: 23,
+                grade: 90
+            },
+            {
+                name: 'jeri',
+                age: 19,
+                grade: 60
+            },
+        ]
     }
-},
+},  
+```  
+```js     
 methods: {
         /**
          * 自定义排序方法
@@ -81,7 +82,7 @@ methods: {
             })
         }
     }
-```  
+```    
 主要是传入sort中的数据  
 
 ## props 参数  
