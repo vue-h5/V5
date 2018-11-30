@@ -12,7 +12,7 @@ HTML
 通过class添加，例如：   
 HTML  
 ```html  
-<v5-icon :class="apple"/>
+<v5-icon class="apple"/>
 ```    
 class内容为图标名称  
 
