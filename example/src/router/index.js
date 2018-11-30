@@ -26,20 +26,9 @@ function auto (data) {
 // 数组转驼峰写法
 // ['','abc','edF'] => AbcDef
 function arr2camel (arr) {
-    let result = ''
-
-    arr.forEach(val => {
-        // val 不能是空内容
-        if (val) {
-            if (result) {
-                result += val.slice(0,1).toUpperCase() + val.slice(1).toLocaleLowerCase()
-            } else {
-                result = val
-            }
-        }
+    return arr.join().replace(/(\w)(.*)/i, function ($0, $1, $2) {
+        return $1.toUpperCase()+$2.toLowerCase()
     })
-
-    return result
 }
 
 /**
