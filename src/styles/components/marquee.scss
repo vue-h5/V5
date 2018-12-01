@@ -1,0 +1,12 @@
+.v5-marquee-mod {
+    position: relative;
+    overflow: hidden;
+
+    .v5-marquee-inner {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        white-space: nowrap;
+    }
+}

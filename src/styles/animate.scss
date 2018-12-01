@@ -4,6 +4,12 @@
     }
 }
 
+@keyframes v5-marquee {
+    to {
+        transform: translate(-100%, 0)
+    }
+}
+
 .v5-fade-enter-active, .v5-fade-leave-active {
     transition: opacity .5s;
 }
