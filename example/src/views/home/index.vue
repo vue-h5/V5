@@ -52,14 +52,14 @@ export default {
 							to: '/base/layer'
 						},
 						{
-							title: 'Marquee',
-							subTitel: '弹幕',
-							to: '/base/marquee'
-						},
-						{
 							title: 'LoadingBar',
 							subTitel: '加载进度条',
 							to: '/base/loadingBar'
+						},
+						{
+							title: 'Marquee',
+							subTitel: '弹幕',
+							to: '/base/marquee'
 						},
 					]
 				},
