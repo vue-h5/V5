@@ -2,10 +2,12 @@
 ## 代码示例  
 
 > 更多完整示例地址： example/src/views/complex/sortBox/    
+  
 HTML    
 ```html    
 <v5-sort-box class="sort-box" :sort="sort" v-model="data"></v5-sort-box>
-```   
+```  
+   
 JS     
 ```js   
 data () {
@@ -83,8 +85,7 @@ methods: {
         }
     }
 ```    
-主要是传入sort中的数据  
-
+     
 ## props 参数  
 | 参数 | 类型 | 说明 | 默认值 |  
 | --- | --- | --- | --- |  
