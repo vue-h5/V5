@@ -1,59 +1,52 @@
 <template>
-    <div :class="['v5-form-item-box', type]">
+    <div :class="['v5-form-item-box', type, {disabled}]">
         <template v-if="type === 'separator'"></template>
-        <template v-else>
-            <div class="v5-form-item-body">
+        <ValidationProvider v-else 
+            :rules="formatValidate"
+            :name="label"
+            :events="['input', 'change']"
+        >
+        <div class="v5-form-item" slot-scope="{ errors }">
+            <div class="v5-form-item-body" >
                 <label :class="['v5-form-item-label', {required: required}]">{{label}}</label>
                 <span :class="['v5-form-item-content', type]">
                     <template v-if="type !== 'slot'">
                         <select 
                             v-if="type ==='select'" 
                             :name="name"
-                            :data-vv-as="label"
-                            :value="value"
-                            v-validate="formatValidate"
-                            @change="updateSelect($event)"
+                            v-model="myVal"
                         >
-                            <option selected disabled>{{placeholder}}</option>
+                            <option selected value="" disabled>{{placeholder}}</option>
                             <option v-for="(opt, oi) in options" :key="oi" :value="opt.value" :selected="opt.selected">{{opt.label}}</option>
                         </select>
                         <input 
                             v-else
                             :type="type" 
                             :name="name" 
-                            :data-vv-as="label"
-                            v-validate="formatValidate"
                             :placeholder="placeholder"
-                            :value="value"
+                            :disabled="disabled"
+                            :readonly="readonly"
+                            v-model="myVal"
                             autocomplete="off"
-                            @input="$emit('input', $event.target.value)"
+                            @click="clickInt"
                         >
-                    </template>
-                    <!-- 动态调用用户自定义组件 -->
-                    <template v-else>
-                        <input 
-                            type="hidden"
-                            :name="name" 
-                            :data-vv-as="label"
-                            v-validate="formatValidate"
-                            :value="value">
-                        <slot :name="slots"></slot>
                     </template>
                 </span>
             </div>
-            <p class="v5-form-item-err">{{errors.first(name)}}</p>
-        </template>
-
+            <p class="v5-form-item-err">{{errors[0]}}</p>
+        </div>
+        </ValidationProvider>
     </div>
 </template>
 
 <script>
+import { ValidationProvider } from 'vee-validate'
+
 export default {
     name: 'v5-field',
-    // 用于辅助验证子组件内容
-    // https://cn.vuejs.org/v2/api/#provide-inject
-    // https://github.com/baianat/vee-validate/issues/677#issuecomment-318969216
-    inject: ['$validator'],
+    components: {
+        ValidationProvider
+    },
     props: {
         // 默认值
         value: '',
@@ -75,21 +68,29 @@ export default {
             type: Boolean,
             default: false
         },
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        readonly: {
+            type: Boolean,
+            default: false
+        },
         // 验证，具体可以查看 veeValidate
         validate: {
             type: [Object, String],
+            default: ''
         },
         // 提供 Select option 对象
         options: {
             type: Array,
             default: () => []
         },
-        // 提供用户自定组件内容
-        slots: String
+        event: Function
     },
     data () {
         return {
-            mes: 'v5 forms',
+            myVal: ''
         }
     },
     computed: {
@@ -110,18 +111,19 @@ export default {
     },
     watch: {
         value (val, old) {
-            // 只有在使用了插槽的时候 值的变化会带来验证
-            if (this.type === 'slot') {
-                this.$validator.validate(this.name, val)
-            }
-        }
+            this.myVal = val
+        },
+        myVal(val, old) {
+            if (this.type === 'number') val = Number(val)
+            this.$emit('input', val)
+        } 
+    },
+    mounted () {
+        this.myVal = this.value
     },
     methods: {
-        updateSelect (evt) {
-            this.$emit('input', evt.target.value)
-            this.options.forEach(val => {
-                val.selected = val.value == evt.target.value
-            })
+        clickInt () {
+            if (this.event) this.event()
         }
     }
 }

@@ -3,9 +3,11 @@ import v5Cell from './components/cell/index.js'
 import v5CellGroup from './components/cellGroup/index.js'
 import v5Collapse from './components/collapse/index.js'
 import V5Field from './components/field/index.js'
+import V5Form from './components/form/index.js'
 import v5Hello from './components/hello/index.js'
 import V5Icon from './components/icon/index.js'
 import V5Layer from './components/layer/index.js'
+import V5Marquee from './components/marquee/index.js'
 import V5SortBox from './components/sortBox/index.js'
 
 import v5LoadingBar from './components/loadingBar/index.js'
@@ -16,9 +18,11 @@ const components = [
     v5CellGroup,
     v5Collapse,
     V5Field,
+    V5Form,
     v5Hello,
     V5Icon,
     V5Layer,
+    V5Marquee,
     V5SortBox
 ]
 
@@ -43,9 +47,11 @@ export {
     v5CellGroup,
     v5Collapse,
     V5Field,
+    V5Form,
     v5Hello,
     V5Icon,
     V5Layer,
+    V5Marquee,
     V5SortBox
 }
 

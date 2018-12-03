@@ -1,3 +1,5 @@
+import Vue from 'vue';
+
 //
 //
 //
@@ -1330,6 +1332,140 @@ __vue_render__$7._withStripped = true;
 //
 //
 //
+
+var script$8 = {
+    name: 'v5-marquee',
+    props: {
+        // 滚动速度
+        speed: {
+            type: Number,
+            default: 3
+        },
+        // 间隔，主要针对内容大于盒子时，连接之前添加空格
+        gap: {
+            type: Number,
+            default: 0
+        }
+    },
+    data () {
+        return {
+            inner: null,
+            innerBCR: {},
+            BCR: {},
+            style: {}
+        }
+    },
+    mounted () {
+        this.inner = this.$el.querySelector('.v5-marquee-inner');
+        this.innerBCR = this.inner.getBoundingClientRect();
+        this.BCR = this.$el.getBoundingClientRect();
+
+        // 设置容器的高度
+        this.style = {
+            height: this.innerBCR.height + 'px'
+        };
+        
+        // 处理复制内容的位置
+        let left = 0;
+        let gap = 0;
+        // 如果内容的宽度大于容器
+        if (this.BCR.width > this.innerBCR.width) {
+            left = this.BCR.width;
+            this.inner.style.width = this.BCR.width + 'px';
+        } else {
+            left = this.innerBCR.width + this.gap;
+            gap = this.gap;
+        }
+
+        // 添加动画样式
+        let className = `v5-marquee-inner${+ new Date}`;
+        let css = document.createElement('style');
+        css.type = 'text/css';
+
+        let style = `.${className} { padding-right: ${gap}px; animation: v5-marquee ${this.speed}s linear 0s infinite;}`;
+
+        // 添加样式
+        css.appendChild(document.createTextNode(style));
+
+        this.$el.appendChild(css);
+        this.inner.classList.add(className);
+
+        // 克隆对象
+        let node = this.inner.cloneNode(true);
+        node.style.left = left + 'px';
+        this.$el.appendChild(node);
+    }
+};
+
+/* script */
+            const __vue_script__$8 = script$8;
+            
+/* template */
+var __vue_render__$8 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c("div", { staticClass: "v5-marquee-mod", style: _vm.style }, [
+    _c("span", { staticClass: "v5-marquee-inner" }, [_vm._t("default")], 2)
+  ])
+};
+var __vue_staticRenderFns__$8 = [];
+__vue_render__$8._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$8 = undefined;
+  /* scoped */
+  const __vue_scope_id__$8 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$8 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$8 = false;
+  /* component normalizer */
+  function __vue_normalize__$8(
+    template, style, script,
+    scope, functional, moduleIdentifier,
+    createInjector, createInjectorSSR
+  ) {
+    const component = (typeof script === 'function' ? script.options : script) || {};
+
+    // For security concerns, we use only base name in production mode.
+    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/marquee/marquee.vue";
+
+    if (!component.render) {
+      component.render = template.render;
+      component.staticRenderFns = template.staticRenderFns;
+      component._compiled = true;
+
+      if (functional) component.functional = true;
+    }
+
+    component._scopeId = scope;
+
+    return component
+  }
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var V5Marquee = __vue_normalize__$8(
+    { render: __vue_render__$8, staticRenderFns: __vue_staticRenderFns__$8 },
+    __vue_inject_styles__$8,
+    __vue_script__$8,
+    __vue_scope_id__$8,
+    __vue_is_functional_template__$8,
+    __vue_module_identifier__$8,
+    undefined,
+    undefined
+  );
+
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1341,7 +1477,7 @@ __vue_render__$7._withStripped = true;
 //
 //
 
-var script$8 = {
+var script$9 = {
     name: 'v5-sort-box',
     props: {
         sort: Array,
@@ -1352,6 +1488,15 @@ var script$8 = {
             // 当前排序对象
             current: {}
         }
+    },
+    mounted () {
+        let index = null;
+        // 获取默认排序最后一项
+        this.sort.forEach((val, i) => {
+            if (val.classes) index = i;
+        });
+        // 设置排序效果
+        this.sortData(this.sort[index]);
     },
     methods: {
         sortList (item, index) {
@@ -1364,6 +1509,10 @@ var script$8 = {
                 default: this.$set(item, 'classes', 'up'); break;
             }
             
+            this.sortData(item);
+        },
+
+        sortData (item) {
             this.current = item;
 
             // 支持用户自定义排序方法
@@ -1393,10 +1542,10 @@ var script$8 = {
 };
 
 /* script */
-            const __vue_script__$8 = script$8;
+            const __vue_script__$9 = script$9;
             
 /* template */
-var __vue_render__$8 = function() {
+var __vue_render__$9 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -1432,19 +1581,19 @@ var __vue_render__$8 = function() {
     2
   )
 };
-var __vue_staticRenderFns__$8 = [];
-__vue_render__$8._withStripped = true;
+var __vue_staticRenderFns__$9 = [];
+__vue_render__$9._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$8 = undefined;
+  const __vue_inject_styles__$9 = undefined;
   /* scoped */
-  const __vue_scope_id__$8 = undefined;
+  const __vue_scope_id__$9 = undefined;
   /* module identifier */
-  const __vue_module_identifier__$8 = undefined;
+  const __vue_module_identifier__$9 = undefined;
   /* functional template */
-  const __vue_is_functional_template__$8 = false;
+  const __vue_is_functional_template__$9 = false;
   /* component normalizer */
-  function __vue_normalize__$8(
+  function __vue_normalize__$9(
     template, style, script,
     scope, functional, moduleIdentifier,
     createInjector, createInjectorSSR
@@ -1472,18 +1621,188 @@ __vue_render__$8._withStripped = true;
   
 
   
-  var V5SortBox = __vue_normalize__$8(
-    { render: __vue_render__$8, staticRenderFns: __vue_staticRenderFns__$8 },
-    __vue_inject_styles__$8,
-    __vue_script__$8,
-    __vue_scope_id__$8,
-    __vue_is_functional_template__$8,
-    __vue_module_identifier__$8,
+  var V5SortBox = __vue_normalize__$9(
+    { render: __vue_render__$9, staticRenderFns: __vue_staticRenderFns__$9 },
+    __vue_inject_styles__$9,
+    __vue_script__$9,
+    __vue_scope_id__$9,
+    __vue_is_functional_template__$9,
+    __vue_module_identifier__$9,
     undefined,
     undefined
   );
 
-const version = '0.0.1';
+//
+//
+//
+//
+//
+//
+//
+//
+
+var script$a = {
+    name: 'v5-loading-bar',
+    props: {
+        value: {
+            type: Number,
+            default: 10
+        },
+        show: {
+            type: Boolean,
+            default: false
+        },
+        error: {
+            type: Boolean,
+            default: false
+        }
+    },
+    data () {
+        return {
+            display: false
+        }
+    },
+    watch: {
+        show (val) {
+            if (val) {
+                this.display = val;
+            } else {
+                setTimeout(()=> {
+                    this.display = val;
+                }, 500);
+            }
+        }
+    }
+};
+
+/* script */
+            const __vue_script__$a = script$a;
+            
+/* template */
+var __vue_render__$a = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c("transition", { attrs: { name: "v5-fade" } }, [
+    _c(
+      "section",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.display,
+            expression: "display"
+          }
+        ],
+        class: ["v5-loading-bar", { error: _vm.error }]
+      },
+      [_c("i", { style: { width: _vm.value + "%" } })]
+    )
+  ])
+};
+var __vue_staticRenderFns__$a = [];
+__vue_render__$a._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$a = undefined;
+  /* scoped */
+  const __vue_scope_id__$a = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$a = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$a = false;
+  /* component normalizer */
+  function __vue_normalize__$a(
+    template, style, script,
+    scope, functional, moduleIdentifier,
+    createInjector, createInjectorSSR
+  ) {
+    const component = (typeof script === 'function' ? script.options : script) || {};
+
+    // For security concerns, we use only base name in production mode.
+    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/loadingBar/loadingBar.vue";
+
+    if (!component.render) {
+      component.render = template.render;
+      component.staticRenderFns = template.staticRenderFns;
+      component._compiled = true;
+
+      if (functional) component.functional = true;
+    }
+
+    component._scopeId = scope;
+
+    return component
+  }
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var Mode = __vue_normalize__$a(
+    { render: __vue_render__$a, staticRenderFns: __vue_staticRenderFns__$a },
+    __vue_inject_styles__$a,
+    __vue_script__$a,
+    __vue_scope_id__$a,
+    __vue_is_functional_template__$a,
+    __vue_module_identifier__$a,
+    undefined,
+    undefined
+  );
+
+let modelConstructor = Vue.extend(Mode);
+let instance;
+let timer;
+
+const v5LoadingBar = () => {
+    instance = new modelConstructor;
+    document.body.appendChild(instance.$mount().$el);
+};
+
+function step () {
+    timer = setInterval(() => {
+        instance.value += Math.floor(Math.random() * 5);
+
+        if (instance.value > 90) {
+            clearInterval(timer
+            );
+        }
+    }, 100);
+}
+
+// 开始动画
+// 可以传入初始值，有初始值时，我们不模拟加载了
+v5LoadingBar.start = (val = 0) => {
+    // 只生成一个加载状态
+    if (!instance) {
+        v5LoadingBar();
+    }
+    
+    // 默认设置
+    instance.value = val;
+    instance.show = true;
+    instance.error = false;
+
+    if (!val) step();
+};
+
+v5LoadingBar.finish = () => {
+    instance.value = 100;
+    instance.show = false;
+};
+
+v5LoadingBar.progress = val => {
+    instance.value = Number(val);
+};
+
+v5LoadingBar.error = () => {
+    instance.error = true;
+    instance.value = 100;
+    instance.show = false;
+};
+
 const components = [
     v5Cascader,
     v5Cell,
@@ -1493,15 +1812,18 @@ const components = [
     v5Hello,
     V5Icon,
     V5Layer,
+    V5Marquee,
     V5SortBox
 ];
 
-const install = Vue => {
+const install = Vue$$1 => {
     if (install.installed) return
     
     components.forEach(key => {
-        Vue.component(key.name, key);
+        Vue$$1.component(key.name, key);
     });
+
+    Vue$$1.prototype.$v5LoadingBar = v5LoadingBar;
 };
 
 if (typeof window !== 'undefined' && window.Vue) {
@@ -1509,9 +1831,9 @@ if (typeof window !== 'undefined' && window.Vue) {
 }
 
 var index = {
-    version,
-    install
+    install,
+    v5LoadingBar
 };
 
 export default index;
-export { version, install, v5Cascader, v5Cell, v5CellGroup, v5Collapse, V5Field, v5Hello, V5Icon, V5Layer, V5SortBox };
+export { install, v5Cascader, v5Cell, v5CellGroup, v5Collapse, V5Field, v5Hello, V5Icon, V5Layer, V5Marquee, V5SortBox };

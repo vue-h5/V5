@@ -52,6 +52,11 @@ export default {
 							to: '/base/layer'
 						},
 						{
+							title: 'Marquee',
+							subTitel: '弹幕',
+							to: '/base/marquee'
+						},
+						{
 							title: 'LoadingBar',
 							subTitel: '加载进度条',
 							to: '/base/loadingBar'
@@ -93,7 +98,13 @@ export default {
 				{
 					label: '表单',
 					icon: 'form',
-					children: []
+					children: [
+						{
+							title: 'From',
+							subTitel: '表单',
+							to: '/form/form'
+						}
+					]
 				},
 			]
 		}
