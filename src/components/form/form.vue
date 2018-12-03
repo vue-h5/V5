@@ -15,15 +15,15 @@
                 v-model="value[item.value]"
                 :options="item.options"
                 :event="item.event"
-            ></v5-field>
+            />
 
             <button :disabled="invalid" type="submit">提交</button>
-            <button type="reset" @click="resetForm">重置</button>
         </form>
     </ValidationObserver>
 </template>
 
 <script>
+import v5Field from '../field'
 import Vue from 'vue'
 import veeValidate, { Validator, ValidationObserver} from 'vee-validate'
 // 引入中文
@@ -35,6 +35,7 @@ Validator.localize('zh', zh_CN)
 export default {
     name: 'v5-form',
     components: {
+        v5Field,
         ValidationObserver
     },
     props: {
@@ -54,17 +55,11 @@ export default {
     },
     methods: {
         submitForm () {
-			this.$refs.observer.validate().then((result) => {
-                if (result) {
-                    alert('OK')
-                } else {
-                    alert('Error')
+			this.$refs.observer.validate().then(result => {
+                if ('submit' in this.$listeners && typeof this.$listeners.submit === 'function') {
+                    this.$emit('submit', result)
                 }
             })
-        },
-
-        resetForm () {
-            this.$refs.observer.reset()
         }
     }
 }

@@ -10,27 +10,25 @@
             <div class="v5-form-item-body" >
                 <label :class="['v5-form-item-label', {required: required}]">{{label}}</label>
                 <span :class="['v5-form-item-content', type]">
-                    <template v-if="type !== 'slot'">
-                        <select 
-                            v-if="type ==='select'" 
-                            :name="name"
-                            v-model="myVal"
-                        >
-                            <option selected value="" disabled>{{placeholder}}</option>
-                            <option v-for="(opt, oi) in options" :key="oi" :value="opt.value" :selected="opt.selected">{{opt.label}}</option>
-                        </select>
-                        <input 
-                            v-else
-                            :type="type" 
-                            :name="name" 
-                            :placeholder="placeholder"
-                            :disabled="disabled"
-                            :readonly="readonly"
-                            v-model="myVal"
-                            autocomplete="off"
-                            @click="clickInt"
-                        >
-                    </template>
+                    <select 
+                        v-if="type ==='select'" 
+                        :name="name"
+                        v-model="myVal"
+                    >
+                        <option selected value="" disabled>{{placeholder}}</option>
+                        <option v-for="(opt, oi) in options" :key="oi" :value="opt.value" :selected="opt.selected">{{opt.label}}</option>
+                    </select>
+                    <input 
+                        v-else
+                        :type="type" 
+                        :name="name" 
+                        :placeholder="placeholder"
+                        :disabled="disabled"
+                        :readonly="readonly"
+                        v-model="myVal"
+                        autocomplete="off"
+                        @click="clickInt"
+                    >
                 </span>
             </div>
             <p class="v5-form-item-err">{{errors[0]}}</p>

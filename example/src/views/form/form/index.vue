@@ -2,7 +2,9 @@
     <section class="from-view">
         <h1>表单</h1>
 
-        <v5-form :data="format" :value="params"></v5-form>
+        <v5-form :data="format" :value="params" @submit="submit">
+            <button slot="footers">Submit</button>
+        </v5-form>
     </section>
 </template>
 
@@ -57,6 +59,14 @@ export default {
     methods: {
         random () {
             this.params.tail = Math.random() * 100 -50
+        },
+
+        submit (result) {
+            if (result) {
+                alert('OK')
+            } else {
+                alert('Error')
+            }
         }
     }
 }

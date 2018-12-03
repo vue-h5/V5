@@ -98,6 +98,7 @@ export default {
 				{
 					label: '表单',
 					icon: 'form',
+					open: true,
 					children: [
 						{
 							title: 'From',
