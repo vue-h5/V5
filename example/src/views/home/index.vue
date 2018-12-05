@@ -42,6 +42,11 @@ export default {
 							to: '/base/icon'
 						},
 						{
+							title: 'Button',
+							subTitel: '按钮',
+							to: '/base/button'
+						},
+						{
 							title: 'Cell',
 							subTitel: '单元格',
 							to: '/base/cell'
