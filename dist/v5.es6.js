@@ -1281,7 +1281,6 @@ Validator.localize('zh', zh_CN);
 var script$6 = {
     name: 'v5-form',
     components: {
-        v5Field,
         ValidationObserver
     },
     props: {

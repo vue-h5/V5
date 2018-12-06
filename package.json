@@ -1,6 +1,6 @@
 {
   "name": "@ektx/v5",
-  "version": "0.0.1-beta.2",
+  "version": "0.0.1-beta.3",
   "scripts": {
     "es5": "webpack --config build/webpack.config.js",
     "es6": "rollup --config build/rollup.config.js",

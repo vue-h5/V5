@@ -34,7 +34,6 @@ Validator.localize('zh', zh_CN)
 export default {
     name: 'v5-form',
     components: {
-        v5Field,
         ValidationObserver
     },
     props: {
