@@ -1,5 +1,5 @@
 <template>
-    <button :class="['v5-btn-mod', type, size, {loading, plain}]" :disabled="disabled" :style="style" v-on="$listeners">
+    <button :class="['v5-button', type, size, {loading, plain}]" :disabled="disabled" :style="style" v-on="$listeners">
         <transition name="v5-scale">
             <span v-if="loading" class="v5-btn-loading">
                 <v5-icon class="spinner3"/>

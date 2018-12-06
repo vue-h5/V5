@@ -3,8 +3,8 @@
         <h1>表单</h1>
 
         <v5-form :data="format" :value="params" @submit="submit">
-            <button slot="footers">Submit</button>
         </v5-form>
+
     </section>
 </template>
 
