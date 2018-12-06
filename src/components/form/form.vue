@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import v5Field from '../field'
 import Vue from 'vue'
 import veeValidate, { Validator, ValidationObserver} from 'vee-validate'
 // 引入中文

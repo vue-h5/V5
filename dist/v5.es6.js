@@ -1,31 +1,7 @@
+import veeValidate, { ValidationProvider, Validator, ValidationObserver } from 'vee-validate';
 import Vue from 'vue';
+import zh_CN from 'vee-validate/dist/locale/zh_CN';
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -40,6 +16,196 @@ import Vue from 'vue';
 //
 
 var script = {
+    name: 'v5-button',
+    props: {
+        // 按钮样式 - primary danger warn 默认
+        type: {
+            type: String,
+            default: ''
+        },
+        // 简约模式 - 关
+        plain: {
+            type: Boolean,
+            default: false
+        },
+        // 禁用
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        // 大小
+        size: {
+            type: String,
+            default: ''
+        },
+        // 加载状态
+        loading: {
+            type: Boolean,
+            default: false
+        },
+        // 圆角
+        radius: {
+            type: [Number,String],
+            default: 3
+        },
+        // 图标
+        icon: {
+            type: String,
+            default: ''
+        }
+    },
+    computed: {
+        style () {
+            let result = {};
+            if (typeof this.radius === 'string') {
+                if (this.radius === 'round') {
+                    result = {
+                        borderRadius: '1em'
+                    };
+                } else {
+                    result = {
+                        borderRadius: `${this.radius}px`
+                    };
+                }
+            }
+            return result
+        }
+    }
+};
+
+/* script */
+            const __vue_script__ = script;
+            
+/* template */
+var __vue_render__ = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "button",
+    _vm._g(
+      {
+        class: [
+          "v5-btn-mod",
+          _vm.type,
+          _vm.size,
+          { loading: _vm.loading, plain: _vm.plain }
+        ],
+        style: _vm.style,
+        attrs: { disabled: _vm.disabled }
+      },
+      _vm.$listeners
+    ),
+    [
+      _c("transition", { attrs: { name: "v5-scale" } }, [
+        _vm.loading
+          ? _c(
+              "span",
+              { staticClass: "v5-btn-loading" },
+              [_c("v5-icon", { staticClass: "spinner3" })],
+              1
+            )
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _vm.icon ? _c("v5-icon", { class: _vm.icon }) : _vm._e(),
+      _vm._v(" "),
+      _c("span", [_vm._t("default")], 2)
+    ],
+    1
+  )
+};
+var __vue_staticRenderFns__ = [];
+__vue_render__._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__ = undefined;
+  /* scoped */
+  const __vue_scope_id__ = undefined;
+  /* module identifier */
+  const __vue_module_identifier__ = undefined;
+  /* functional template */
+  const __vue_is_functional_template__ = false;
+  /* component normalizer */
+  function __vue_normalize__(
+    template, style, script$$1,
+    scope, functional, moduleIdentifier,
+    createInjector, createInjectorSSR
+  ) {
+    const component = (typeof script$$1 === 'function' ? script$$1.options : script$$1) || {};
+
+    // For security concerns, we use only base name in production mode.
+    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/button/button.vue";
+
+    if (!component.render) {
+      component.render = template.render;
+      component.staticRenderFns = template.staticRenderFns;
+      component._compiled = true;
+
+      if (functional) component.functional = true;
+    }
+
+    component._scopeId = scope;
+
+    return component
+  }
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var v5Button = __vue_normalize__(
+    { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    undefined,
+    undefined
+  );
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var script$1 = {
     name: 'v5-cascader',
     props: {
         // 选择值
@@ -222,10 +388,10 @@ var script = {
 };
 
 /* script */
-            const __vue_script__ = script;
+            const __vue_script__$1 = script$1;
             
 /* template */
-var __vue_render__ = function() {
+var __vue_render__$1 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -320,24 +486,24 @@ var __vue_render__ = function() {
     ]
   )
 };
-var __vue_staticRenderFns__ = [];
-__vue_render__._withStripped = true;
+var __vue_staticRenderFns__$1 = [];
+__vue_render__$1._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__ = undefined;
+  const __vue_inject_styles__$1 = undefined;
   /* scoped */
-  const __vue_scope_id__ = undefined;
+  const __vue_scope_id__$1 = undefined;
   /* module identifier */
-  const __vue_module_identifier__ = undefined;
+  const __vue_module_identifier__$1 = undefined;
   /* functional template */
-  const __vue_is_functional_template__ = false;
+  const __vue_is_functional_template__$1 = false;
   /* component normalizer */
-  function __vue_normalize__(
-    template, style, script$$1,
+  function __vue_normalize__$1(
+    template, style, script,
     scope, functional, moduleIdentifier,
     createInjector, createInjectorSSR
   ) {
-    const component = (typeof script$$1 === 'function' ? script$$1.options : script$$1) || {};
+    const component = (typeof script === 'function' ? script.options : script) || {};
 
     // For security concerns, we use only base name in production mode.
     component.__file = "/Users/zhuwenlong/Sites/V5/src/components/cascader/cascader.vue";
@@ -360,13 +526,13 @@ __vue_render__._withStripped = true;
   
 
   
-  var v5Cascader = __vue_normalize__(
-    { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
-    __vue_inject_styles__,
-    __vue_script__,
-    __vue_scope_id__,
-    __vue_is_functional_template__,
-    __vue_module_identifier__,
+  var v5Cascader = __vue_normalize__$1(
+    { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
+    __vue_inject_styles__$1,
+    __vue_script__$1,
+    __vue_scope_id__$1,
+    __vue_is_functional_template__$1,
+    __vue_module_identifier__$1,
     undefined,
     undefined
   );
@@ -388,7 +554,7 @@ __vue_render__._withStripped = true;
 //
 //
 
-var script$1 = {
+var script$2 = {
     name: 'v5-cell',
     props: {
         // logo 图标
@@ -434,10 +600,10 @@ var script$1 = {
 };
 
 /* script */
-            const __vue_script__$1 = script$1;
+            const __vue_script__$2 = script$2;
             
 /* template */
-var __vue_render__$1 = function() {
+var __vue_render__$2 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -482,19 +648,19 @@ var __vue_render__$1 = function() {
     ]
   )
 };
-var __vue_staticRenderFns__$1 = [];
-__vue_render__$1._withStripped = true;
+var __vue_staticRenderFns__$2 = [];
+__vue_render__$2._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$1 = undefined;
+  const __vue_inject_styles__$2 = undefined;
   /* scoped */
-  const __vue_scope_id__$1 = undefined;
+  const __vue_scope_id__$2 = undefined;
   /* module identifier */
-  const __vue_module_identifier__$1 = undefined;
+  const __vue_module_identifier__$2 = undefined;
   /* functional template */
-  const __vue_is_functional_template__$1 = false;
+  const __vue_is_functional_template__$2 = false;
   /* component normalizer */
-  function __vue_normalize__$1(
+  function __vue_normalize__$2(
     template, style, script,
     scope, functional, moduleIdentifier,
     createInjector, createInjectorSSR
@@ -522,13 +688,13 @@ __vue_render__$1._withStripped = true;
   
 
   
-  var v5Cell = __vue_normalize__$1(
-    { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
-    __vue_inject_styles__$1,
-    __vue_script__$1,
-    __vue_scope_id__$1,
-    __vue_is_functional_template__$1,
-    __vue_module_identifier__$1,
+  var v5Cell = __vue_normalize__$2(
+    { render: __vue_render__$2, staticRenderFns: __vue_staticRenderFns__$2 },
+    __vue_inject_styles__$2,
+    __vue_script__$2,
+    __vue_scope_id__$2,
+    __vue_is_functional_template__$2,
+    __vue_module_identifier__$2,
     undefined,
     undefined
   );
@@ -540,7 +706,7 @@ __vue_render__$1._withStripped = true;
 //
 //
 
-var script$2 = {
+var script$3 = {
     name: 'v5-cell-group',
     data () {
         return {
@@ -550,28 +716,28 @@ var script$2 = {
 };
 
 /* script */
-            const __vue_script__$2 = script$2;
+            const __vue_script__$3 = script$3;
             
 /* template */
-var __vue_render__$2 = function() {
+var __vue_render__$3 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c("div", { staticClass: "v5-cell-group-mod" }, [_vm._t("default")], 2)
 };
-var __vue_staticRenderFns__$2 = [];
-__vue_render__$2._withStripped = true;
+var __vue_staticRenderFns__$3 = [];
+__vue_render__$3._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$2 = undefined;
+  const __vue_inject_styles__$3 = undefined;
   /* scoped */
-  const __vue_scope_id__$2 = undefined;
+  const __vue_scope_id__$3 = undefined;
   /* module identifier */
-  const __vue_module_identifier__$2 = undefined;
+  const __vue_module_identifier__$3 = undefined;
   /* functional template */
-  const __vue_is_functional_template__$2 = false;
+  const __vue_is_functional_template__$3 = false;
   /* component normalizer */
-  function __vue_normalize__$2(
+  function __vue_normalize__$3(
     template, style, script,
     scope, functional, moduleIdentifier,
     createInjector, createInjectorSSR
@@ -599,13 +765,13 @@ __vue_render__$2._withStripped = true;
   
 
   
-  var v5CellGroup = __vue_normalize__$2(
-    { render: __vue_render__$2, staticRenderFns: __vue_staticRenderFns__$2 },
-    __vue_inject_styles__$2,
-    __vue_script__$2,
-    __vue_scope_id__$2,
-    __vue_is_functional_template__$2,
-    __vue_module_identifier__$2,
+  var v5CellGroup = __vue_normalize__$3(
+    { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
+    __vue_inject_styles__$3,
+    __vue_script__$3,
+    __vue_scope_id__$3,
+    __vue_is_functional_template__$3,
+    __vue_module_identifier__$3,
     undefined,
     undefined
   );
@@ -626,7 +792,7 @@ __vue_render__$2._withStripped = true;
 //
 //
 
-var script$3 = {
+var script$4 = {
     name: 'v5-collapse',
     props: {
         // 标题内容
@@ -664,10 +830,10 @@ var script$3 = {
 };
 
 /* script */
-            const __vue_script__$3 = script$3;
+            const __vue_script__$4 = script$4;
             
 /* template */
-var __vue_render__$3 = function() {
+var __vue_render__$4 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -695,19 +861,19 @@ var __vue_render__$3 = function() {
     )
   ])
 };
-var __vue_staticRenderFns__$3 = [];
-__vue_render__$3._withStripped = true;
+var __vue_staticRenderFns__$4 = [];
+__vue_render__$4._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$3 = undefined;
+  const __vue_inject_styles__$4 = undefined;
   /* scoped */
-  const __vue_scope_id__$3 = undefined;
+  const __vue_scope_id__$4 = undefined;
   /* module identifier */
-  const __vue_module_identifier__$3 = undefined;
+  const __vue_module_identifier__$4 = undefined;
   /* functional template */
-  const __vue_is_functional_template__$3 = false;
+  const __vue_is_functional_template__$4 = false;
   /* component normalizer */
-  function __vue_normalize__$3(
+  function __vue_normalize__$4(
     template, style, script,
     scope, functional, moduleIdentifier,
     createInjector, createInjectorSSR
@@ -735,73 +901,24 @@ __vue_render__$3._withStripped = true;
   
 
   
-  var v5Collapse = __vue_normalize__$3(
-    { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
-    __vue_inject_styles__$3,
-    __vue_script__$3,
-    __vue_scope_id__$3,
-    __vue_is_functional_template__$3,
-    __vue_module_identifier__$3,
+  var v5Collapse = __vue_normalize__$4(
+    { render: __vue_render__$4, staticRenderFns: __vue_staticRenderFns__$4 },
+    __vue_inject_styles__$4,
+    __vue_script__$4,
+    __vue_scope_id__$4,
+    __vue_is_functional_template__$4,
+    __vue_module_identifier__$4,
     undefined,
     undefined
   );
 
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
-var script$4 = {
+var script$5 = {
     name: 'v5-field',
-    // 用于辅助验证子组件内容
-    // https://cn.vuejs.org/v2/api/#provide-inject
-    // https://github.com/baianat/vee-validate/issues/677#issuecomment-318969216
-    inject: ['$validator'],
+    components: {
+        ValidationProvider
+    },
     props: {
         // 默认值
         value: '',
@@ -823,21 +940,29 @@ var script$4 = {
             type: Boolean,
             default: false
         },
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        readonly: {
+            type: Boolean,
+            default: false
+        },
         // 验证，具体可以查看 veeValidate
         validate: {
             type: [Object, String],
+            default: ''
         },
         // 提供 Select option 对象
         options: {
             type: Array,
             default: () => []
         },
-        // 提供用户自定组件内容
-        slots: String
+        event: Function
     },
     data () {
         return {
-            mes: 'v5 forms',
+            myVal: ''
         }
     },
     computed: {
@@ -858,166 +983,258 @@ var script$4 = {
     },
     watch: {
         value (val, old) {
-            // 只有在使用了插槽的时候 值的变化会带来验证
-            if (this.type === 'slot') {
-                this.$validator.validate(this.name, val);
-            }
-        }
+            this.myVal = val;
+        },
+        myVal(val, old) {
+            if (this.type === 'number') val = Number(val);
+            this.$emit('input', val);
+        } 
+    },
+    mounted () {
+        this.myVal = this.value;
     },
     methods: {
-        updateSelect (evt) {
-            this.$emit('input', evt.target.value);
-            this.options.forEach(val => {
-                val.selected = val.value == evt.target.value;
-            });
+        clickInt () {
+            if (this.event) this.event();
         }
     }
 };
 
 /* script */
-            const __vue_script__$4 = script$4;
+            const __vue_script__$5 = script$5;
             
 /* template */
-var __vue_render__$4 = function() {
+var __vue_render__$5 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c(
     "div",
-    { class: ["v5-form-item-box", _vm.type] },
+    { class: ["v5-form-item-box", _vm.type, { disabled: _vm.disabled }] },
     [
       _vm.type === "separator"
         ? void 0
-        : [
-            _c("div", { staticClass: "v5-form-item-body" }, [
-              _c(
-                "label",
-                { class: ["v5-form-item-label", { required: _vm.required }] },
-                [_vm._v(_vm._s(_vm.label))]
-              ),
-              _vm._v(" "),
-              _c(
-                "span",
-                { class: ["v5-form-item-content", _vm.type] },
-                [
-                  _vm.type !== "slot"
-                    ? [
-                        _vm.type === "select"
-                          ? _c(
-                              "select",
-                              {
-                                directives: [
-                                  {
-                                    name: "validate",
-                                    rawName: "v-validate",
-                                    value: _vm.formatValidate,
-                                    expression: "formatValidate"
+        : _c("ValidationProvider", {
+            attrs: {
+              rules: _vm.formatValidate,
+              name: _vm.label,
+              events: ["input", "change"]
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(ref) {
+                  var errors = ref.errors;
+                  return _c("div", { staticClass: "v5-form-item" }, [
+                    _c("div", { staticClass: "v5-form-item-body" }, [
+                      _c(
+                        "label",
+                        {
+                          class: [
+                            "v5-form-item-label",
+                            { required: _vm.required }
+                          ]
+                        },
+                        [_vm._v(_vm._s(_vm.label))]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        { class: ["v5-form-item-content", _vm.type] },
+                        [
+                          _vm.type === "select"
+                            ? _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.myVal,
+                                      expression: "myVal"
+                                    }
+                                  ],
+                                  attrs: { name: _vm.name },
+                                  on: {
+                                    change: function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value;
+                                          return val
+                                        });
+                                      _vm.myVal = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0];
+                                    }
                                   }
-                                ],
-                                attrs: {
-                                  name: _vm.name,
-                                  "data-vv-as": _vm.label
                                 },
-                                domProps: { value: _vm.value },
-                                on: {
-                                  change: function($event) {
-                                    _vm.updateSelect($event);
-                                  }
-                                }
-                              },
-                              [
-                                _c(
-                                  "option",
-                                  { attrs: { selected: "", disabled: "" } },
-                                  [_vm._v(_vm._s(_vm.placeholder))]
-                                ),
-                                _vm._v(" "),
-                                _vm._l(_vm.options, function(opt, oi) {
-                                  return _c(
+                                [
+                                  _c(
                                     "option",
                                     {
-                                      key: oi,
-                                      domProps: {
-                                        value: opt.value,
-                                        selected: opt.selected
+                                      attrs: {
+                                        selected: "",
+                                        value: "",
+                                        disabled: ""
                                       }
                                     },
-                                    [_vm._v(_vm._s(opt.label))]
-                                  )
+                                    [_vm._v(_vm._s(_vm.placeholder))]
+                                  ),
+                                  _vm._v(" "),
+                                  _vm._l(_vm.options, function(opt, oi) {
+                                    return _c(
+                                      "option",
+                                      {
+                                        key: oi,
+                                        domProps: {
+                                          value: opt.value,
+                                          selected: opt.selected
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(opt.label))]
+                                    )
+                                  })
+                                ],
+                                2
+                              )
+                            : _vm.type === "checkbox"
+                              ? _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.myVal,
+                                      expression: "myVal"
+                                    }
+                                  ],
+                                  attrs: {
+                                    name: _vm.name,
+                                    placeholder: _vm.placeholder,
+                                    disabled: _vm.disabled,
+                                    readonly: _vm.readonly,
+                                    autocomplete: "off",
+                                    type: "checkbox"
+                                  },
+                                  domProps: {
+                                    checked: Array.isArray(_vm.myVal)
+                                      ? _vm._i(_vm.myVal, null) > -1
+                                      : _vm.myVal
+                                  },
+                                  on: {
+                                    click: _vm.clickInt,
+                                    change: function($event) {
+                                      var $$a = _vm.myVal,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false;
+                                      if (Array.isArray($$a)) {
+                                        var $$v = null,
+                                          $$i = _vm._i($$a, $$v);
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            (_vm.myVal = $$a.concat([$$v]));
+                                        } else {
+                                          $$i > -1 &&
+                                            (_vm.myVal = $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1)));
+                                        }
+                                      } else {
+                                        _vm.myVal = $$c;
+                                      }
+                                    }
+                                  }
                                 })
-                              ],
-                              2
-                            )
-                          : _c("input", {
-                              directives: [
-                                {
-                                  name: "validate",
-                                  rawName: "v-validate",
-                                  value: _vm.formatValidate,
-                                  expression: "formatValidate"
-                                }
-                              ],
-                              attrs: {
-                                type: _vm.type,
-                                name: _vm.name,
-                                "data-vv-as": _vm.label,
-                                placeholder: _vm.placeholder,
-                                autocomplete: "off"
-                              },
-                              domProps: { value: _vm.value },
-                              on: {
-                                input: function($event) {
-                                  _vm.$emit("input", $event.target.value);
-                                }
-                              }
-                            })
-                      ]
-                    : [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "validate",
-                              rawName: "v-validate",
-                              value: _vm.formatValidate,
-                              expression: "formatValidate"
-                            }
-                          ],
-                          attrs: {
-                            type: "hidden",
-                            name: _vm.name,
-                            "data-vv-as": _vm.label
-                          },
-                          domProps: { value: _vm.value }
-                        }),
-                        _vm._v(" "),
-                        _vm._t(_vm.slots)
-                      ]
-                ],
-                2
-              )
-            ]),
-            _vm._v(" "),
-            _c("p", { staticClass: "v5-form-item-err" }, [
-              _vm._v(_vm._s(_vm.errors.first(_vm.name)))
+                              : _vm.type === "radio"
+                                ? _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.myVal,
+                                        expression: "myVal"
+                                      }
+                                    ],
+                                    attrs: {
+                                      name: _vm.name,
+                                      placeholder: _vm.placeholder,
+                                      disabled: _vm.disabled,
+                                      readonly: _vm.readonly,
+                                      autocomplete: "off",
+                                      type: "radio"
+                                    },
+                                    domProps: {
+                                      checked: _vm._q(_vm.myVal, null)
+                                    },
+                                    on: {
+                                      click: _vm.clickInt,
+                                      change: function($event) {
+                                        _vm.myVal = null;
+                                      }
+                                    }
+                                  })
+                                : _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.myVal,
+                                        expression: "myVal"
+                                      }
+                                    ],
+                                    attrs: {
+                                      name: _vm.name,
+                                      placeholder: _vm.placeholder,
+                                      disabled: _vm.disabled,
+                                      readonly: _vm.readonly,
+                                      autocomplete: "off",
+                                      type: _vm.type
+                                    },
+                                    domProps: { value: _vm.myVal },
+                                    on: {
+                                      click: _vm.clickInt,
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.myVal = $event.target.value;
+                                      }
+                                    }
+                                  })
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "v5-form-item-err" }, [
+                      _vm._v(_vm._s(errors[0]))
+                    ])
+                  ])
+                }
+              }
             ])
-          ]
+          })
     ],
     2
   )
 };
-var __vue_staticRenderFns__$4 = [];
-__vue_render__$4._withStripped = true;
+var __vue_staticRenderFns__$5 = [];
+__vue_render__$5._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$4 = undefined;
+  const __vue_inject_styles__$5 = undefined;
   /* scoped */
-  const __vue_scope_id__$4 = undefined;
+  const __vue_scope_id__$5 = undefined;
   /* module identifier */
-  const __vue_module_identifier__$4 = undefined;
+  const __vue_module_identifier__$5 = undefined;
   /* functional template */
-  const __vue_is_functional_template__$4 = false;
+  const __vue_is_functional_template__$5 = false;
   /* component normalizer */
-  function __vue_normalize__$4(
+  function __vue_normalize__$5(
     template, style, script,
     scope, functional, moduleIdentifier,
     createInjector, createInjectorSSR
@@ -1045,13 +1262,163 @@ __vue_render__$4._withStripped = true;
   
 
   
-  var V5Field = __vue_normalize__$4(
-    { render: __vue_render__$4, staticRenderFns: __vue_staticRenderFns__$4 },
-    __vue_inject_styles__$4,
-    __vue_script__$4,
-    __vue_scope_id__$4,
-    __vue_is_functional_template__$4,
-    __vue_module_identifier__$4,
+  var V5Field = __vue_normalize__$5(
+    { render: __vue_render__$5, staticRenderFns: __vue_staticRenderFns__$5 },
+    __vue_inject_styles__$5,
+    __vue_script__$5,
+    __vue_scope_id__$5,
+    __vue_is_functional_template__$5,
+    __vue_module_identifier__$5,
+    undefined,
+    undefined
+  );
+
+//
+
+Vue.use(veeValidate);
+Validator.localize('zh', zh_CN);
+
+var script$6 = {
+    name: 'v5-form',
+    components: {
+        v5Field,
+        ValidationObserver
+    },
+    props: {
+        data: {
+            type: Array,
+            default: []
+        },
+        value: {
+            type: Object,
+            default: {}
+        }
+    },
+    data () {
+        return {
+
+        }
+    },
+    methods: {
+        submitForm () {
+			this.$refs.observer.validate().then(result => {
+                if ('submit' in this.$listeners && typeof this.$listeners.submit === 'function') {
+                    this.$emit('submit', result);
+                }
+            });
+        }
+    }
+};
+
+/* script */
+            const __vue_script__$6 = script$6;
+            
+/* template */
+var __vue_render__$6 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c("ValidationObserver", {
+    ref: "observer",
+    scopedSlots: _vm._u([
+      {
+        key: "default",
+        fn: function(ref) {
+          var invalid = ref.invalid;
+          return _c(
+            "form",
+            {
+              on: {
+                submit: function($event) {
+                  $event.preventDefault();
+                  return _vm.submitForm($event)
+                }
+              }
+            },
+            [
+              _vm._l(_vm.data, function(item, index) {
+                return _c("v5-field", {
+                  key: index,
+                  attrs: {
+                    label: item.label,
+                    type: item.type,
+                    placeholder: item.placeholder,
+                    name: item.name || item.key,
+                    required: item.required,
+                    disabled: item.disabled,
+                    readonly: item.readonly,
+                    validate: item.validate,
+                    options: item.options,
+                    event: item.event
+                  },
+                  model: {
+                    value: _vm.value[item.value],
+                    callback: function($$v) {
+                      _vm.$set(_vm.value, item.value, $$v);
+                    },
+                    expression: "value[item.value]"
+                  }
+                })
+              }),
+              _vm._v(" "),
+              _c("button", { attrs: { disabled: invalid, type: "submit" } }, [
+                _vm._v("提交")
+              ])
+            ],
+            2
+          )
+        }
+      }
+    ])
+  })
+};
+var __vue_staticRenderFns__$6 = [];
+__vue_render__$6._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$6 = undefined;
+  /* scoped */
+  const __vue_scope_id__$6 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$6 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$6 = false;
+  /* component normalizer */
+  function __vue_normalize__$6(
+    template, style, script,
+    scope, functional, moduleIdentifier,
+    createInjector, createInjectorSSR
+  ) {
+    const component = (typeof script === 'function' ? script.options : script) || {};
+
+    // For security concerns, we use only base name in production mode.
+    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/form/form.vue";
+
+    if (!component.render) {
+      component.render = template.render;
+      component.staticRenderFns = template.staticRenderFns;
+      component._compiled = true;
+
+      if (functional) component.functional = true;
+    }
+
+    component._scopeId = scope;
+
+    return component
+  }
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var V5Form = __vue_normalize__$6(
+    { render: __vue_render__$6, staticRenderFns: __vue_staticRenderFns__$6 },
+    __vue_inject_styles__$6,
+    __vue_script__$6,
+    __vue_scope_id__$6,
+    __vue_is_functional_template__$6,
+    __vue_module_identifier__$6,
     undefined,
     undefined
   );
@@ -1061,7 +1428,7 @@ __vue_render__$4._withStripped = true;
 //
 //
 
-var script$5 = {
+var script$7 = {
     name: 'v5-hello',
     data () {
         return {
@@ -1071,28 +1438,28 @@ var script$5 = {
 };
 
 /* script */
-            const __vue_script__$5 = script$5;
+            const __vue_script__$7 = script$7;
             
 /* template */
-var __vue_render__$5 = function() {
+var __vue_render__$7 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c("h1", [_vm._v(_vm._s(_vm.mes))])
 };
-var __vue_staticRenderFns__$5 = [];
-__vue_render__$5._withStripped = true;
+var __vue_staticRenderFns__$7 = [];
+__vue_render__$7._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$5 = undefined;
+  const __vue_inject_styles__$7 = undefined;
   /* scoped */
-  const __vue_scope_id__$5 = undefined;
+  const __vue_scope_id__$7 = undefined;
   /* module identifier */
-  const __vue_module_identifier__$5 = undefined;
+  const __vue_module_identifier__$7 = undefined;
   /* functional template */
-  const __vue_is_functional_template__$5 = false;
+  const __vue_is_functional_template__$7 = false;
   /* component normalizer */
-  function __vue_normalize__$5(
+  function __vue_normalize__$7(
     template, style, script,
     scope, functional, moduleIdentifier,
     createInjector, createInjectorSSR
@@ -1120,13 +1487,13 @@ __vue_render__$5._withStripped = true;
   
 
   
-  var v5Hello = __vue_normalize__$5(
-    { render: __vue_render__$5, staticRenderFns: __vue_staticRenderFns__$5 },
-    __vue_inject_styles__$5,
-    __vue_script__$5,
-    __vue_scope_id__$5,
-    __vue_is_functional_template__$5,
-    __vue_module_identifier__$5,
+  var v5Hello = __vue_normalize__$7(
+    { render: __vue_render__$7, staticRenderFns: __vue_staticRenderFns__$7 },
+    __vue_inject_styles__$7,
+    __vue_script__$7,
+    __vue_scope_id__$7,
+    __vue_is_functional_template__$7,
+    __vue_module_identifier__$7,
     undefined,
     undefined
   );
@@ -1136,33 +1503,33 @@ __vue_render__$5._withStripped = true;
 //
 //
 
-var script$6 = {
+var script$8 = {
     name: 'v5-icon'
 };
 
 /* script */
-            const __vue_script__$6 = script$6;
+            const __vue_script__$8 = script$8;
             
 /* template */
-var __vue_render__$6 = function() {
+var __vue_render__$8 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c("i", { class: ["v5-icon"] })
 };
-var __vue_staticRenderFns__$6 = [];
-__vue_render__$6._withStripped = true;
+var __vue_staticRenderFns__$8 = [];
+__vue_render__$8._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$6 = undefined;
+  const __vue_inject_styles__$8 = undefined;
   /* scoped */
-  const __vue_scope_id__$6 = undefined;
+  const __vue_scope_id__$8 = undefined;
   /* module identifier */
-  const __vue_module_identifier__$6 = undefined;
+  const __vue_module_identifier__$8 = undefined;
   /* functional template */
-  const __vue_is_functional_template__$6 = false;
+  const __vue_is_functional_template__$8 = false;
   /* component normalizer */
-  function __vue_normalize__$6(
+  function __vue_normalize__$8(
     template, style, script,
     scope, functional, moduleIdentifier,
     createInjector, createInjectorSSR
@@ -1190,13 +1557,13 @@ __vue_render__$6._withStripped = true;
   
 
   
-  var V5Icon = __vue_normalize__$6(
-    { render: __vue_render__$6, staticRenderFns: __vue_staticRenderFns__$6 },
-    __vue_inject_styles__$6,
-    __vue_script__$6,
-    __vue_scope_id__$6,
-    __vue_is_functional_template__$6,
-    __vue_module_identifier__$6,
+  var V5Icon = __vue_normalize__$8(
+    { render: __vue_render__$8, staticRenderFns: __vue_staticRenderFns__$8 },
+    __vue_inject_styles__$8,
+    __vue_script__$8,
+    __vue_scope_id__$8,
+    __vue_is_functional_template__$8,
+    __vue_module_identifier__$8,
     undefined,
     undefined
   );
@@ -1214,7 +1581,7 @@ __vue_render__$6._withStripped = true;
 //
 //
 
-var script$7 = {
+var script$9 = {
     name: 'v5-layer',
     props: {
         // 控制弹层显隐
@@ -1251,10 +1618,10 @@ var script$7 = {
 };
 
 /* script */
-            const __vue_script__$7 = script$7;
+            const __vue_script__$9 = script$9;
             
 /* template */
-var __vue_render__$7 = function() {
+var __vue_render__$9 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -1275,19 +1642,19 @@ var __vue_render__$7 = function() {
     [_c("div", { staticClass: "v5-layer-inner" }, [_vm._t("default")], 2)]
   )
 };
-var __vue_staticRenderFns__$7 = [];
-__vue_render__$7._withStripped = true;
+var __vue_staticRenderFns__$9 = [];
+__vue_render__$9._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$7 = undefined;
+  const __vue_inject_styles__$9 = undefined;
   /* scoped */
-  const __vue_scope_id__$7 = undefined;
+  const __vue_scope_id__$9 = undefined;
   /* module identifier */
-  const __vue_module_identifier__$7 = undefined;
+  const __vue_module_identifier__$9 = undefined;
   /* functional template */
-  const __vue_is_functional_template__$7 = false;
+  const __vue_is_functional_template__$9 = false;
   /* component normalizer */
-  function __vue_normalize__$7(
+  function __vue_normalize__$9(
     template, style, script,
     scope, functional, moduleIdentifier,
     createInjector, createInjectorSSR
@@ -1315,13 +1682,13 @@ __vue_render__$7._withStripped = true;
   
 
   
-  var V5Layer = __vue_normalize__$7(
-    { render: __vue_render__$7, staticRenderFns: __vue_staticRenderFns__$7 },
-    __vue_inject_styles__$7,
-    __vue_script__$7,
-    __vue_scope_id__$7,
-    __vue_is_functional_template__$7,
-    __vue_module_identifier__$7,
+  var V5Layer = __vue_normalize__$9(
+    { render: __vue_render__$9, staticRenderFns: __vue_staticRenderFns__$9 },
+    __vue_inject_styles__$9,
+    __vue_script__$9,
+    __vue_scope_id__$9,
+    __vue_is_functional_template__$9,
+    __vue_module_identifier__$9,
     undefined,
     undefined
   );
@@ -1333,7 +1700,7 @@ __vue_render__$7._withStripped = true;
 //
 //
 
-var script$8 = {
+var script$a = {
     name: 'v5-marquee',
     props: {
         // 滚动速度
@@ -1398,10 +1765,10 @@ var script$8 = {
 };
 
 /* script */
-            const __vue_script__$8 = script$8;
+            const __vue_script__$a = script$a;
             
 /* template */
-var __vue_render__$8 = function() {
+var __vue_render__$a = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -1409,19 +1776,19 @@ var __vue_render__$8 = function() {
     _c("span", { staticClass: "v5-marquee-inner" }, [_vm._t("default")], 2)
   ])
 };
-var __vue_staticRenderFns__$8 = [];
-__vue_render__$8._withStripped = true;
+var __vue_staticRenderFns__$a = [];
+__vue_render__$a._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$8 = undefined;
+  const __vue_inject_styles__$a = undefined;
   /* scoped */
-  const __vue_scope_id__$8 = undefined;
+  const __vue_scope_id__$a = undefined;
   /* module identifier */
-  const __vue_module_identifier__$8 = undefined;
+  const __vue_module_identifier__$a = undefined;
   /* functional template */
-  const __vue_is_functional_template__$8 = false;
+  const __vue_is_functional_template__$a = false;
   /* component normalizer */
-  function __vue_normalize__$8(
+  function __vue_normalize__$a(
     template, style, script,
     scope, functional, moduleIdentifier,
     createInjector, createInjectorSSR
@@ -1449,13 +1816,13 @@ __vue_render__$8._withStripped = true;
   
 
   
-  var V5Marquee = __vue_normalize__$8(
-    { render: __vue_render__$8, staticRenderFns: __vue_staticRenderFns__$8 },
-    __vue_inject_styles__$8,
-    __vue_script__$8,
-    __vue_scope_id__$8,
-    __vue_is_functional_template__$8,
-    __vue_module_identifier__$8,
+  var V5Marquee = __vue_normalize__$a(
+    { render: __vue_render__$a, staticRenderFns: __vue_staticRenderFns__$a },
+    __vue_inject_styles__$a,
+    __vue_script__$a,
+    __vue_scope_id__$a,
+    __vue_is_functional_template__$a,
+    __vue_module_identifier__$a,
     undefined,
     undefined
   );
@@ -1477,7 +1844,7 @@ __vue_render__$8._withStripped = true;
 //
 //
 
-var script$9 = {
+var script$b = {
     name: 'v5-sort-box',
     props: {
         sort: Array,
@@ -1542,10 +1909,10 @@ var script$9 = {
 };
 
 /* script */
-            const __vue_script__$9 = script$9;
+            const __vue_script__$b = script$b;
             
 /* template */
-var __vue_render__$9 = function() {
+var __vue_render__$b = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -1581,19 +1948,19 @@ var __vue_render__$9 = function() {
     2
   )
 };
-var __vue_staticRenderFns__$9 = [];
-__vue_render__$9._withStripped = true;
+var __vue_staticRenderFns__$b = [];
+__vue_render__$b._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$9 = undefined;
+  const __vue_inject_styles__$b = undefined;
   /* scoped */
-  const __vue_scope_id__$9 = undefined;
+  const __vue_scope_id__$b = undefined;
   /* module identifier */
-  const __vue_module_identifier__$9 = undefined;
+  const __vue_module_identifier__$b = undefined;
   /* functional template */
-  const __vue_is_functional_template__$9 = false;
+  const __vue_is_functional_template__$b = false;
   /* component normalizer */
-  function __vue_normalize__$9(
+  function __vue_normalize__$b(
     template, style, script,
     scope, functional, moduleIdentifier,
     createInjector, createInjectorSSR
@@ -1621,13 +1988,13 @@ __vue_render__$9._withStripped = true;
   
 
   
-  var V5SortBox = __vue_normalize__$9(
-    { render: __vue_render__$9, staticRenderFns: __vue_staticRenderFns__$9 },
-    __vue_inject_styles__$9,
-    __vue_script__$9,
-    __vue_scope_id__$9,
-    __vue_is_functional_template__$9,
-    __vue_module_identifier__$9,
+  var V5SortBox = __vue_normalize__$b(
+    { render: __vue_render__$b, staticRenderFns: __vue_staticRenderFns__$b },
+    __vue_inject_styles__$b,
+    __vue_script__$b,
+    __vue_scope_id__$b,
+    __vue_is_functional_template__$b,
+    __vue_module_identifier__$b,
     undefined,
     undefined
   );
@@ -1641,7 +2008,7 @@ __vue_render__$9._withStripped = true;
 //
 //
 
-var script$a = {
+var script$c = {
     name: 'v5-loading-bar',
     props: {
         value: {
@@ -1676,10 +2043,10 @@ var script$a = {
 };
 
 /* script */
-            const __vue_script__$a = script$a;
+            const __vue_script__$c = script$c;
             
 /* template */
-var __vue_render__$a = function() {
+var __vue_render__$c = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -1701,19 +2068,19 @@ var __vue_render__$a = function() {
     )
   ])
 };
-var __vue_staticRenderFns__$a = [];
-__vue_render__$a._withStripped = true;
+var __vue_staticRenderFns__$c = [];
+__vue_render__$c._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$a = undefined;
+  const __vue_inject_styles__$c = undefined;
   /* scoped */
-  const __vue_scope_id__$a = undefined;
+  const __vue_scope_id__$c = undefined;
   /* module identifier */
-  const __vue_module_identifier__$a = undefined;
+  const __vue_module_identifier__$c = undefined;
   /* functional template */
-  const __vue_is_functional_template__$a = false;
+  const __vue_is_functional_template__$c = false;
   /* component normalizer */
-  function __vue_normalize__$a(
+  function __vue_normalize__$c(
     template, style, script,
     scope, functional, moduleIdentifier,
     createInjector, createInjectorSSR
@@ -1741,13 +2108,13 @@ __vue_render__$a._withStripped = true;
   
 
   
-  var Mode = __vue_normalize__$a(
-    { render: __vue_render__$a, staticRenderFns: __vue_staticRenderFns__$a },
-    __vue_inject_styles__$a,
-    __vue_script__$a,
-    __vue_scope_id__$a,
-    __vue_is_functional_template__$a,
-    __vue_module_identifier__$a,
+  var Mode = __vue_normalize__$c(
+    { render: __vue_render__$c, staticRenderFns: __vue_staticRenderFns__$c },
+    __vue_inject_styles__$c,
+    __vue_script__$c,
+    __vue_scope_id__$c,
+    __vue_is_functional_template__$c,
+    __vue_module_identifier__$c,
     undefined,
     undefined
   );
@@ -1804,11 +2171,13 @@ v5LoadingBar.error = () => {
 };
 
 const components = [
+    v5Button,
     v5Cascader,
     v5Cell,
     v5CellGroup,
     v5Collapse,
     V5Field,
+    V5Form,
     v5Hello,
     V5Icon,
     V5Layer,
@@ -1836,4 +2205,4 @@ var index = {
 };
 
 export default index;
-export { install, v5Cascader, v5Cell, v5CellGroup, v5Collapse, V5Field, v5Hello, V5Icon, V5Layer, V5Marquee, V5SortBox };
+export { install, v5Button, v5Cascader, v5Cell, v5CellGroup, v5Collapse, V5Field, V5Form, v5Hello, V5Icon, V5Layer, V5Marquee, V5SortBox };

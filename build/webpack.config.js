@@ -8,7 +8,7 @@ module.exports = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, '../dist'),
-        filename: 'V5.min.js',
+        filename: 'v5.min.js',
         // 暴露 library as V5
         library: 'V5',
         // 在 AMD 或 CommonJS 的 require 之后可访问（libraryTarget:'umd'）
