@@ -1,11 +1,6 @@
 # V5
+
 [toc]
-
-## 0.0.1-beta.2
-- `NEW` 弹幕组件
-- `NEW` 加载条组件
-- `IMPROVED` 表单组件
-
 
 ## 目录说明
 ```bash
@@ -19,6 +14,27 @@ V5
   |---- styles 组件的样式库
   |---- index.js 组件引用
 ```
+
+## 使用开发版本
+### 克隆 v5 项目到本地
+```sh
+# 因公司网络问题，建议使用 http 克隆
+git clone git@gitlab.hztianque.com:cell/V5.git
+```
+
+### 建立本地连接
+```sh
+cd V5
+
+yarn link
+```
+
+### 在项目中使用
+```sh
+yarn link @ektx/v5
+```
+
+> 需要注意的是，此方法需要大家在每次安装了依赖后都要重新操作此步骤
 
 ## 项目使用
 ```bash
