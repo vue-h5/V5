@@ -6,6 +6,20 @@
 - `NEW` 加载条组件
 - `IMPROVED` 表单组件
 
+
+## 目录说明
+```bash
+V5
+|---- build 打包命令
+|---- dist 打包后文件
+|---- doc 使用文档
+|---- example 示例
+|---- src 组件开发目录
+  |---- components 组件库
+  |---- styles 组件的样式库
+  |---- index.js 组件引用
+```
+
 ## 项目使用
 ```bash
 # 在项目中使用开发版本
@@ -14,6 +28,10 @@ yarn add git+ssh://git@gitlab.hztianque.com/cell/V5.git#dev
 # 使用发布版本
 yarn add @ektx/v5
 ```
+
+## 文档
+
+**使用文档在 doc/**
 
 ## 打包
 ```bash
@@ -38,17 +56,6 @@ yarn
 
 # 运行 Demo
 yarn run serve
-```
-## 目录说明
-```bash
-V5
-|---- build 打包命令
-|---- dist 打包后文件
-|---- example 示例
-|---- src 组件开发目录
-  |---- components 组件库
-  |---- styles 组件的样式库
-  |---- index.js 组件引用
 ```
 
 ## 项目贡献

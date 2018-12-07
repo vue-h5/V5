@@ -1,6 +1,4 @@
-import veeValidate, { ValidationProvider, Validator, ValidationObserver } from 'vee-validate';
 import Vue from 'vue';
-import zh_CN from 'vee-validate/dist/locale/zh_CN';
 
 //
 //
@@ -86,7 +84,7 @@ var __vue_render__ = function() {
     _vm._g(
       {
         class: [
-          "v5-btn-mod",
+          "v5-button",
           _vm.type,
           _vm.size,
           { loading: _vm.loading, plain: _vm.plain }
@@ -913,12 +911,63 @@ __vue_render__$4._withStripped = true;
   );
 
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var script$5 = {
     name: 'v5-field',
-    components: {
-        ValidationProvider
-    },
+    // 用于辅助验证子组件内容
+    // https://cn.vuejs.org/v2/api/#provide-inject
+    // https://github.com/baianat/vee-validate/issues/677#issuecomment-318969216
+    inject: ['$validator'],
     props: {
         // 默认值
         value: '',
@@ -940,14 +989,6 @@ var script$5 = {
             type: Boolean,
             default: false
         },
-        disabled: {
-            type: Boolean,
-            default: false
-        },
-        readonly: {
-            type: Boolean,
-            default: false
-        },
         // 验证，具体可以查看 veeValidate
         validate: {
             type: [Object, String],
@@ -958,11 +999,20 @@ var script$5 = {
             type: Array,
             default: () => []
         },
-        event: Function
+        // 提供用户自定组件内容
+        slots: String,
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        readonly: {
+            type: Boolean,
+            default: false
+        }
     },
     data () {
         return {
-            myVal: ''
+            mes: 'v5 forms',
         }
     },
     computed: {
@@ -983,19 +1033,19 @@ var script$5 = {
     },
     watch: {
         value (val, old) {
-            this.myVal = val;
-        },
-        myVal(val, old) {
-            if (this.type === 'number') val = Number(val);
-            this.$emit('input', val);
-        } 
-    },
-    mounted () {
-        this.myVal = this.value;
+            // 只有在使用了插槽的时候 值的变化会带来验证
+            if (this.type === 'slot') {
+                this.$validator.validate(this.name, val);
+            }
+        }
     },
     methods: {
-        clickInt () {
-            if (this.event) this.event();
+        updateSelect (evt) {
+            this.$emit('input', evt.target.value);
+            // 标识选中效果
+            this.options.forEach(val => {
+                val.selected = val.value == evt.target.value;
+            });
         }
     }
 };
@@ -1014,210 +1064,121 @@ var __vue_render__$5 = function() {
     [
       _vm.type === "separator"
         ? void 0
-        : _c("ValidationProvider", {
-            attrs: {
-              rules: _vm.formatValidate,
-              name: _vm.label,
-              events: ["input", "change"]
-            },
-            scopedSlots: _vm._u([
-              {
-                key: "default",
-                fn: function(ref) {
-                  var errors = ref.errors;
-                  return _c("div", { staticClass: "v5-form-item" }, [
-                    _c("div", { staticClass: "v5-form-item-body" }, [
-                      _c(
-                        "label",
-                        {
-                          class: [
-                            "v5-form-item-label",
-                            { required: _vm.required }
-                          ]
-                        },
-                        [_vm._v(_vm._s(_vm.label))]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        { class: ["v5-form-item-content", _vm.type] },
-                        [
-                          _vm.type === "select"
-                            ? _c(
-                                "select",
-                                {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.myVal,
-                                      expression: "myVal"
-                                    }
-                                  ],
-                                  attrs: { name: _vm.name },
-                                  on: {
-                                    change: function($event) {
-                                      var $$selectedVal = Array.prototype.filter
-                                        .call($event.target.options, function(
-                                          o
-                                        ) {
-                                          return o.selected
-                                        })
-                                        .map(function(o) {
-                                          var val =
-                                            "_value" in o ? o._value : o.value;
-                                          return val
-                                        });
-                                      _vm.myVal = $event.target.multiple
-                                        ? $$selectedVal
-                                        : $$selectedVal[0];
-                                    }
+        : [
+            _c("div", { staticClass: "v5-form-item-body" }, [
+              _c(
+                "label",
+                { class: ["v5-form-item-label", { required: _vm.required }] },
+                [_vm._v(_vm._s(_vm.label))]
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                { class: ["v5-form-item-content", _vm.type] },
+                [
+                  _vm.type !== "slot"
+                    ? [
+                        _vm.type === "select"
+                          ? _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "validate",
+                                    rawName: "v-validate",
+                                    value: _vm.formatValidate,
+                                    expression: "formatValidate"
                                   }
+                                ],
+                                attrs: {
+                                  name: _vm.name,
+                                  "data-vv-as": _vm.label
                                 },
-                                [
-                                  _c(
+                                domProps: { value: _vm.value },
+                                on: {
+                                  change: function($event) {
+                                    _vm.updateSelect($event);
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { selected: "", disabled: "" } },
+                                  [_vm._v(_vm._s(_vm.placeholder))]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.options, function(opt, oi) {
+                                  return _c(
                                     "option",
                                     {
-                                      attrs: {
-                                        selected: "",
-                                        value: "",
-                                        disabled: ""
+                                      key: oi,
+                                      domProps: {
+                                        value: opt.value,
+                                        selected: opt.selected
                                       }
                                     },
-                                    [_vm._v(_vm._s(_vm.placeholder))]
-                                  ),
-                                  _vm._v(" "),
-                                  _vm._l(_vm.options, function(opt, oi) {
-                                    return _c(
-                                      "option",
-                                      {
-                                        key: oi,
-                                        domProps: {
-                                          value: opt.value,
-                                          selected: opt.selected
-                                        }
-                                      },
-                                      [_vm._v(_vm._s(opt.label))]
-                                    )
-                                  })
-                                ],
-                                2
-                              )
-                            : _vm.type === "checkbox"
-                              ? _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.myVal,
-                                      expression: "myVal"
-                                    }
-                                  ],
-                                  attrs: {
-                                    name: _vm.name,
-                                    placeholder: _vm.placeholder,
-                                    disabled: _vm.disabled,
-                                    readonly: _vm.readonly,
-                                    autocomplete: "off",
-                                    type: "checkbox"
-                                  },
-                                  domProps: {
-                                    checked: Array.isArray(_vm.myVal)
-                                      ? _vm._i(_vm.myVal, null) > -1
-                                      : _vm.myVal
-                                  },
-                                  on: {
-                                    click: _vm.clickInt,
-                                    change: function($event) {
-                                      var $$a = _vm.myVal,
-                                        $$el = $event.target,
-                                        $$c = $$el.checked ? true : false;
-                                      if (Array.isArray($$a)) {
-                                        var $$v = null,
-                                          $$i = _vm._i($$a, $$v);
-                                        if ($$el.checked) {
-                                          $$i < 0 &&
-                                            (_vm.myVal = $$a.concat([$$v]));
-                                        } else {
-                                          $$i > -1 &&
-                                            (_vm.myVal = $$a
-                                              .slice(0, $$i)
-                                              .concat($$a.slice($$i + 1)));
-                                        }
-                                      } else {
-                                        _vm.myVal = $$c;
-                                      }
-                                    }
-                                  }
+                                    [_vm._v(_vm._s(opt.label))]
+                                  )
                                 })
-                              : _vm.type === "radio"
-                                ? _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.myVal,
-                                        expression: "myVal"
-                                      }
-                                    ],
-                                    attrs: {
-                                      name: _vm.name,
-                                      placeholder: _vm.placeholder,
-                                      disabled: _vm.disabled,
-                                      readonly: _vm.readonly,
-                                      autocomplete: "off",
-                                      type: "radio"
-                                    },
-                                    domProps: {
-                                      checked: _vm._q(_vm.myVal, null)
-                                    },
-                                    on: {
-                                      click: _vm.clickInt,
-                                      change: function($event) {
-                                        _vm.myVal = null;
-                                      }
-                                    }
-                                  })
-                                : _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.myVal,
-                                        expression: "myVal"
-                                      }
-                                    ],
-                                    attrs: {
-                                      name: _vm.name,
-                                      placeholder: _vm.placeholder,
-                                      disabled: _vm.disabled,
-                                      readonly: _vm.readonly,
-                                      autocomplete: "off",
-                                      type: _vm.type
-                                    },
-                                    domProps: { value: _vm.myVal },
-                                    on: {
-                                      click: _vm.clickInt,
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.myVal = $event.target.value;
-                                      }
-                                    }
-                                  })
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "v5-form-item-err" }, [
-                      _vm._v(_vm._s(errors[0]))
-                    ])
-                  ])
-                }
-              }
+                              ],
+                              2
+                            )
+                          : _c("input", {
+                              directives: [
+                                {
+                                  name: "validate",
+                                  rawName: "v-validate",
+                                  value: _vm.formatValidate,
+                                  expression: "formatValidate"
+                                }
+                              ],
+                              attrs: {
+                                type: _vm.type,
+                                name: _vm.name,
+                                "data-vv-as": _vm.label,
+                                placeholder: _vm.placeholder,
+                                disabled: _vm.disabled,
+                                readonly: _vm.readonly,
+                                autocomplete: "off"
+                              },
+                              domProps: { value: _vm.value },
+                              on: {
+                                input: function($event) {
+                                  _vm.$emit("input", $event.target.value);
+                                }
+                              }
+                            })
+                      ]
+                    : [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "validate",
+                              rawName: "v-validate",
+                              value: _vm.formatValidate,
+                              expression: "formatValidate"
+                            }
+                          ],
+                          attrs: {
+                            type: "hidden",
+                            name: _vm.name,
+                            "data-vv-as": _vm.label
+                          },
+                          domProps: { value: _vm.value }
+                        }),
+                        _vm._v(" "),
+                        _vm._t(_vm.slots)
+                      ]
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("p", { staticClass: "v5-form-item-err" }, [
+              _vm._v(_vm._s(_vm.errors.first(_vm.name)))
             ])
-          })
+          ]
     ],
     2
   )
@@ -1274,15 +1235,33 @@ __vue_render__$5._withStripped = true;
   );
 
 //
-
-Vue.use(veeValidate);
-Validator.localize('zh', zh_CN);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var script$6 = {
     name: 'v5-form',
-    components: {
-        ValidationObserver
-    },
+
     props: {
         data: {
             type: Array,
@@ -1300,8 +1279,11 @@ var script$6 = {
     },
     methods: {
         submitForm () {
-			this.$refs.observer.validate().then(result => {
-                if ('submit' in this.$listeners && typeof this.$listeners.submit === 'function') {
+			this.$validator.validateAll().then(result => {
+                if (
+                    'submit' in this.$listeners && 
+                    typeof this.$listeners.submit === 'function'
+                ) {
                     this.$emit('submit', result);
                 }
             });
@@ -1317,59 +1299,49 @@ var __vue_render__$6 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c("ValidationObserver", {
-    ref: "observer",
-    scopedSlots: _vm._u([
-      {
-        key: "default",
-        fn: function(ref) {
-          var invalid = ref.invalid;
-          return _c(
-            "form",
-            {
-              on: {
-                submit: function($event) {
-                  $event.preventDefault();
-                  return _vm.submitForm($event)
-                }
-              }
-            },
-            [
-              _vm._l(_vm.data, function(item, index) {
-                return _c("v5-field", {
-                  key: index,
-                  attrs: {
-                    label: item.label,
-                    type: item.type,
-                    placeholder: item.placeholder,
-                    name: item.name || item.key,
-                    required: item.required,
-                    disabled: item.disabled,
-                    readonly: item.readonly,
-                    validate: item.validate,
-                    options: item.options,
-                    event: item.event
-                  },
-                  model: {
-                    value: _vm.value[item.value],
-                    callback: function($$v) {
-                      _vm.$set(_vm.value, item.value, $$v);
-                    },
-                    expression: "value[item.value]"
-                  }
-                })
-              }),
-              _vm._v(" "),
-              _c("button", { attrs: { disabled: invalid, type: "submit" } }, [
-                _vm._v("提交")
-              ])
-            ],
-            2
-          )
+  return _c(
+    "form",
+    {
+      staticClass: "v5-form",
+      on: {
+        submit: function($event) {
+          $event.preventDefault();
+          return _vm.submitForm($event)
         }
       }
-    ])
-  })
+    },
+    [
+      _vm._l(_vm.data, function(item, index) {
+        return _c("v5-field", {
+          key: index,
+          attrs: {
+            label: item.label,
+            type: item.type,
+            placeholder: item.placeholder,
+            name: item.name || item.value,
+            required: item.required,
+            disabled: item.disabled,
+            readonly: item.readonly,
+            validate: item.validate,
+            options: item.options,
+            slots: item.slot
+          },
+          model: {
+            value: _vm.value[item.value],
+            callback: function($$v) {
+              _vm.$set(_vm.value, item.value, $$v);
+            },
+            expression: "value[item.value]"
+          }
+        })
+      }),
+      _vm._v(" "),
+      _vm._t("footers", [
+        _c("v5-button", { attrs: { type: "primary" } }, [_vm._v("提交")])
+      ])
+    ],
+    2
+  )
 };
 var __vue_staticRenderFns__$6 = [];
 __vue_render__$6._withStripped = true;
