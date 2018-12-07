@@ -3,13 +3,14 @@
 
 ## 基础组件
 
-### Icon
+### Icon 图标
 [图标库 - iconfont](http://iconfont.cn/manage/index?manage_type=myprojects&projectId=886927)  
 [使用文档](./base/icon.md)  
 
 **todo**  
 - [x] 完善示例中的内容 - `ymy` 2018-11-26  
 - [x] 添加使用文档 - `ymy` 2018-11-26  
+- [ ] 优化字体的引用方式，改成包内自带
 - [ ] 添加搜索的功能，方便查看图标
 
 ### Cell 单元格
@@ -24,12 +25,15 @@
 **todo**
 - [x] 添加使用文档- `ymy` 2018-11-26  
 
-### LoadingBar 加载进度条
-- [ ] 添加使用文档
+### Marquee
+[使用文档 base/marquee](./base/marquee.md)
 
-### Marquee 弹幕
-- [ ] 添加使用文档
+**todo**
+- [ ] 添加上下滚动效果
+- [ ] 添加左右滚动效果
+- [ ] 添加鼠标悬停功能
 
+## 表单
 
 ## 复合组件
 ### Cascader 集联选择器
@@ -38,9 +42,9 @@
 ### Cell-group 单元格组
 用于优化显示单元格集合的效果。
 
-> 只能用于包含 cell    
+> 只能用于包含 cell
 
-**todo**
+**todo*
 - [ ] 支持接受一个数组，在有数组时，自动组装cell
 
 
@@ -60,10 +64,3 @@
 
 **todo**
 - [x] 添加使用文档 - `ymy` 2018-11-26 
-
-
-## 表单
-### Form 表单
-
-**todo**
-- [ ] 添加使用文档
