@@ -25,6 +25,10 @@
 **todo**
 - [x] 添加使用文档- `ymy` 2018-11-26  
 
+
+### LoadingBar
+[使用文档 base/loadingBar](./base/loadingBar.md)
+
 ### Marquee
 [使用文档 base/marquee](./base/marquee.md)
 
@@ -32,6 +36,7 @@
 - [ ] 添加上下滚动效果
 - [ ] 添加左右滚动效果
 - [ ] 添加鼠标悬停功能
+
 
 ## 表单
 
