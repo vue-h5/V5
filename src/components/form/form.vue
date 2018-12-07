@@ -14,8 +14,9 @@
             v-model="value[item.value]"
             :options="item.options"
             :slots="item.slot"
-        ></v5-field>
-
+        >
+            <slot :name="item.slot" :slot="item.slot"></slot>
+        </v5-field>
         <slot name="footers">
             <v5-button type="primary">提交</v5-button>
         </slot>
