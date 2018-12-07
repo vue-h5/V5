@@ -3,7 +3,7 @@
 
 ## 代码示例
 
-> 更多完整示例地址： example/src/views/complex/layer/
+> 更多完整示例地址： example/src/views/base/layer/
 
 HTML
 ```html
