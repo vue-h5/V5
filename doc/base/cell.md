@@ -22,7 +22,7 @@
 
 ## props 参数
 | 参数 | 类型 | 说明 | 默认值 |
-| --- | --- | --- | --- |
+|:---:| --- | --- |:---:|
 | logo | `String` | 主图标 | - |s
 | title | `String` `Number` | 标题 | - |
 | subTitle | `String` `Number` | 副标题 | - |
