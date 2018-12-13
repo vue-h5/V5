@@ -1,8 +1,8 @@
 <template>
     <section class="marquee-view">
         <h2>弹幕</h2>
-        <v5-marquee :speed="5">{{mes}}</v5-marquee>
-        <v5-marquee :speed="20" :gap="50">{{mes2}}</v5-marquee>
+        <v5-marquee :speed="5" :gap="100">{{mes}}</v5-marquee>
+        <v5-marquee :speed="20" :gap="100">{{mes2}}</v5-marquee>
         <div class="box">
             <v5-marquee class="txt" :speed="5">{{mes}}</v5-marquee>
             <v5-marquee class="txt" :speed="20" :gap="50">{{mes2}}</v5-marquee>

@@ -1258,6 +1258,7 @@ __vue_render__$5._withStripped = true;
 //
 //
 //
+//
 
 var script$6 = {
     name: 'v5-form',
@@ -1312,28 +1313,33 @@ var __vue_render__$6 = function() {
     },
     [
       _vm._l(_vm.data, function(item, index) {
-        return _c("v5-field", {
-          key: index,
-          attrs: {
-            label: item.label,
-            type: item.type,
-            placeholder: item.placeholder,
-            name: item.name || item.value,
-            required: item.required,
-            disabled: item.disabled,
-            readonly: item.readonly,
-            validate: item.validate,
-            options: item.options,
-            slots: item.slot
-          },
-          model: {
-            value: _vm.value[item.value],
-            callback: function($$v) {
-              _vm.$set(_vm.value, item.value, $$v);
+        return _c(
+          "v5-field",
+          {
+            key: index,
+            attrs: {
+              label: item.label,
+              type: item.type,
+              placeholder: item.placeholder,
+              name: item.name || item.value,
+              required: item.required,
+              disabled: item.disabled,
+              readonly: item.readonly,
+              validate: item.validate,
+              options: item.options,
+              slots: item.slot
             },
-            expression: "value[item.value]"
-          }
-        })
+            model: {
+              value: _vm.value[item.value],
+              callback: function($$v) {
+                _vm.$set(_vm.value, item.value, $$v);
+              },
+              expression: "value[item.value]"
+            }
+          },
+          [_vm._t(item.slot, null, { slot: item.slot })],
+          2
+        )
       }),
       _vm._v(" "),
       _vm._t("footers", [
