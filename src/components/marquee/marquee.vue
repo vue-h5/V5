@@ -1,6 +1,7 @@
 <template>
     <div class="v5-marquee-mod" :style="style">
-        <span class="v5-marquee-inner"><slot></slot></span>
+        <span class="v5-marquee-inner v5-marquee-origin" :style="originStyle"><slot></slot></span>
+        <span class="v5-marquee-inner v5-marquee-right" :style="mirrorStyle"><slot></slot></span>
     </div>
 </template>
 
@@ -21,51 +22,48 @@ export default {
     },
     data () {
         return {
-            inner: null,
-            innerBCR: {},
+            // 原始信息
+            originEl: null,
+            originStyle: {},
+            mirrorStyle: {},
+            // 容器的信息
             BCR: {},
             style: {}
         }
     },
     mounted () {
-        this.inner = this.$el.querySelector('.v5-marquee-inner')
-        this.innerBCR = this.inner.getBoundingClientRect()
+        this.originEl = this.$el.querySelector('.v5-marquee-origin')
         this.BCR = this.$el.getBoundingClientRect()
+        this.init()
+    },
+    methods: {
+        init () {
+            // 设置容器大小
+            this.style = {
+                height: this.originEl.scrollHeight + 'px'
+            }
 
-        // 设置容器的高度
-        this.style = {
-            height: this.innerBCR.height + 'px'
+            let left = this.BCR.width + 'px'
+            let width = left
+            let animation = `v5-marquee ${this.speed}s linear 0s infinite`
+            let originW = this.originEl.scrollWidth
+
+            if (originW > this.BCR.width) {
+               left = originW + this.gap + 'px'
+               width = left
+            }
+
+            this.mirrorStyle = { left, width, animation }
+            this.originStyle = { width, animation }
+        },
+        update () {
+            this.originStyle = {}
+            this.mirrorStyle = {}
+
+            this.$nextTick(() => {
+                this.init()
+            })
         }
-        
-        // 处理复制内容的位置
-        let left = 0
-        let gap = 0
-        // 如果内容的宽度大于容器
-        if (this.BCR.width > this.innerBCR.width) {
-            left = this.BCR.width
-            this.inner.style.width = this.BCR.width + 'px'
-        } else {
-            left = this.innerBCR.width + this.gap
-            gap = this.gap
-        }
-
-        // 添加动画样式
-        let className = `v5-marquee-inner${+ new Date}`
-        let css = document.createElement('style')
-        css.type = 'text/css'
-
-        let style = `.${className} { padding-right: ${gap}px; animation: v5-marquee ${this.speed}s linear 0s infinite;}`
-
-        // 添加样式
-        css.appendChild(document.createTextNode(style))
-
-        this.$el.appendChild(css)
-        this.inner.classList.add(className)
-
-        // 克隆对象
-        let node = this.inner.cloneNode(true)
-        node.style.left = left + 'px'
-        this.$el.appendChild(node)
     }
 }
 </script>

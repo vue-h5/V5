@@ -1676,6 +1676,7 @@ __vue_render__$9._withStripped = true;
 //
 //
 //
+//
 
 var script$a = {
     name: 'v5-marquee',
@@ -1693,51 +1694,48 @@ var script$a = {
     },
     data () {
         return {
-            inner: null,
-            innerBCR: {},
+            // 原始信息
+            originEl: null,
+            originStyle: {},
+            mirrorStyle: {},
+            // 容器的信息
             BCR: {},
             style: {}
         }
     },
     mounted () {
-        this.inner = this.$el.querySelector('.v5-marquee-inner');
-        this.innerBCR = this.inner.getBoundingClientRect();
+        this.originEl = this.$el.querySelector('.v5-marquee-origin');
         this.BCR = this.$el.getBoundingClientRect();
+        this.init();
+    },
+    methods: {
+        init () {
+            // 设置容器大小
+            this.style = {
+                height: this.originEl.scrollHeight + 'px'
+            };
 
-        // 设置容器的高度
-        this.style = {
-            height: this.innerBCR.height + 'px'
-        };
-        
-        // 处理复制内容的位置
-        let left = 0;
-        let gap = 0;
-        // 如果内容的宽度大于容器
-        if (this.BCR.width > this.innerBCR.width) {
-            left = this.BCR.width;
-            this.inner.style.width = this.BCR.width + 'px';
-        } else {
-            left = this.innerBCR.width + this.gap;
-            gap = this.gap;
+            let left = this.BCR.width + 'px';
+            let width = left;
+            let animation = `v5-marquee ${this.speed}s linear 0s infinite`;
+            let originW = this.originEl.scrollWidth;
+
+            if (originW > this.BCR.width) {
+               left = originW + this.gap + 'px';
+               width = left;
+            }
+
+            this.mirrorStyle = { left, width, animation };
+            this.originStyle = { width, animation };
+        },
+        update () {
+            this.originStyle = {};
+            this.mirrorStyle = {};
+
+            this.$nextTick(() => {
+                this.init();
+            });
         }
-
-        // 添加动画样式
-        let className = `v5-marquee-inner${+ new Date}`;
-        let css = document.createElement('style');
-        css.type = 'text/css';
-
-        let style = `.${className} { padding-right: ${gap}px; animation: v5-marquee ${this.speed}s linear 0s infinite;}`;
-
-        // 添加样式
-        css.appendChild(document.createTextNode(style));
-
-        this.$el.appendChild(css);
-        this.inner.classList.add(className);
-
-        // 克隆对象
-        let node = this.inner.cloneNode(true);
-        node.style.left = left + 'px';
-        this.$el.appendChild(node);
     }
 };
 
@@ -1750,7 +1748,25 @@ var __vue_render__$a = function() {
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
   return _c("div", { staticClass: "v5-marquee-mod", style: _vm.style }, [
-    _c("span", { staticClass: "v5-marquee-inner" }, [_vm._t("default")], 2)
+    _c(
+      "span",
+      {
+        staticClass: "v5-marquee-inner v5-marquee-origin",
+        style: _vm.originStyle
+      },
+      [_vm._t("default")],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "span",
+      {
+        staticClass: "v5-marquee-inner v5-marquee-right",
+        style: _vm.mirrorStyle
+      },
+      [_vm._t("default")],
+      2
+    )
   ])
 };
 var __vue_staticRenderFns__$a = [];
@@ -1917,7 +1933,8 @@ var __vue_render__$b = function() {
               item.sort ? _c("i", { class: item.classes }) : _vm._e()
             ]
           )
-        })
+        }),
+        0
       ),
       _vm._v(" "),
       _vm._t("default")
