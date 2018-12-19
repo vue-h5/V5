@@ -10,6 +10,7 @@
   "main": "dist/v5.es6.js",
   "style": "dist/v5.css",
   "dependencies": {
+    "better-scroll": "^1.13.2",
     "vee-validate": "^2.1.3",
     "vue": "^2.5.21"
   },

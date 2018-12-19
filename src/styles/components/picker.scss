@@ -1,0 +1,46 @@
+.v5-picker-mod {
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+    background: #fff;
+
+    &::after,
+    &::before {
+        position: absolute;
+        left: 0;
+        right: 0;
+        z-index: 1;
+        content: '';
+        pointer-events: none;
+        background: rgba(255, 255, 255, .25);
+    }
+
+    &::after {
+        top: 50%;
+        bottom: 0;
+        margin-top: 22px;
+        border-top: 1px solid #eee;
+    }
+
+    &::before {
+        top: 0;
+        bottom: 50%;
+        transform: translateY(-22px);
+        border-bottom: 1px solid #eee;
+    }
+
+}
+.v5-picker-ul {
+    margin-top: 88px;
+
+    li {
+        line-height: 44px;
+        text-align: center;
+        font-size: 16px;
+        color: #333;
+
+        &[disabled] {
+            color: #bbb;
+        }
+    }
+}

@@ -109,6 +109,11 @@ export default {
 							title: 'From',
 							subTitel: '表单',
 							to: '/form/form'
+						},
+						{
+							title: 'Picker',
+							subTitel: '选择器',
+							to: '/form/picker'
 						}
 					]
 				},
