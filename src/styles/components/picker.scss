@@ -1,4 +1,13 @@
 .v5-picker-mod {
+    display: flex;
+
+    .v5-picker-item {
+        flex: 1;
+        transform: all .3 ease;
+    }
+}
+
+.v5-picker-item {
     height: 220px;
     overflow: hidden;
     position: relative;

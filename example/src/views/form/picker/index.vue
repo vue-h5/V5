@@ -7,6 +7,9 @@
         
         <h3>时间: {{year}}</h3>
         <v5-picker v-model="year" :data="date"/>
+        
+        <h3>城市: {{myCity}}</h3>
+        <v5-picker v-model="myCity" :data="myCitys"/>
     </section>  
 </template>
 
@@ -15,7 +18,7 @@ export default {
     name: 'v5-picker-demo',
     data () {
         return {
-            city: 'tianjing',
+            city: ['tianjing'],
             citys: [
                 {
                     label: '安徽',
@@ -45,8 +48,52 @@ export default {
                     disabled: true
                 },
             ],
-            year: new Date().getFullYear(),
-            date: []
+            year: [new Date().getFullYear()],
+            date: [],
+            myCity: ['zhejiang', 'ningbo'],
+            myCitys: [
+                {
+                    label: '浙江',
+                    value: 'zhejiang', 
+                    children: [{
+                        label: '杭州',
+                        value: 'hanzhou'
+                    }, {
+                        label: '宁波',
+                        value: 'ningbo',
+                    }, {
+                        label: '温州',
+                        value: 'wenzhou'
+                    }, {
+                        label: '嘉兴',
+                        value: 'jiaxin'
+                    }, {
+                        label: '湖州',
+                        value: 'huzhou',
+                        disabled: true
+                    }]
+                },
+                {
+                    label: '福建',
+                    value: 'fujiang',
+                    children: [{
+                        label: '福州',
+                        value: 'fuzhou'
+                    }, {
+                        label: '厦门',
+                        value: 'xiamen'
+                    }, {
+                        label: '莆田',
+                        value: 'putian'
+                    }, {
+                        label: '三明',
+                        value: 'shangming'
+                    }, {
+                        label: '泉州',
+                        value: 'quanzhou'
+                    }]
+                }
+            ]
         }
     },
     mounted () {

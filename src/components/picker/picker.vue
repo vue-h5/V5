@@ -1,102 +1,99 @@
 <template>
     <div class="v5-picker-mod">
-        <ul class="v5-picker-ul">
-            <li v-for="(item, index) in data" :key="index" :disabled="item.disabled">
-                {{item.label}}
-            </li>
-        </ul>
+        <PickerItem 
+            v-for="(item, index) in formatData" 
+            :key="index"
+            :index="index"
+            :value="value[index]"
+            :data="item"
+            @input="update"
+        ></PickerItem>
     </div>
 </template>
 
 <script>
-import BScroll from 'better-scroll'
+import PickerItem from './child.vue'
 
 export default {
     name: 'v5-picker',
+    components: { PickerItem },
     props: {
         value: {
-            type: [String, Number]
+            type: Array
         },
         data: {
-            type: Array,
+            type: Array
+        }
+    },
+    watch: {
+        data () {
+            this.formatDataEvt()
+            this.setChild()
         }
     },
     data () {
         return {
-            scroll: null,
-            selectedIndex: 0,
-            current: {}
+            formatData: [],
+            linkObj: {}
         }
     },
-    watch: {
-        data (val) {
-            this.init()
-        },
-        value (val) {
-            this.init()
-        }
-    },
-    mounted () {
-        this.$nextTick(() => {
-            this.init()
-            this.scrollEnd()
-        })
+    created () {
+        this.formatDataEvt()
+        this.setChild()
     },
     methods: {
+        formatDataEvt (data = this.data) {
+            this.$set(this.formatData, 0, data)
 
-        init () {
-            if (this.value) {
-                this.data.forEach((item, index) => {
-                    if (item.value === this.value) {
-                        this.selectedIndex = index
+            data.forEach(item => {
+                this.loopChild(item)
+            })
+        },
+
+        loopChild (item) {
+            if (item.children) {
+                this.linkObj[item.value] = item.children
+                item.children.forEach(val => {
+                    this.loopChild(val)
+                })
+            }
+        },
+
+        setChild () {
+            if (this.value.length) {
+                this.value.forEach((item, index) => {
+                    if (index) {
+                        let key = this.value[index -1]
+                        if (Reflect.has(this.linkObj, key))
+                            this.$set(
+                                this.formatData,
+                                index,
+                                this.linkObj[key]
+                            )
                     }
                 })
             }
-            
-            this.scroll = new BScroll(this.$el, {
-                scrollY: true,
-                click: true,
-                wheel: {
-                    // 当前选择的索引
-                    selectedIndex: this.selectedIndex,
-                    // 列表的弧度
-                    rotate: 0,
-                    // 切换选择项的调整时间
-                    adjustTime: 400
-                },
-                // 支持鼠标事件
-                mouseWheel: {
-                    speed: 20,
-                    invert: false,
-                    easeTime: 300
-                },
-                probeType: 3
-            })
-
         },
-        scrollEnd () {
-            this.scroll.on('scrollEnd', ({y}) => {
-                let index = this.scroll.getSelectedIndex()
-                this.current = this.data[index]
 
-                if (this.current.disabled) {
-                    while (Reflect.has(this.current, 'disabled')) {
-                        switch (this.scroll.directionY) {
-                            case 1:
-                                --index; break;
-                            case -1: ++index; break; 
-                        }
-                        this.current = this.data[index]
-                    }
-                    
-                    this.scroll.wheelTo(index)
+        resetChild (index) {
+            let l = this.formatData.length
+
+            for (; index < l; index++) {
+                let key = this.value[index]
+                let data = this.linkObj[key]
+
+                if (data) {
+                    this.$set(this.value, index+1, data[0].value)
+                    this.$set(this.formatData, index+1, data)
                 }
+            }
+        },
 
-                this.$emit('input', this.current.value)
-            })
-
+        update (data, index) {
+            this.$set(this.value, index, data)
+            this.resetChild(index)
+            this.$emit('input', this.value)
         }
-    },
-
+    }
 }
 </script>
