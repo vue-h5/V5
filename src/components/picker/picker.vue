@@ -64,11 +64,13 @@ export default {
                     // 切换选择项的调整时间
                     adjustTime: 400
                 },
+                // 支持鼠标事件
                 mouseWheel: {
                     speed: 20,
                     invert: false,
                     easeTime: 300
-                }
+                },
+                probeType: 3
             })
 
         },
