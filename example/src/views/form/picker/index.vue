@@ -2,23 +2,36 @@
     <section class="from-view">
         <h2>Picker 选择器</h2>
         
-        <h3>地区: {{city}}</h3>
+        <v5-field label="地区" v-model="city" readonly/>
         <v5-picker v-model="city" :data="citys"/>
+        <br/>
         
-        <h3>时间: {{year}}</h3>
-        <v5-picker v-model="year" :data="date"/>
-        
-        <h3>城市: {{myCity}}</h3>
+        <v5-field label="城市" v-model="myCity" readonly/>
         <v5-picker v-model="myCity" :data="myCitys"/>
+        <br/>
+
+        <v5-field label="非联动效果" v-model="hero" readonly/>
+        <v5-picker v-model="hero" disformat :data="heros"/>
+        <br/>
+
+        <v5-field label="年" v-model="year" readonly/>
+        <v5-picker v-model="year" :data="date"/>
+        <br/>
+        
+        <v5-field label="时间" v-model="time" readonly/>
+        <v5-picker v-model="time" :data="dateTime" disformat @update="update"/>
+        
     </section>  
 </template>
 
 <script>
+import chinaCitys from './citys.js'
+
 export default {
     name: 'v5-picker-demo',
     data () {
         return {
-            city: ['tianjing'],
+            city: ['anhui'],
             citys: [
                 {
                     label: '安徽',
@@ -50,59 +63,89 @@ export default {
             ],
             year: [new Date().getFullYear()],
             date: [],
-            myCity: ['zhejiang', 'ningbo'],
-            myCitys: [
-                {
-                    label: '浙江',
-                    value: 'zhejiang', 
-                    children: [{
-                        label: '杭州',
-                        value: 'hanzhou'
-                    }, {
-                        label: '宁波',
-                        value: 'ningbo',
-                    }, {
-                        label: '温州',
-                        value: 'wenzhou'
-                    }, {
-                        label: '嘉兴',
-                        value: 'jiaxin'
-                    }, {
-                        label: '湖州',
-                        value: 'huzhou',
-                        disabled: true
-                    }]
-                },
-                {
-                    label: '福建',
-                    value: 'fujiang',
-                    children: [{
-                        label: '福州',
-                        value: 'fuzhou'
-                    }, {
-                        label: '厦门',
-                        value: 'xiamen'
-                    }, {
-                        label: '莆田',
-                        value: 'putian'
-                    }, {
-                        label: '三明',
-                        value: 'shangming'
-                    }, {
-                        label: '泉州',
-                        value: 'quanzhou'
-                    }]
-                }
-            ]
+            myCity: ['北京', '北京', '朝阳区'],
+            myCitys: chinaCitys,
+            dateTime: [[], [], []],
+            time: [2018, 12, 25],
+            heros: [
+                [{
+                    label: '孙悟空',
+                    value: '孙悟空'
+                }, {
+                    label: '唐僧',
+                    value: '唐僧'
+                }, {
+                    label: '猪八戒',
+                    value: '猪八戒'
+                }, {
+                    label: '沙僧',
+                    value: '沙僧'
+                }],
+                [{
+                    label: '金箍棒',
+                    value: '金箍棒'
+                }, {
+                    label: '九齿钉耙',
+                    value: '九齿钉耙'
+                }, {
+                    label: '紫金袈裟',
+                    value: '紫金袈裟'
+                }, {
+                    label: '月牙铲',
+                    value: '月牙铲'
+                }]
+            ],
+            hero: ['孙悟空', '金箍棒']
         }
     },
     mounted () {
-        for (let i = 1949; i < 2200; i++) {
-            this.date.push({
-                label: i,
-                value: i  
-            })
+        setTimeout(() => {
+            for (let i = 1949; i < 2200; i++) {
+                this.date.push({
+                    label: i,
+                    value: i  
+                })
+
+                this.dateTime[0].push({
+                    label: i,
+                    value: i
+                })
+            }
+
+            // 
+            for (let i = 1; i < 13; i++) {
+                this.dateTime[1].push({
+                    label: i,
+                    value: i
+                })
+            }
+
+            this.getDate()
+
+        }, 3000)
+    },
+    methods: {
+        update (item, index) {
+            // 如果更新索引是 1 即为月时更新天数
+            if (index === 1) {
+                this.time[2] = 1
+                this.getDate()
+            }
+        },
+
+        getDate () {
+            let days = new Date(this.time[0], this.time[1], 0).getDate()
+
+            this.dateTime[2] = []
+            
+            for (let i = 1; i <= days; i++) {
+                this.dateTime[2].push({
+                    label: i,
+                    value: i
+                })
+            }
         }
     }
+
 }
 </script>
