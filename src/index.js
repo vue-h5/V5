@@ -11,6 +11,8 @@ import V5Layer from './components/layer/index.js'
 import V5Marquee from './components/marquee/index.js'
 import V5Picker from './components/picker/index.js'
 import V5SortBox from './components/sortBox/index.js'
+import V5Swiper from './components/swiper/index.js'
+import V5SwiperItem from './components/swiperItem/index.js'
 
 import v5LoadingBar from './components/loadingBar/index.js'
 
@@ -27,7 +29,9 @@ const components = [
     V5Layer,
     V5Marquee,
     V5Picker,
-    V5SortBox
+    V5SortBox,
+    V5Swiper,
+    V5SwiperItem
 ]
 
 const install = Vue => {
@@ -58,7 +62,9 @@ export {
     V5Layer,
     V5Marquee,
     V5Picker,
-    V5SortBox
+    V5SortBox,
+    V5Swiper,
+    V5SwiperItem
 }
 
 export default {

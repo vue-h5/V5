@@ -1,0 +1,31 @@
+.v5-swiper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+.v5-swiper-item {
+    display: inline-block;
+}
+
+.v5-swiper-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+
+    li {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        margin: 0 3px;
+        font-size: 0;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, .3);
+        transition: background .3s ease-in-out;
+
+        &.current {
+            background: rgba(255, 255, 255, .7);
+        }
+    }
+}

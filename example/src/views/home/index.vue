@@ -66,6 +66,11 @@ export default {
 							subTitel: '弹幕',
 							to: '/base/marquee'
 						},
+						{
+							title: 'Swiper',
+							subTitel: '轮播图',
+							to: '/base/swiper'
+						},
 					]
 				},
 				{
