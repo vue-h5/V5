@@ -9,9 +9,12 @@
         >
             <slot/>
         </div>
-        <ul class="v5-swiper-indicators">
-            <li v-for="item in childSize" :key="item" :class="{current: item-1 == currentIndex}">{{item}}</li>
-        </ul>
+
+        <slot name="indicator">
+            <ul :class="['v5-swiper-indicators', {vertical}]">
+                <li v-for="item in childSize" :key="item" :class="{current: item-1 == currentIndex}">{{item}}</li>
+            </ul>
+        </slot>
     </div>
 </template>
 
@@ -36,10 +39,13 @@ export default {
     },
     data () {
         return {
+            // 滚动类型[swiper picker]
             scrollType: 'swiper',
+            // 滚动盒子
             scrollBox: '.v5-swiper-display',
+            // 当前索引
             current: 0,
-            pause: false,
+            // 自动定时器
             timeEvent: null,
         }
     },

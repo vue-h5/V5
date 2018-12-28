@@ -33,8 +33,7 @@ export default {
             // 点击时的时间辍
             sTime: 0,
             // 是否在移动
-            isMove: false,
-            swiperPause: false
+            isMove: false
         }
     },
     watch: {

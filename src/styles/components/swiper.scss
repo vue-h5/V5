@@ -28,4 +28,17 @@
             background: rgba(255, 255, 255, .7);
         }
     }
+
+    &.vertical {
+        left: 6px;
+        top: 50%;
+        bottom: auto;
+        right: auto;
+        transform: translateY(-50%);
+
+        li {
+            display: block;
+            margin: 3px 0;
+        }
+    }
 }

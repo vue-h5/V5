@@ -28,12 +28,22 @@
             <v5-swiper-item class="demo-swiper">1</v5-swiper-item>
         </v5-swiper>
         
-        <h3></h3>
         <v5-cell title="change 事件" sub-title="当前索引" :inner="currentIndex"/>
         <v5-swiper @change="myChange">
             <v5-swiper-item class="demo-swiper">1</v5-swiper-item>
             <v5-swiper-item class="demo-swiper">2</v5-swiper-item>
             <v5-swiper-item class="demo-swiper">3</v5-swiper-item>
+        </v5-swiper>
+        
+        <h3>自定义指示器</h3>
+        <v5-swiper @change="myChange">
+            <v5-swiper-item class="demo-swiper">1</v5-swiper-item>
+            <v5-swiper-item class="demo-swiper">2</v5-swiper-item>
+            <v5-swiper-item class="demo-swiper">3</v5-swiper-item>
+
+            <div class="my-indicator" slot="indicator">
+                {{currentIndex+1}}/3
+            </div>
         </v5-swiper>
         
     </section>
@@ -81,5 +91,12 @@ export default {
     .demo-swiper {
         width: 90vw;
     }
+}
+
+.my-indicator {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    color: #fff;
 }
 </style>
