@@ -29,7 +29,7 @@ export default {
         // 内部路由跳转
         to: String,
         // 内容
-        inner: String,
+        inner: [String, Number, Boolean],
         // 图标
         icon: String,
         // 不过使用
