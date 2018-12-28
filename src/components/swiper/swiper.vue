@@ -4,7 +4,7 @@
             class="v5-swiper-display" 
             :style="styles"
             @touchstart="iTouchstart"
-            @touchmove="touchmove"
+            @touchmove="iTouchmove"
             @touchend="iTouchend"
         >
             <slot/>
@@ -43,6 +43,11 @@ export default {
             timeEvent: null,
         }
     },
+    watch: {
+        currentIndex (val) {
+            this.$emit('change', val)
+        }
+    },
     computed: {
         swiperVertical () {
             return this.vertical
@@ -61,7 +66,15 @@ export default {
 
         iTouchstart (evt) {
             clearTimeout(this.timeEvent)
-            this.touchstart(evt)
+
+            if (this.childSize > 1)
+                this.touchstart(evt)
+        },
+
+        iTouchmove (evt) {
+            if (this.childSize > 1) {
+                this.touchmove(evt)
+            }
         },
 
         iTouchend (evt) {
