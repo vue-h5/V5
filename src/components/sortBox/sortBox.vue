@@ -39,6 +39,7 @@ export default {
     methods: {
         init () {
             let index = null
+            console.log(this.sort)
             // 获取默认排序最后一项
             this.sort.forEach((val, i) => {
                 if (val.classes) index = i

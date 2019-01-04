@@ -13,6 +13,7 @@
         </v5-sort-box>
 
         <v5-button size="small" @click="getNew">生成新数据</v5-button>
+        <v5-button size="small" @click="reset">生成新数据且重置为默认状态</v5-button>
     </section>
 </template>
 
@@ -100,6 +101,12 @@ export default {
 
                 return item
             })
+        },
+
+        reset () {
+            this.sort[2].classes = ''
+            this.sort[1].classes = 'up'
+            this.getNew()
         }
     }
 }
