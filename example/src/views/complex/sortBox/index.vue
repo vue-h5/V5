@@ -11,6 +11,8 @@
                 </li>
             </ul>
         </v5-sort-box>
+
+        <v5-button size="small" @click="getNew">生成新数据</v5-button>
     </section>
 </template>
 
@@ -88,6 +90,15 @@ export default {
                     result = b[key] - a[key]
                 }
                 return result
+            })
+        },
+
+        getNew () {
+            this.data = this.data.map(item => {
+                item.age = (Math.random() * 10).toFixed(0)
+                item.grade = (Math.random() * 100).toFixed(0)
+
+                return item
             })
         }
     }
