@@ -46,6 +46,19 @@
             </div>
         </v5-swiper>
         
+        <h3>缩略图效果</h3>
+        <v5-swiper @change="myChange">
+            <v5-swiper-item class="demo-swiper">1</v5-swiper-item>
+            <v5-swiper-item class="demo-swiper">2</v5-swiper-item>
+            <v5-swiper-item class="demo-swiper">3</v5-swiper-item>
+
+            <div class="my-thumbnail" slot="indicator">
+                <span :class="{current: currentIndex === 0}">1</span>
+                <span :class="{current: currentIndex === 1}">2</span>
+                <span :class="{current: currentIndex === 2}">3</span>
+            </div>
+        </v5-swiper>
+        
     </section>
 </template>
 
@@ -98,5 +111,24 @@ export default {
     bottom: 10px;
     left: 10px;
     color: #fff;
+}
+
+.my-thumbnail {
+    width: 100vw;
+    font-size: 0;
+
+    span {
+        display: inline-block;
+        width: 33.33%;
+        font-size: 14px;
+        text-align: center;
+        box-sizing: border-box;
+        background: #fff;
+
+        &.current {
+            color: #fff;
+            background: yellowgreen;
+        }
+    }
 }
 </style>
