@@ -63,13 +63,6 @@ export default {
     },
     mounted () {
         this.scrollInit()
-    },
-    methods: {
-        init () {
-            this.$nextTick(() => {
-
-            })
-        }
-    },
+    }
 }
 </script>
