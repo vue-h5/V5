@@ -1,6 +1,10 @@
 {
-  "name": "@ektx/v5",
-  "version": "0.0.1-beta.6",
+  "name": "@tq/v5",
+  "version": "0.0.1-beta.7",
+  "author": {
+    "name": "zwl",
+    "email": "zhuwenlong@hztianque.com"
+  },
   "scripts": {
     "es5": "webpack --config build/webpack.config.js",
     "es6": "rollup --config build/rollup.config.js",

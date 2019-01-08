@@ -2287,14 +2287,7 @@ var script$b = {
     },
     mounted () {
         this.scrollInit();
-    },
-    methods: {
-        init () {
-            this.$nextTick(() => {
-
-            });
-        }
-    },
+    }
 };
 
 /* script */
@@ -2626,16 +2619,26 @@ var script$d = {
             current: {}
         }
     },
-    mounted () {
-        let index = null;
-        // 获取默认排序最后一项
-        this.sort.forEach((val, i) => {
-            if (val.classes) index = i;
-        });
-        // 设置排序效果
-        this.sortData(this.sort[index]);
+    watch: {
+        value: {
+            handler (val, old) {
+                if (val === old) return
+                this.init();
+            },
+            immediate: true
+        }
     },
     methods: {
+        init () {
+            let index = null;
+            // 获取默认排序最后一项
+            this.sort.forEach((val, i) => {
+                if (val.classes) index = i;
+            });
+            // 设置排序效果
+            this.sortData(this.sort[index]);
+        },
+
         sortList (item, index) {
             if (item !== this.current)
                 this.current.classes = '';
