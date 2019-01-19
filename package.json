@@ -1,6 +1,6 @@
 {
   "name": "@tq/v5",
-  "version": "0.0.1-beta.7",
+  "version": "0.0.1-beta.9",
   "author": {
     "name": "zwl",
     "email": "zhuwenlong@hztianque.com"
@@ -9,7 +9,7 @@
     "es5": "webpack --config build/webpack.config.js",
     "es6": "rollup --config build/rollup.config.js",
     "style": "gulp --gulpfile build/style.js",
-    "build": "rollup --config build/rollup.config.js && gulp --gulpfile build/style.js"
+    "build": "npm run es5 && npm run es6 && npm run style"
   },
   "main": "dist/v5.es6.js",
   "style": "dist/v5.css",
