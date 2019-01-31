@@ -23,11 +23,11 @@ function auto (data) {
     })
 }
 
-// 数组转驼峰写法
-// ['','abc','edF'] => AbcDef
+// 数组转驼峰写法 -abs-sjka
+// ['', 'abc', 'c89', '6edF'] => AbcC896edf
 function arr2camel (arr) {
-    return arr.join().replace(/(\w)(.*)/i, function ($0, $1, $2) {
-        return $1.toUpperCase()+$2.toLowerCase()
+    return arr.join('-').toLowerCase().replace(/(-\w)/g, (match, $1) => {
+        return $1.slice(1).toUpperCase()
     })
 }
 
@@ -60,13 +60,14 @@ async function registered (r) {
             let parent = pathArr[arrLength -2]
             let parentPath = pathArr.slice(0, -1)
             parentPath = `.${parentPath.join('/')}/index.vue`
-
+            console.log(arr2camel(pathArr))
             // 路由内容
             let route = {
                 name: arr2camel(pathArr),
                 path: pathArr[arrLength -1],
                 component: () => requireRouter(r)
             }
+            console.log('route', route)
 
             // 判断辅助函数中有没有父级内容
             if (helpObj.hasOwnProperty(parentPath)) {
