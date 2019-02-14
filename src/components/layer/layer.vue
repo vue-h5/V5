@@ -1,12 +1,14 @@
 <template>
     <div 
-        :class="['v5-layer-mod', position, {show: show}]" 
+        :class="['v5-layer-mod', position, {show}]" 
         @click.passive.self="clickEvt()"
-        :style="{zIndex}"
+        :style="styles"
     >
-        <div class="v5-layer-inner">
-            <slot/>
-        </div>
+        <slot name="inner">
+            <div class="v5-layer-inner">
+                <slot/>
+            </div>
+        </slot>
     </div>
 </template>
 
@@ -24,15 +26,18 @@ export default {
             type: String,
             default: ''
         },
-        // 定义动画效果
-        animate: {
-            type: String,
-            default: 'fade'
+        // 定义动画时长效果
+        duration: {
+            type: Number,
+            default: 300
         }
     },
     data () {
         return {
-            zIndex: 1000
+            styles: {
+                transitionDuration: 300,
+                zIndex: 1000
+            }
         }
     },
     methods: {
@@ -42,7 +47,14 @@ export default {
     },
     watch: {
         show (val) {
-            this.zIndex = new Date().getTime()
+            this.styles.zIndex =  Number(String(new Date().getTime()).slice(-7))
+        },
+        duration: {
+            handler (val) {
+                if (this.position)
+                    this.styles.transitionDuration = `${val}ms`
+            },
+            immediate: true
         }
     }
 }

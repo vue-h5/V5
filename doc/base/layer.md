@@ -34,7 +34,7 @@ data () {
 | --- | --- | --- | --- |
 | show | `Boolean` | 控制显示或隐藏弹层 | `false` |
 | position | `top left right bottom`或空 | 控制弹层的显示方向 | 空 |
-| animate | `String` | 定义你要的动画效果 | `fade` |
+| duration | `Number` | 定义动画时长效果，单位毫秒(ms) | 300 |
 
 
 ## 事件

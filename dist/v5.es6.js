@@ -1562,6 +1562,8 @@ __vue_render__$8._withStripped = true;
 //
 //
 //
+//
+//
 
 var script$9 = {
     name: 'v5-layer',
@@ -1576,15 +1578,18 @@ var script$9 = {
             type: String,
             default: ''
         },
-        // 定义动画效果
-        animate: {
-            type: String,
-            default: 'fade'
+        // 定义动画时长效果
+        duration: {
+            type: Number,
+            default: 300
         }
     },
     data () {
         return {
-            zIndex: 1000
+            styles: {
+                transitionDuration: 300,
+                zIndex: 1000
+            }
         }
     },
     methods: {
@@ -1594,7 +1599,14 @@ var script$9 = {
     },
     watch: {
         show (val) {
-            this.zIndex = new Date().getTime();
+            this.styles.zIndex =  Number(String(new Date().getTime()).slice(-7));
+        },
+        duration: {
+            handler (val) {
+                if (this.position)
+                    this.styles.transitionDuration = `${val}ms`;
+            },
+            immediate: true
         }
     }
 };
@@ -1611,7 +1623,7 @@ var __vue_render__$9 = function() {
     "div",
     {
       class: ["v5-layer-mod", _vm.position, { show: _vm.show }],
-      style: { zIndex: _vm.zIndex },
+      style: _vm.styles,
       on: {
         "&click": function($event) {
           if ($event.target !== $event.currentTarget) {
@@ -1621,7 +1633,12 @@ var __vue_render__$9 = function() {
         }
       }
     },
-    [_c("div", { staticClass: "v5-layer-inner" }, [_vm._t("default")], 2)]
+    [
+      _vm._t("inner", [
+        _c("div", { staticClass: "v5-layer-inner" }, [_vm._t("default")], 2)
+      ])
+    ],
+    2
   )
 };
 var __vue_staticRenderFns__$9 = [];
