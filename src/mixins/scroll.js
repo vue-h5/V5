@@ -174,7 +174,7 @@ export default {
                 x: evt.touches[0].pageX
             }
             
-            this.sTime = + new Date()
+            this.sTime = Date.now()
             // 设置过滤为0s
             this.styles.transitionDuration = '0s'
             
@@ -219,7 +219,7 @@ export default {
             }
 
             let moveY = evt.changedTouches[0].pageY - this.start.y
-            let time = + new Date() - this.sTime
+            let time = Date.now() - this.sTime
 
             // 加数度
             let speed = moveY / time

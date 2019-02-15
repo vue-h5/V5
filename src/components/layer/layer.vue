@@ -47,7 +47,7 @@ export default {
     },
     watch: {
         show (val) {
-            this.styles.zIndex =  Number(String(new Date().getTime()).slice(-7))
+            this.styles.zIndex =  Number(String(Date.now()).slice(-7))
         },
         duration: {
             handler (val) {
