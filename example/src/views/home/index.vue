@@ -71,6 +71,11 @@ export default {
 							subTitel: '轮播图',
 							to: '/base/swiper'
 						},
+						{
+							title: 'Search',
+							subTitel: '搜索',
+							to: '/base/search'
+						},
 					]
 				},
 				{
@@ -114,6 +119,11 @@ export default {
 							title: 'From',
 							subTitel: '表单',
 							to: '/form/form'
+						},
+						{
+							title: 'FormVertical',
+							subTitel: '纵行表单',
+							to: '/form/formvertical'
 						},
 						{
 							title: 'Picker',

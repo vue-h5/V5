@@ -1,0 +1,55 @@
+.v5-search{
+    background: #fff;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+
+    .search-content{
+        // width: 90%;
+        flex: 1;
+        height: 36px;
+        border-radius: 3px;
+        line-height: 36px;
+        text-align: left;
+        position: relative;
+        background:rgba(25,31,37,0.12);
+
+        // 搜索图标
+        .icon-search {
+            height: 100%;
+            line-height: 3rem;
+            position: absolute;
+            font-size: 16px;
+            color: #A3A5A8;
+            padding: 0 8px 0 12px;
+        }
+        // 删除图标
+        .icon-dele{
+            height: 100%;
+            position: absolute;
+            right: 8px;
+            bottom: -2px;
+            color: #A3A5A8;
+        }
+        input {
+            // width: 80%;
+            height: 38px;
+            line-height: 38px;
+            text-align: left;
+            padding: 0 36px;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            background: transparent;
+        }
+    }
+    .cancel-text{
+        width: 52px;
+        display: inline-block;
+        height: 36px;
+        line-height: 36px;
+        padding: 0 5px;
+        font-size: 16px;
+        text-align: center;
+    }
+}
