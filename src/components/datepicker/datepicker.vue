@@ -2,6 +2,8 @@
     <div class="v5-datepicker-mod">
         {{date}}
         <v5-picker v-model="date" :data="dateList" disformat @update="update"/>
+        {{startDateObj}}<br/>
+        {{endDateObj}}
     </div>
 </template>
 
@@ -10,7 +12,7 @@ export default {
     name: 'v5-datepicker',
     props: {
         value: {
-            type: Date,
+            type: [Date, String],
             default: () => new Date()
         },
         type: {
@@ -64,22 +66,35 @@ export default {
 
         dateObj: {
             get () {
-                console.log('C_GET dateObj')
-                let _obj = this.getDateObj(this.value)
+                console.log('C_GET dateObj', typeof this.value)
+                let _obj
+
+                if (typeof this.value === 'string') {
+                    let _t = this.getTimeObj(this.value)
+                    _obj = new Date(1970, 0, 1, _t.hour, _t.minutes)
+                    _obj = this.getDateObj(_obj)
+                } else {
+                    _obj = this.getDateObj(this.value)
+                }
 
                 return _obj
-
             },
             set (val) {
                 console.log('C_SET dateObj')
-                this.$emit('input', new Date(
-                    val.year,
-                    val.month -1,
-                    val.date,
-                    val.hour,
-                    val.minutes,
-                    val.seconds,
-                ))
+                if (typeof this.value === 'string') {
+                    this.$emit('input', this.date.map(val => { 
+                        return val <= 9 ? `0${val}`: val
+                    }).join(':'))
+                } else {
+                    this.$emit('input', new Date(
+                        val.year,
+                        val.month -1,
+                        val.date,
+                        val.hour,
+                        val.minutes,
+                        val.seconds,
+                    ))
+                }
             }
         },
 
@@ -94,11 +109,24 @@ export default {
             }, this.format)
         },
 
-        dateList () {
-            if (!this.nowDateObj) {
-                this.nowDateObj = this.getDateObj()
-            }
+        preveDate () {
+            // if (this.startTime) {
+            //     let _t = this.getTimeObj(this.startTime)
+            //     return new Date(1970, 0, 1, _t.hour, _t.minutes)
+            // } else {
+            //     return this.startDate
+            // }
+            return this.setTimeBoundary('startTime')
+        },
 
+        nextDate () {
+            // if (this.endTime) {
+            //     let _t = this.
+            // }
+            return this.setTimeBoundary('endTime')
+        },
+
+        dateList () {
             switch (this.type) {
                 case 'datetime':
                     this.timeTable = ['Y', 'M', 'D', 'HH', 'MM']
@@ -111,24 +139,30 @@ export default {
                 case 'date':
                     this.timeTable = ['Y', 'M', 'D']
                     break
-
             }
 
-            this.startDateObj = this.getTimeBoundary('startDate')
-            this.endDateObj = this.getTimeBoundary('endDate')
+            this.startDateObj = this.getTimeBoundary('preveDate')
+            this.endDateObj = this.getTimeBoundary('nextDate', true)
 
             console.log('startDateObj:', this.startDateObj)
             console.log('endDateObj:', this.endDateObj)
 
             return this.getDateLists()
-        }
+        },
+
+
     },
     methods: {
-        getTimeBoundary (type) {
+        /**
+         * 处理时间边界
+         * @param {string} type 指定处理开始前还是结束时间边界
+         */
+        getTimeBoundary (type, isEnd = false) {
             let obj = {}
-            let isEnd = type === 'endDate'
+            // let isEnd = type === 'nextDate'
 
             obj = {
+                year: 1970,
                 month: isEnd ? 12 : 1,
                 date: isEnd ? 30 : 1,
                 hour: isEnd ? 23 : 0,
@@ -137,26 +171,69 @@ export default {
             }
 
             if (this[type]) {
+                // 获取指定时间的对象
                 let _dateObj = this.getDateObj(this[type])
                 obj.year = _dateObj.year
 
+                
+
+                // 处理时间边界
                 if (this.dateObj.year === _dateObj.year) {
                     obj.month = _dateObj.month
 
-                    if (this.dateObj.month === _dateObj.month) {
-                        obj.date = _dateObj.date
+                    if (isEnd) {
+                        if (this.dateObj.month >= _dateObj.month) {
+                            obj.date = _dateObj.date
+                            this.dateObj.month = _dateObj.month
+    
+                            if (this.dateObj.date >= _dateObj.date) {
+                                obj.hour = _dateObj.hour
+                                this.dateObj.date = _dateObj.date
+    
+                                if (this.dateObj.hour >= _dateObj.hour) {
+                                    obj.minutes = _dateObj.minutes
+                                    this.dateObj.hour = _dateObj.hour
 
-                        if (this.dateObj.date === _dateObj.date) {
-                            obj.hour = _dateObj.hour
+                                    if (this.dateObj.minutes >= _dateObj.minutes) {
+                                        obj.seconds = _dateObj.seconds
+                                        this.dateObj.minutes = _dateObj.minutes
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        if (this.dateObj.month <= _dateObj.month) {
+                            obj.date = _dateObj.date
+                            this.dateObj.month = _dateObj.month
+    
+                            if (this.dateObj.date <= _dateObj.date) {
+                                obj.hour = _dateObj.hour
+                                this.dateObj.date = _dateObj.date
+    
+                                if (this.dateObj.hour <= _dateObj.hour) {
+                                    obj.minutes = _dateObj.minutes
+                                    this.dateObj.hour = _dateObj.hour
 
-                            if (this.dateObj.hour === _dateObj.hour) {
-                                obj.minutes = _dateObj.minutes
+                                    if (this.dateObj.minutes <= _dateObj.minutes) {
+                                        obj.seconds = _dateObj.seconds
+                                        this.dateObj.minutes = _dateObj.minutes
+                                    }
+                                }
                             }
                         }
                     }
                 }
             } else {
-                obj.year = this.getDateObj().year + (isEnd ? 10 : -10)
+                // 当前时间前后默认10年选择
+
+                // if (this.startTime || this.endTime) {
+                //     obj = Object.assign({}, obj, this.getTimeObj(this.startTime))
+                // } else if (this.endTime) {
+                //     obj = Object.assign({}, obj, this.getTimeObj(this.endTime))
+                // } else {
+                    obj.year = this.getDateObj().year + (isEnd ? 10 : -10)
+
+                // }
             }
 
             return obj
@@ -176,10 +253,14 @@ export default {
             }
         },
 
-        getTimeObj (val, num = 0) {
+        /**
+         * 获取时间
+         * @param {string} 时间，格式：12:30
+         */
+        getTimeObj (val) {
             let obj = {
-                hour: num,
-                minutes: num
+                hour: 0,
+                minutes: 0
             }
 
             if (val) {
@@ -237,6 +318,19 @@ export default {
             console.count()
             this.dateObj[this.escapeTabel[this.timeTable[index]]] = item.value
             this.dateObj = Object.assign({}, this.dateObj)
+        },
+
+        /**
+         * 设置时间的前后边界
+         * @param {string} type 取值对象
+         */
+        setTimeBoundary (type) {
+            if (this[type]) {
+                let _t = this.getTimeObj(this[type])
+                return new Date(1970, 0, 1, _t.hour, _t.minutes)
+            } else {
+                return this[`${type.slice(0, -4)}Date`]
+            }
         }
     }
 }

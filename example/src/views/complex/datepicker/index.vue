@@ -6,13 +6,14 @@
 
         <h3>type="date"</h3>
         <v5-cell sub-title="type='date'" title="date" :inner="currentDate"/>
-        <p>startDate: 2018-1-14 8:30</p>
-        <p>startDate: 2020-1-14 17:30</p>
+        <p>startDate: 2018-2-14 8:30</p>
+        <p>endDate: 2020-2-14 17:30</p>
         <v5-datepicker :startDate="startDate" :endDate="endDate" v-model="currentDate"/>
 
         <h3>type="time"</h3>
-        <v5-cell sub-title="type='time'" title="time" :inner="currentDate"/>
-        <v5-datepicker type="time" :startTime="startTime" :endTime="endTime" v-model="currentDate"/>
+        <p></p>
+        <v5-cell sub-title="type='time'" title="time" :inner="currentTime"/>
+        <v5-datepicker type="time" :startTime="startTime" :endTime="endTime" v-model="currentTime"/>
     </section>
 </template>
 
@@ -22,6 +23,7 @@ export default {
     data () {
         return {
             currentDate: new Date(),
+            currentTime: '12:20',
             format: {
                 year: '年',
                 month: '月',
@@ -29,8 +31,8 @@ export default {
                 hour: '时',
                 minutes: '分'
             },
-            startDate: new Date(2018, 1, 14, 8, 30),
-            endDate: new Date(2020, 1, 14, 17, 30),
+            startDate: new Date(2018, 1, 14, 12, 30),
+            endDate: new Date(2020, 1, 14, 12, 30),
             startTime: '8:30',
             endTime: '17:30'
         }
