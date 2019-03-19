@@ -100,10 +100,6 @@ export default {
                 {
                     label: 'android',
                     text: '&#xe601'
-                },
-                {
-                    label: 'delete',
-                    text: '&#xe617'
                 }
             ]
         }

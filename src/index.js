@@ -1,13 +1,10 @@
 import v5Button from './components/button/index.js'
-import v5Search from './components/search/index.js'
 import v5Cascader from './components/cascader/index.js'
 import v5Cell from './components/cell/index.js'
 import v5CellGroup from './components/cellGroup/index.js'
 import v5Collapse from './components/collapse/index.js'
 import V5Field from './components/field/index.js'
-import V5Fieldvertical from './components/fieldvertical/index.js'
 import V5Form from './components/form/index.js'
-import V5Formvertical from './components/formvertical/index.js'
 import v5Hello from './components/hello/index.js'
 import V5Icon from './components/icon/index.js'
 import V5Layer from './components/layer/index.js'
@@ -21,15 +18,12 @@ import v5LoadingBar from './components/loadingBar/index.js'
 
 const components = [
     v5Button,
-    v5Search,
     v5Cascader,
     v5Cell,
     v5CellGroup,
     v5Collapse,
     V5Field,
-    V5Fieldvertical,
     V5Form,
-    V5Formvertical,
     v5Hello,
     V5Icon,
     V5Layer,
@@ -57,15 +51,12 @@ if (typeof window !== 'undefined' && window.Vue) {
 export {
     install,
     v5Button,
-    v5Search,
     v5Cascader,
     v5Cell,
     v5CellGroup,
     v5Collapse,
     V5Field,
-    V5Fieldvertical,
     V5Form,
-    V5Formvertical,
     v5Hello,
     V5Icon,
     V5Layer,
