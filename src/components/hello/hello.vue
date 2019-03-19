@@ -1,5 +1,7 @@
 <template>
-    <h1>{{mes}}</h1>
+    <div class="v5-hello-mod">
+        <h1>{{mes}}</h1>
+    </div>
 </template>
 
 <script>

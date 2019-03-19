@@ -30,7 +30,6 @@ export default {
         to: String,
         // 内容
         inner: {
-            type: [String, Number, Boolean],
             default: ''
         },
         // 图标
@@ -39,10 +38,6 @@ export default {
         disabled: {
             type: Boolean,
             default: false
-        }
-    },
-    data () {
-        return {
         }
     },
     computed: {

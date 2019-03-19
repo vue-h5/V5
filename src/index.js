@@ -2,7 +2,8 @@ import v5Button from './components/button/index.js'
 import v5Cascader from './components/cascader/index.js'
 import v5Cell from './components/cell/index.js'
 import v5CellGroup from './components/cellGroup/index.js'
-import v5Collapse from './components/collapse/index.js'
+import V5Collapse from './components/collapse/index.js'
+import V5Datepicker from './components/datepicker/index.js'
 import V5Field from './components/field/index.js'
 import V5Form from './components/form/index.js'
 import v5Hello from './components/hello/index.js'
@@ -21,7 +22,8 @@ const components = [
     v5Cascader,
     v5Cell,
     v5CellGroup,
-    v5Collapse,
+    V5Collapse,
+    V5Datepicker,
     V5Field,
     V5Form,
     v5Hello,
@@ -54,7 +56,8 @@ export {
     v5Cascader,
     v5Cell,
     v5CellGroup,
-    v5Collapse,
+    V5Collapse,
+    V5Datepicker,
     V5Field,
     V5Form,
     v5Hello,
