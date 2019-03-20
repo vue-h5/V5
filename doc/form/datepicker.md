@@ -10,7 +10,7 @@ HTML
 ```html
 <v5-datepicker v-model="currentDate" :format="format"/>
 
-<v5-datepicker v-model="currentTime"/>
+<v5-datepicker v-model="currentTime" type="time"/>
 ```
 
 Js
