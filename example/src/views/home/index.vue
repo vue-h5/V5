@@ -98,11 +98,6 @@ export default {
 							subTitel: '排序盒子',
 							to: '/complex/sortBox'
 						},
-						{
-							title: 'Datepicker',
-							subTitel: '时间选择器',
-							to: '/complex/datepicker'
-						},
 					]
 				},
 				{
@@ -119,7 +114,12 @@ export default {
 							title: 'Picker',
 							subTitel: '选择器',
 							to: '/form/picker'
-						}
+						},
+						{
+							title: 'Datepicker',
+							subTitel: '时间选择器',
+							to: '/complex/datepicker'
+						},
 					]
 				},
 			]
