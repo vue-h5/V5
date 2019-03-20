@@ -3,8 +3,8 @@
         <h2>Datepicker - 时间选择器</h2>
 
         <div class="box">
-            <v5-cell sub-title="type='datetime'" title="datetime" :inner="currentDate"/>
-            <v5-datepicker v-model="realTime" :format="format"/>
+            <v5-cell sub-title="type='Y/M/D/HH/MM/SS'" title="自定义时间显示" :inner="realTime"/>
+            <v5-datepicker v-model="realTime" type="Y/M/D/HH/MM/SS"/>
         </div>
 
         <div class="box">

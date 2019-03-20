@@ -122,6 +122,8 @@ export default {
                 case 'date':
                     this.timeTable = ['Y', 'M', 'D']
                     break
+                default:
+                    this.timeTable = this.type.split('/')
             }
 
             this.startDateObj = this.getTimeBoundary('preveDate')
@@ -270,7 +272,7 @@ export default {
             for (let i = start; i <= end; i++) {
                 let label = i + this.iFormat[type]
 
-                if (['hour','minutes'].includes(type)) {
+                if (['hour','minutes', 'seconds'].includes(type)) {
                     if (i <= 9) {
                         label = `0${label}`
                     }
