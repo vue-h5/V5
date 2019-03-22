@@ -4,12 +4,12 @@
 
         <div class="box">
             <v5-cell sub-title="type='Y/M/D/HH/MM/SS'" title="自定义时间显示" :inner="realTime"/>
-            <v5-datepicker v-model="realTime" type="Y/M/D/HH/MM/SS"/>
+            <v5-datepicker v-model="realTime" type="Y/M/D/HH/MM/SS" :format="format"/>
         </div>
 
         <div class="box">
             <v5-cell sub-title="type='datetime'" title="datetime" :inner="currentDate"/>
-            <v5-datepicker v-model="currentDate" :format="format"/>
+            <v5-datepicker type="date" v-model="currentDate" :format="format"/>
         </div>
 
         <div class="box">
@@ -45,7 +45,8 @@ export default {
                 month: '月',
                 date: '日',
                 hour: '时',
-                minutes: '分'
+                minutes: '分',
+                seconds: '秒'
             },
             startDate: new Date(2018, 1, 14, 12, 30),
             endDate: new Date(2020, 1, 14, 12, 30),

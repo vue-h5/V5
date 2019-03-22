@@ -140,12 +140,10 @@ export default {
          * @param {string} type 指定处理开始前还是结束时间边界
          */
         getTimeBoundary (type, isEnd = false) {
-            let obj = {}
-
-            obj = {
+            let obj = {
                 year: 1970,
                 month: isEnd ? 12 : 1,
-                date: isEnd ? 30 : 1,
+                date: isEnd ? 32 : 1,
                 hour: isEnd ? 23 : 0,
                 minutes: isEnd ? 59 : 0,
                 seconds: isEnd ? 59 : 0
@@ -154,54 +152,7 @@ export default {
             if (this[type]) {
                 // 获取指定时间的对象
                 let _dateObj = this.getDateObj(this[type])
-                obj.year = _dateObj.year
-
-                // 处理时间边界
-                if (this.dateObj.year === _dateObj.year) {
-                    obj.month = _dateObj.month
-
-                    if (isEnd) {
-                        if (this.dateObj.month >= _dateObj.month) {
-                            obj.date = _dateObj.date
-                            this.dateObj.month = _dateObj.month
-    
-                            if (this.dateObj.date >= _dateObj.date) {
-                                obj.hour = _dateObj.hour
-                                this.dateObj.date = _dateObj.date
-    
-                                if (this.dateObj.hour >= _dateObj.hour) {
-                                    obj.minutes = _dateObj.minutes
-                                    this.dateObj.hour = _dateObj.hour
-
-                                    if (this.dateObj.minutes >= _dateObj.minutes) {
-                                        obj.seconds = _dateObj.seconds
-                                        this.dateObj.minutes = _dateObj.minutes
-                                    }
-                                }
-                            }
-                        }
-                    } else {
-                        if (this.dateObj.month <= _dateObj.month) {
-                            obj.date = _dateObj.date
-                            this.dateObj.month = _dateObj.month
-    
-                            if (this.dateObj.date <= _dateObj.date) {
-                                obj.hour = _dateObj.hour
-                                this.dateObj.date = _dateObj.date
-    
-                                if (this.dateObj.hour <= _dateObj.hour) {
-                                    obj.minutes = _dateObj.minutes
-                                    this.dateObj.hour = _dateObj.hour
-
-                                    if (this.dateObj.minutes <= _dateObj.minutes) {
-                                        obj.seconds = _dateObj.seconds
-                                        this.dateObj.minutes = _dateObj.minutes
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                obj = Object.assign({}, obj, _dateObj)
             } else {
                 // 当前时间前后默认10年选择
                 obj.year = this.getDateObj().year + (isEnd ? 10 : -10)
@@ -249,18 +200,57 @@ export default {
         },
 
         getDateLists () {
+            let start = 1 
+            let end = 32
+
             return this.timeTable.map(type => {
                 switch (type) {
                     case 'Y':
                         return this.getList(this.startDateObj.year, this.endDateObj.year, 'year')
                     case 'M':
-                        return this.getList(this.startDateObj.month, this.endDateObj.month, 'month');
+                        start = this.dateObj.year <= this.startDateObj.year ? this.startDateObj.month : 1
+                        
+                        if (this.dateObj.year === this.endDateObj.year) {
+                            end = this.endDateObj.month
+                            if (this.dateObj.month >= this.endDateObj.month) {
+                                this.dateObj.month = end
+                            }
+                        } else {
+                            end = 12 
+                        }
+
+                        return this.getList(start, end, 'month');
                     case 'D':
-                        return this.getList(this.startDateObj.date, this.endDateObj.date, 'month')
+                        end = new Date(this.dateObj.year, this.dateObj
+                        .month, 0).getDate()
+                        
+                        if (
+                            this.dateObj.year === this.startDateObj.year
+                            && this.dateObj.month <= this.startDateObj.month
+                        ) {
+                            start = this.startDateObj.date
+
+                            if (this.dateObj.date <= this.startDateObj.date) {
+                                this.dateObj.date = start
+                            }
+                        }
+
+                        if (
+                            this.dateObj.year === this.endDateObj.year
+                            && this.dateObj.month >= this.endDateObj.month
+                        ) {
+                            end = this.endDateObj.date
+
+                            if (this.dateObj.date >= this.endDateObj.date) {
+                                this.dateObj.date = end
+                            }
+                        }
+
+                        return this.getList(start, end, 'date')
                     case 'HH':
-                        return this.getList(this.startDateObj.hour, this.endDateObj.hour, 'hour')
+                        return this.computedBoundary('hour')
                     case 'MM':
-                        return this.getList(this.startDateObj.minutes, this.endDateObj.minutes, 'minutes')
+                        return this.computedBoundary('minutes')
                     case 'SS':
                         return this.getList(0, 59, 'seconds')
                 }
@@ -309,6 +299,48 @@ export default {
                 // 返回开始与结束时间
                 return this[`${type.slice(0, -4)}Date`]
             }
+        },
+
+        getTimeNo (obj, type) {
+            let arr = [obj.year, obj.month, obj.date]
+
+            if (type === 'minutes') {
+                arr.push(obj.hour)
+            }
+
+            return new Date(...arr).getTime()
+
+        },
+
+        /**
+         * 计算小时与分钟的边界选择列表
+         * @returns 返回 picker 组件列表数组
+         */
+        computedBoundary (type) {
+            let start = 0
+            let end = type === 'hour' ? 23 : 59
+
+            let _STime = this.getTimeNo(this.startDateObj, type)
+            let _ETime = this.getTimeNo(this.endDateObj, type)
+            let _NTime = this.getTimeNo(this.dateObj, type)
+
+            if (_NTime === _STime) {
+                start = this.startDateObj[type]
+
+                if (this.dateObj[type] <= this.startDateObj[type]) {
+                    this.dateObj[type] = start
+                }
+            }
+
+            if (_NTime === _ETime) {
+                end = this.endDateObj[type]
+
+                if (this.dateObj[type] >= this.endDateObj[type]) {
+                    this.dateObj[type] = end
+                }
+            }
+
+            return this.getList(start, end, type)
         }
     }
 }

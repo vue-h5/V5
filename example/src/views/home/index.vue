@@ -118,7 +118,7 @@ export default {
 						{
 							title: 'Datepicker',
 							subTitel: '时间选择器',
-							to: '/complex/datepicker'
+							to: '/form/datepicker'
 						},
 					]
 				},
