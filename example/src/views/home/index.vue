@@ -71,6 +71,11 @@ export default {
 							subTitel: '轮播图',
 							to: '/base/swiper'
 						},
+						{
+							title: 'Input',
+							subTitel: '输入框',
+							to: '/base/input'
+						},
 					]
 				},
 				{

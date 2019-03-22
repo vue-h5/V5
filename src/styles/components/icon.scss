@@ -1,11 +1,12 @@
 @font-face {
     font-family: 'tq-v5';  /* project id 886927 */
-    src: url('//at.alicdn.com/t/font_886927_z53aw3p763b.eot');
-    src: url('//at.alicdn.com/t/font_886927_z53aw3p763b.eot?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_886927_z53aw3p763b.woff') format('woff'),
-    url('//at.alicdn.com/t/font_886927_z53aw3p763b.ttf') format('truetype'),
-    url('//at.alicdn.com/t/font_886927_z53aw3p763b.svg#tq-v5') format('svg');
-}
+    src: url('//at.alicdn.com/t/font_886927_kxey1nxy84.eot');
+    src: url('//at.alicdn.com/t/font_886927_kxey1nxy84.eot?#iefix') format('embedded-opentype'),
+    url('//at.alicdn.com/t/font_886927_kxey1nxy84.woff2') format('woff2'),
+    url('//at.alicdn.com/t/font_886927_kxey1nxy84.woff') format('woff'),
+    url('//at.alicdn.com/t/font_886927_kxey1nxy84.ttf') format('truetype'),
+    url('//at.alicdn.com/t/font_886927_kxey1nxy84.svg#tq-v5') format('svg');
+  }
 
 $icons: 
     save '\e612',
@@ -29,7 +30,8 @@ $icons:
     zoom-in '\e615',
     youtube '\e614',
     zap '\e613',
-
+    delete '\e617',
+    search '\e630'
     ;
 
 .v5-icon {
