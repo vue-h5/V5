@@ -221,32 +221,7 @@ export default {
 
                         return this.getList(start, end, 'month');
                     case 'D':
-                        end = new Date(this.dateObj.year, this.dateObj
-                        .month, 0).getDate()
-                        
-                        if (
-                            this.dateObj.year === this.startDateObj.year
-                            && this.dateObj.month <= this.startDateObj.month
-                        ) {
-                            start = this.startDateObj.date
-
-                            if (this.dateObj.date <= this.startDateObj.date) {
-                                this.dateObj.date = start
-                            }
-                        }
-
-                        if (
-                            this.dateObj.year === this.endDateObj.year
-                            && this.dateObj.month >= this.endDateObj.month
-                        ) {
-                            end = this.endDateObj.date
-
-                            if (this.dateObj.date >= this.endDateObj.date) {
-                                this.dateObj.date = end
-                            }
-                        }
-
-                        return this.getList(start, end, 'date')
+                        return this.computedBoundary('date')
                     case 'HH':
                         return this.computedBoundary('hour')
                     case 'MM':
@@ -283,6 +258,14 @@ export default {
          */
         update (item, index) {
             this.dateObj[this.escapeTabel[this.timeTable[index]]] = item.value
+
+            // 判断当前月中是否有目前选择的
+            let date = new Date(this.dateObj.year, this.dateObj.month, 0).getDate()
+            // 如果当前月没有目前选择的，我们更新为当前月最大的
+            if (date < this.dateObj.date) {
+                this.dateObj.date = date
+            }
+
             this.dateObj = Object.assign({}, this.dateObj)
         },
 
@@ -302,10 +285,14 @@ export default {
         },
 
         getTimeNo (obj, type) {
-            let arr = [obj.year, obj.month, obj.date]
+            let arr = [obj.year, obj.month]
 
-            if (type === 'minutes') {
-                arr.push(obj.hour)
+            switch (type) {
+                case 'hour':
+                    arr.push(obj.date)
+                    break;
+                case 'minutes':
+                    arr.push(obj.date, obj.hour)
             }
 
             return new Date(...arr).getTime()
@@ -318,7 +305,16 @@ export default {
          */
         computedBoundary (type) {
             let start = 0
-            let end = type === 'hour' ? 23 : 59
+            let end = 0
+            
+            switch (type) {
+                case 'hour': end = 23; break;
+                case 'minutes': end = 59; break;
+                case 'date':
+                    end = new Date(this.dateObj.year, this.dateObj.month, 0).getDate();
+
+                    break;
+            }
 
             let _STime = this.getTimeNo(this.startDateObj, type)
             let _ETime = this.getTimeNo(this.endDateObj, type)

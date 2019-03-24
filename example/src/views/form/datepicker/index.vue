@@ -57,7 +57,7 @@ export default {
     },
     mounted () {
         setInterval(()=> {
-            this.realTime = new Date
+            // this.realTime = new Date
         }, 1000)
     }
 }
