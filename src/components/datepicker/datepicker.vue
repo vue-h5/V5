@@ -32,7 +32,7 @@ export default {
             type: String
         },
         format: {
-            type: Object
+            type: [Object, Function]
         }
     },
     data () {
@@ -91,21 +91,28 @@ export default {
         },
 
         iFormat () {
-            return Object.assign({
+            let defaultOptions = {
                 year: '',
                 month: '',
                 date: '',
                 hour: '',
                 minutes: '',
                 seconds: ''
-            }, this.format)
+            }
+            if (typeof this.format === 'object') {
+                return Object.assign(defaultOptions, this.format)
+            } else {
+                return defaultOptions
+            }
         },
 
         preveDate () {
+            // 将用户给定的时间转化为时间对象
             return this.setTimeBoundary('startTime')
         },
 
         nextDate () {
+            // 将用户给定的时间转化为时间对象
             return this.setTimeBoundary('endTime')
         },
 
@@ -126,6 +133,7 @@ export default {
                     this.timeTable = this.type.split('/')
             }
 
+            // 生成2个前后时间的边界，用于picker生成选择列表
             this.startDateObj = this.getTimeBoundary('preveDate')
             this.endDateObj = this.getTimeBoundary('nextDate', true)
 
@@ -235,17 +243,28 @@ export default {
         getList (start, end, type) {
             let result = []
             for (let i = start; i <= end; i++) {
-                let label = i + this.iFormat[type]
+                let label = ''
+                let disabled = false
 
-                if (['hour','minutes', 'seconds'].includes(type)) {
-                    if (i <= 9) {
-                        label = `0${label}`
+                if (typeof this.format === 'function') {
+                    let _obj = this.format(type, i)
+
+                    label = String(_obj.label)
+                    disabled = _obj.disabled
+                } else {
+                    label = i + this.iFormat[type]
+    
+                    if (['hour','minutes', 'seconds'].includes(type)) {
+                        if (i <= 9) {
+                            label = `0${label}`
+                        }
                     }
+    
                 }
-
                 result.push({
                     label,
-                    value: i
+                    value: i,
+                    disabled
                 })
             }
             return result

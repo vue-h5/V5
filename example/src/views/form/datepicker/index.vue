@@ -9,7 +9,7 @@
 
         <div class="box">
             <v5-cell sub-title="type='datetime'" title="datetime" :inner="currentDate"/>
-            <v5-datepicker type="date" v-model="currentDate" :format="format"/>
+            <v5-datepicker type="date" v-model="currentDate" :format="formatEvt"/>
         </div>
 
         <div class="box">
@@ -59,6 +59,29 @@ export default {
         setInterval(()=> {
             // this.realTime = new Date
         }, 1000)
+    },
+    methods: {
+        formatEvt (type, value) {
+            let label = value
+            // 注意：disabled 都是true时，即没有可选内容时
+            // 全卡死，因为无法给出推荐选择
+            let disabled = false
+            switch (type) {
+                case 'year':
+                    // 2019不可选择
+                    disabled = value == 2020;
+                    label = String(label).slice(-2)+'年'
+                    break;
+                case 'month':
+                    if (value <= 9) label = `0${label}`;
+                    label += 'M'
+                    break;
+                case 'date':
+                    label = label+'th'
+            }
+
+            return {label, disabled}
+        }
     }
 }
 </script>
