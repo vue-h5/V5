@@ -42,10 +42,11 @@
     margin-top: 88px;
 
     li {
-        line-height: 44px;
+        line-height: 2.75em;
         text-align: center;
         font-size: 16px;
         color: #333;
+        white-space: nowrap;
 
         &[disabled] {
             color: #bbb;

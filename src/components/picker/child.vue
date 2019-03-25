@@ -1,6 +1,4 @@
 <template>
-<div style="width: 100%">
-
     <div class="v5-picker-item">
         <ul 
             class="v5-picker-ul" 
@@ -18,8 +16,6 @@
             </li>
         </ul>
     </div>
-        
-</div>
 </template>
 
 <script>
