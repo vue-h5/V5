@@ -33,6 +33,10 @@ export default {
         },
         format: {
             type: [Object, Function]
+        },
+        // 用于规定那些时间不可选择，具体到天
+        disDate: {
+            type: [Object, String]
         }
     },
     data () {
@@ -140,7 +144,95 @@ export default {
             return this.getDateLists()
         },
 
+        disDateObj () {
+            let obj = {}
+            let loop = (str, label) => {
+                // _DT = dateTime
+                let _DT = str.split(/\s/)
+                let [_Y, _M, _D] = _DT[0].split('/')
+                let _time = _DT[1] || ''
+                let [_HH, _MM, _SS] = _time.split(':')
 
+                if (!Reflect.has(obj, _Y)) {
+                    obj[_Y] = _M ? {} : label
+                }
+
+                if (_M && !Reflect.has(obj[_Y], _M)) {
+                    obj[_Y][_M] = _D ? {} : label
+                }
+
+                if (_D && !Reflect.has(obj[_Y][_M], _D)) {
+                    obj[_Y][_M][_D] = _HH ? {} : label || str
+                }
+
+                if (_HH && !Reflect.has(obj[_Y][_M][_D], _HH)) {
+                    obj[_Y][_M][_D][_HH] = _MM ? {} : label
+                }
+
+                if (_MM && !Reflect.has(obj[_Y][_M][_D][_HH], _MM)) {
+                    obj[_Y][_M][_D][_HH][_MM] = _SS ? {} : label
+                }
+
+                if (_SS && !Reflect.has(obj[_Y][_M][_D][_HH][_MM], _SS)) {
+                    obj[_Y][_M][_D][_HH][_MM] = _SS ? {} : label
+                }
+            }
+
+            for (let key in this.disDate) {
+                let label = this.disDate[key]
+
+                if (key.includes('-')) {
+                    if (key.includes(' ')) {
+                        if (key.includes(':')) {
+                            let [_startDate, _endTime] = key.split('-')
+                            let [_padStart, _startTime] = _startDate.split(/\s/)
+                            let [_startHour, _startMinutes] = _startTime.split(':')
+                            let [_endHour, _endMinutes] = _endTime.split(':')
+
+                            for (let h = _startHour; h <= _endHour; h++) {
+                                let _SM = h == _startHour ? _startMinutes : 0
+                                let _EM = h == _endHour ? _endMinutes : 59
+                                for (let m = _SM; m <= _EM; m++) {
+                                    loop(_padStart+` ${h}:${m}`, label)
+                                }
+                            }
+                        } else {
+                            let [_HD, _ED] = key.split('-')
+                            // _ST = string
+                            let [_ST, _SD] = _HD.split(' ')
+
+                            for (let i = _SD; i <= _ED; i++) {
+                                loop(_ST+' '+i, label)
+                            }
+                        }
+                    } else {
+                        let [_SD, _ED] = key.split('-')
+                        let _SDArr = _SD.split('/')
+
+                        switch (_SDArr.length) {
+                            case 1:
+                                for (let i = _SD; i <= _ED; i++) {
+                                    loop(String(i), label)
+                                }
+                                break;
+                            case 2:
+                                for (let i = _SDArr[1]; i <= _ED; i++) {
+                                    loop(`${_SDArr[0]}/${i}`, label)
+                                }
+                                break;
+                            case 3:
+                                for (let i = Number(_SDArr[2]); i <= _ED; i++) {
+                                    loop(`${_SDArr[0]}/${_SDArr[1]}/${i}`, label)
+                                }
+                        }
+                    }
+                } else {
+                    loop(key, this.disDate[key])
+                }
+            }
+
+            return obj
+        }
     },
     methods: {
         /**
@@ -259,7 +351,56 @@ export default {
                             label = `0${label}`
                         }
                     }
-    
+                }
+
+                // disabled
+                let {year, month, date, hour, minutes} = this.dateObj;
+
+                switch (type) {
+                    case 'year':
+                        try {
+                            disabled = this.disDateObj[i]
+                            disabled = typeof disabled === 'string'
+                        } catch (e) {}
+                        break;
+                    case 'month':
+                        try {
+                            disabled = this.disDateObj[year][i];
+                            disabled = typeof disabled === 'string'
+                        } catch (e) {}
+                        break;
+                    case 'date':
+                        try {
+                            disabled = this.disDateObj[year][month][i];
+                            if (typeof disabled === 'string') {
+                                label = `${i} ${disabled}`;
+                            }
+                            disabled = typeof disabled === 'string'
+                        } catch (e) {}
+                        break;
+                    case 'hour':
+                        try {
+                            disabled = this.disDateObj[year][month][date][i];
+                            if (typeof disabled === 'object') {
+                                disabled = Object.keys(disabled).length === 60
+                            } else {
+                                if (typeof disabled === 'string') {
+                                    label = i+` ${disabled}`
+                                    disabled = true
+                                }
+                            }
+                        } catch (e) {}
+                        break;
+                    case 'minutes':
+                        try {
+                            disabled = this.disDateObj[year][month][date][hour][i];
+                            if (typeof disabled === 'string') {
+                                label = i+ ` ${disabled}`
+                                disabled = true
+                            }
+                        } catch (e) {}
+                        break;
+
                 }
                 result.push({
                     label,
@@ -330,6 +471,7 @@ export default {
                 case 'hour': end = 23; break;
                 case 'minutes': end = 59; break;
                 case 'date':
+                    start = 1
                     end = new Date(this.dateObj.year, this.dateObj.month, 0).getDate();
 
                     break;

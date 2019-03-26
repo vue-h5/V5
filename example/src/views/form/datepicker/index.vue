@@ -5,15 +5,36 @@
         <div class="box">
             <v5-cell sub-title="type='Y/M/D/HH/MM/SS'" title="自定义时间显示" :inner="realTime"/>
             <v5-datepicker v-model="realTime" type="Y/M/D/HH/MM/SS" :format="format"/>
+
+            <div class="mark">
+                <p>你也可以自己定义时间的显示内容，通过<code>/</code>来分隔。</p>
+            </div>
         </div>
 
         <div class="box">
-            <v5-cell sub-title="type='datetime'" title="datetime" :inner="currentDate"/>
+            <v5-cell sub-title="type='date'" title="函数式自定义显示" :inner="currentDate"/>
             <v5-datepicker type="date" v-model="currentDate" :format="formatEvt"/>
         </div>
+       
+        <div class="box">
+            <v5-cell sub-title="type='date'" title="自定义过滤时间" :inner="currentDate"/>
+            <v5-datepicker v-model="currentDate" :disDate="disDate"/>
+
+            <div class="mark">
+                <strong>以下日期不可以选择：</strong>
+                <p>元旦: 2019/1/1</p>
+                <p>春节: 2019/2/2-10</p>
+                <p>妇女节: 2019/3/8 13:30-17:50</p>
+                <p>午休: 2019/3/25 11-13</p>
+                <p>劳动节: 2019/5/1-4</p>
+                <p>国庆节: 2019/10/1-7</p>
+                <p>2019/11-12</p>
+                <p>2021-2022</p>
+            </div>
+        </div>
 
         <div class="box">
-            <v5-cell sub-title="type='date'" title="date" :inner="currentDate"/>
+            <v5-cell sub-title="type='datetime'" title="给定时间区间" :inner="currentDate"/>
             <v5-datepicker :startDate="startDate" :endDate="endDate" v-model="currentDate"/>
 
             <div class="mark">
@@ -52,7 +73,17 @@ export default {
             endDate: new Date(2020, 1, 14, 12, 30),
             startTime: '8:30',
             endTime: '17:30',
-            realTime: new Date
+            realTime: new Date,
+            disDate: {
+                '2019/1/1': '元旦',
+                '2019/2/2-10': '春节',
+                '2019/3/8 13:30-17:50': '妇女节',
+                '2019/3/25 11-13': '午休',
+                '2019/5/1-4': '劳动节',
+                '2019/10/1-7': '国庆节',
+                '2019/11-12': '',
+                '2021-2022': ''
+            }
         }
     },
     mounted () {
@@ -69,7 +100,7 @@ export default {
             switch (type) {
                 case 'year':
                     // 2019不可选择
-                    disabled = value == 2020;
+                    // disabled = value == 2020;
                     label = String(label).slice(-2)+'年'
                     break;
                 case 'month':
