@@ -12,23 +12,35 @@ let requireRouter = {}
 
 /**
  * 自动注册功能
- * @param {function} data webpack require.context
+ * @param {function} ctx webpackAsyncContext
  */
-function auto (data) {
+function auto (ctx) {
     // 保存懒加载
-    requireRouter = data
+    requireRouter = ctx
     
-    data.keys().map(r => {
-        registered(r)
+    ctx.keys().forEach(filePath => {
+        registered(filePath)
     })
 }
 
-// 数组转驼峰写法 -abs-sjka
-// ['', 'abc', 'c89', '6edF'] => AbcC896edf
+// 数组转驼峰写法 abs-sjka
+// ['', 'abc', 'c89', '6edF'] => abcC896edf
 function arr2camel (arr) {
-    return arr.join('-').toLowerCase().replace(/(-\w)/g, (match, $1) => {
-        return $1.slice(1).toUpperCase()
-    })
+  if (Array.isArray(arr)) {
+    // 过滤第一个非法数组内容
+    if (!/$[0-9a-zA-Z]/.test(arr[0])) {
+      [, ...arr] = arr
+    }
+    /* eslint-disable */
+        return arr.join('-')
+            .toLowerCase()
+            .replace(/(-\w)/g, (match, $1) => {
+                return $1.slice(1).toUpperCase()
+            })
+        /* eslint-enable */
+  } else {
+    throw Error('You should gave a Array')
+  }
 }
 
 /**
@@ -93,7 +105,9 @@ async function registered (r) {
             // 处理 / 目录，此项目将 project 为根目录
             let name = path.slice(1)
             path = path === '/home' ? '/' : path
-            
+            requireRouter(r).then(locale => {
+                console.log(locale)
+            })
             let data = {
                 name,
                 path,
@@ -115,7 +129,7 @@ auto(require.context(
     // 是否查询子目录
     true,
     // 路由匹配规则
-    // 对于是以 index.vue 结尾的文件
+    // 对于是以 index.vue 或是 route.js 结尾的文件
     /(index\.vue$)|(route\.js$)/,
     // 启动懒加载
     'lazy'
