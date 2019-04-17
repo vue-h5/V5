@@ -105,9 +105,7 @@ async function registered (r) {
             // 处理 / 目录，此项目将 project 为根目录
             let name = path.slice(1)
             path = path === '/home' ? '/' : path
-            requireRouter(r).then(locale => {
-                console.log(locale)
-            })
+            
             let data = {
                 name,
                 path,
