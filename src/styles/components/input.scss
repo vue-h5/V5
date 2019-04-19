@@ -1,36 +1,42 @@
-.v5-input{
+.v5-input-mod {
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+    background: #fff;
     .v5-input-inner:focus {
         outline: none;
         border-color: #409eff;
     }
     .v5-input-inner {
-        border-radius: 4px;
-        border: 1px solid #dcdfe6;
+        border: none;
         box-sizing: border-box;
-        color: #606266;
         display: inline-block;
-        height: 40px;
-        line-height: 40px;
+        line-height: 3.5;
         outline: none;
-        padding: 0 15px;
-        transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+        padding-left: 6px;
+        width: 100%;
     }
     .clear {
         display: none;
-        position: absolute;
-        width: 40px;
-        height: 40px;
         text-align: center;
-        line-height: 40px;
-        margin: 0 0 0 -40px;
-        font-size: 16px;
+        font-size: 12px;
         color: #A3A5A8;
+        padding: 0 4px;
     }
     .v5-input-inner::-ms-clear {
         display: none;
     }
     .v5-input-inner:valid + .clear {
         display: inline;
+    }
+    .icon-left {
+        text-align: center;
+        padding-left: 4px;
+    }
+    .icon-right {
+        text-align: center;
+        color: #A3A5A8;
+        padding: 0 4px;
     }
 
 }

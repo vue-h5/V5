@@ -1,17 +1,31 @@
 <template>
-<div class="v5-input">
+<div class="v5-input-mod">
+    <!-- input框左侧图标 -->
+    <span class="icon-left" v-show="lIcon || this.$slots.leftIcon">
+        <slot name="leftIcon">
+            <v5-icon :class="lIcon"/>
+        </slot>
+    </span>
     <input 
         class="v5-input-inner" 
         required
         :type="type" 
+        :maxlength="maxlength"
         :placeholder="placeholder" 
         :disabled="disabled"
         @input="$emit('input', $event.target.value)"
         v-model="keyWord"
     >
-    <a class="clear" v-if="clearable" @click="clearContent">
-        <v5-icon :class="iconDelete" />
-    </a>
+    <!-- input框右侧清除图标 -->
+    <span class="clear" @click="clearContent" v-show="clearable">
+        <slot name="deleteIcon">×</slot>
+    </span>
+    <!-- input框右侧图标 -->
+    <span class="icon-right" v-show="rIcon || this.$slots.rightIcon">
+        <slot name="rightIcon">
+            <v5-icon :class="rIcon"/>
+        </slot>
+    </span>
 </div>
 </template>
 
@@ -39,12 +53,16 @@ export default {
             type: Boolean,
             default: false
         },
-        // 自定义清空图标
-        iconDelete: {
+        // 限制最大输入字符个数
+        maxlength: {
             type: String,
-            default: 'delete'
-        }
-
+        },
+        rIcon: {
+            type: String,
+        },
+        lIcon: {
+            type: String,
+        },
     },
     data () {
         return {
