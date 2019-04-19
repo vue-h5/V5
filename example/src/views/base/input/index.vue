@@ -28,8 +28,6 @@
         <v5-input placeholder="请输入企业名称" rIcon="apple"></v5-input>
         <h4>10、最大输入长度</h4>
         <v5-input placeholder="请输入不超过5个字符" maxlength=5></v5-input>
-        <h4>11、布局</h4>
-        <v5-input placeholder="请输入" lIcon="form" rIcon="apple" clearable></v5-input>
     </div>
 </template>
 <script>
