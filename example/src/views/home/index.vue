@@ -71,6 +71,11 @@ export default {
 							subTitel: '轮播图',
 							to: '/base/swiper'
 						},
+						{
+							title: 'BackTop',
+							subTitel: '返回到顶部',
+							to: '/base/backTop'
+						},
 					]
 				},
 				{

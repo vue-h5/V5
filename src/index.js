@@ -1,4 +1,5 @@
 import v5Button from './components/button/index.js'
+import V5BackTop from './components/backTop/index.js'
 import v5Cascader from './components/cascader/index.js'
 import v5Cell from './components/cell/index.js'
 import v5CellGroup from './components/cellGroup/index.js'
@@ -18,6 +19,7 @@ import v5LoadingBar from './components/loadingBar/index.js'
 
 const components = [
     v5Button,
+    V5BackTop,
     v5Cascader,
     v5Cell,
     v5CellGroup,
@@ -51,6 +53,7 @@ if (typeof window !== 'undefined' && window.Vue) {
 export {
     install,
     v5Button,
+    V5BackTop,
     v5Cascader,
     v5Cell,
     v5CellGroup,
