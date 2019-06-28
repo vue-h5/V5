@@ -1,3 +1,5 @@
+
+import commonjs from 'rollup-plugin-commonjs' 
 import VuePlugin from 'rollup-plugin-vue'
 
 export default {
@@ -6,5 +8,8 @@ export default {
         file: './dist/v5.es6.js',
         format: 'esm'
     },
-    plugins: [VuePlugin()]
+    plugins: [
+        commonjs(),
+        VuePlugin()
+    ]
 }
