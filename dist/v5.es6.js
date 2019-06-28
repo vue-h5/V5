@@ -1,5 +1,3 @@
-import { setTimeout as setTimeout$1, clearTimeout } from 'timers';
-import 'assert';
 import Vue from 'vue';
 
 //
@@ -73,9 +71,94 @@ var script = {
     }
 };
 
+function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
+/* server only */
+, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+  if (typeof shadowMode !== 'boolean') {
+    createInjectorSSR = createInjector;
+    createInjector = shadowMode;
+    shadowMode = false;
+  } // Vue.extend constructor export interop.
+
+
+  var options = typeof script === 'function' ? script.options : script; // render functions
+
+  if (template && template.render) {
+    options.render = template.render;
+    options.staticRenderFns = template.staticRenderFns;
+    options._compiled = true; // functional template
+
+    if (isFunctionalTemplate) {
+      options.functional = true;
+    }
+  } // scopedId
+
+
+  if (scopeId) {
+    options._scopeId = scopeId;
+  }
+
+  var hook;
+
+  if (moduleIdentifier) {
+    // server build
+    hook = function hook(context) {
+      // 2.3 injection
+      context = context || // cached call
+      this.$vnode && this.$vnode.ssrContext || // stateful
+      this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
+      // 2.2 with runInNewContext: true
+
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__;
+      } // inject component styles
+
+
+      if (style) {
+        style.call(this, createInjectorSSR(context));
+      } // register component module identifier for async chunk inference
+
+
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier);
+      }
+    }; // used by ssr in case component is cached and beforeCreate
+    // never gets called
+
+
+    options._ssrRegister = hook;
+  } else if (style) {
+    hook = shadowMode ? function () {
+      style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
+    } : function (context) {
+      style.call(this, createInjector(context));
+    };
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // register for functional component in vue file
+      var originalRender = options.render;
+
+      options.render = function renderWithStyleInjection(h, context) {
+        hook.call(context);
+        return originalRender(h, context);
+      };
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate;
+      options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+    }
+  }
+
+  return script;
+}
+
+var normalizeComponent_1 = normalizeComponent;
+
 /* script */
-            const __vue_script__ = script;
-            
+const __vue_script__ = script;
+
 /* template */
 var __vue_render__ = function() {
   var _vm = this;
@@ -126,36 +209,13 @@ __vue_render__._withStripped = true;
   const __vue_module_identifier__ = undefined;
   /* functional template */
   const __vue_is_functional_template__ = false;
-  /* component normalizer */
-  function __vue_normalize__(
-    template, style, script$$1,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script$$1 === 'function' ? script$$1.options : script$$1) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/button/button.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var v5Button = __vue_normalize__(
+  var v5Button = normalizeComponent_1(
     { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
     __vue_inject_styles__,
     __vue_script__,
@@ -388,8 +448,8 @@ var script$1 = {
 };
 
 /* script */
-            const __vue_script__$1 = script$1;
-            
+const __vue_script__$1 = script$1;
+
 /* template */
 var __vue_render__$1 = function() {
   var _vm = this;
@@ -415,7 +475,7 @@ var __vue_render__$1 = function() {
                   class: [{ child: nav.children }],
                   on: {
                     click: function($event) {
-                      _vm.change(nav, i);
+                      return _vm.change(nav, i)
                     }
                   }
                 },
@@ -464,7 +524,7 @@ var __vue_render__$1 = function() {
                     },
                     on: {
                       click: function($event) {
-                        _vm.update(item);
+                        return _vm.update(item)
                       }
                     }
                   })
@@ -497,36 +557,13 @@ __vue_render__$1._withStripped = true;
   const __vue_module_identifier__$1 = undefined;
   /* functional template */
   const __vue_is_functional_template__$1 = false;
-  /* component normalizer */
-  function __vue_normalize__$1(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/cascader/cascader.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var v5Cascader = __vue_normalize__$1(
+  var v5Cascader = normalizeComponent_1(
     { render: __vue_render__$1, staticRenderFns: __vue_staticRenderFns__$1 },
     __vue_inject_styles__$1,
     __vue_script__$1,
@@ -569,7 +606,6 @@ var script$2 = {
         to: String,
         // 内容
         inner: {
-            type: [String, Number, Boolean],
             default: ''
         },
         // 图标
@@ -578,10 +614,6 @@ var script$2 = {
         disabled: {
             type: Boolean,
             default: false
-        }
-    },
-    data () {
-        return {
         }
     },
     computed: {
@@ -603,8 +635,8 @@ var script$2 = {
 };
 
 /* script */
-            const __vue_script__$2 = script$2;
-            
+const __vue_script__$2 = script$2;
+
 /* template */
 var __vue_render__$2 = function() {
   var _vm = this;
@@ -662,36 +694,13 @@ __vue_render__$2._withStripped = true;
   const __vue_module_identifier__$2 = undefined;
   /* functional template */
   const __vue_is_functional_template__$2 = false;
-  /* component normalizer */
-  function __vue_normalize__$2(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/cell/cell.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var v5Cell = __vue_normalize__$2(
+  var v5Cell = normalizeComponent_1(
     { render: __vue_render__$2, staticRenderFns: __vue_staticRenderFns__$2 },
     __vue_inject_styles__$2,
     __vue_script__$2,
@@ -719,8 +728,8 @@ var script$3 = {
 };
 
 /* script */
-            const __vue_script__$3 = script$3;
-            
+const __vue_script__$3 = script$3;
+
 /* template */
 var __vue_render__$3 = function() {
   var _vm = this;
@@ -739,36 +748,13 @@ __vue_render__$3._withStripped = true;
   const __vue_module_identifier__$3 = undefined;
   /* functional template */
   const __vue_is_functional_template__$3 = false;
-  /* component normalizer */
-  function __vue_normalize__$3(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/cellGroup/cell-group.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var v5CellGroup = __vue_normalize__$3(
+  var v5CellGroup = normalizeComponent_1(
     { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
     __vue_inject_styles__$3,
     __vue_script__$3,
@@ -833,8 +819,8 @@ var script$4 = {
 };
 
 /* script */
-            const __vue_script__$4 = script$4;
-            
+const __vue_script__$4 = script$4;
+
 /* template */
 var __vue_render__$4 = function() {
   var _vm = this;
@@ -875,42 +861,578 @@ __vue_render__$4._withStripped = true;
   const __vue_module_identifier__$4 = undefined;
   /* functional template */
   const __vue_is_functional_template__$4 = false;
-  /* component normalizer */
-  function __vue_normalize__$4(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/collapse/collapse.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var v5Collapse = __vue_normalize__$4(
+  var V5Collapse = normalizeComponent_1(
     { render: __vue_render__$4, staticRenderFns: __vue_staticRenderFns__$4 },
     __vue_inject_styles__$4,
     __vue_script__$4,
     __vue_scope_id__$4,
     __vue_is_functional_template__$4,
     __vue_module_identifier__$4,
+    undefined,
+    undefined
+  );
+
+//
+//
+//
+//
+//
+//
+
+var script$5 = {
+    name: 'v5-datepicker',
+    props: {
+        value: {
+            type: [Date, String],
+            default: () => new Date
+        },
+        type: {
+            type: String,
+            // dateTime 2019-2-28 12:34
+            // date 2019-2-28
+            // time 12:34
+            default: 'datetime'
+        },
+        startDate: {
+            type: Date
+        },
+        endDate: {
+            type: Date
+        },
+        startTime: {
+            type: String
+        },
+        endTime: {
+            type: String
+        },
+        format: {
+            type: [Object, Function]
+        },
+        // 用于规定那些时间不可选择，具体到天
+        disDate: {
+            type: [Object, String]
+        }
+    },
+    data () {
+        return {
+            startDateObj: {},
+            endDateObj: {},
+            // 时间渲染方式
+            timeTable: [],
+            escapeTabel: {
+                'Y': 'year',
+                'M': 'month',
+                'D': 'date',
+                'HH': 'hour',
+                'MM': 'minutes',
+                'SS': 'seconds'
+            }
+        }
+    },
+    computed: {
+        date () {
+            return this.timeTable.map((type, i) => {
+                return this.dateObj[this.escapeTabel[type]]
+            })
+        },
+
+        dateObj: {
+            get () {
+                let _obj;
+
+                if (typeof this.value === 'string') {
+                    let _t = this.getTimeObj(this.value);
+                    _obj = new Date(1970, 0, 1, _t.hour, _t.minutes);
+                    _obj = this.getDateObj(_obj);
+                } else {
+                    _obj = this.getDateObj(this.value);
+                }
+
+                return _obj
+            },
+            set (val) {
+                if (typeof this.value === 'string') {
+                    this.$emit('input', this.date.map(val => { 
+                        return val <= 9 ? `0${val}`: val
+                    }).join(':'));
+                } else {
+                    this.$emit('input', new Date(
+                        val.year,
+                        val.month -1,
+                        val.date,
+                        val.hour,
+                        val.minutes,
+                        val.seconds,
+                    ));
+                }
+            }
+        },
+
+        iFormat () {
+            let defaultOptions = {
+                year: '',
+                month: '',
+                date: '',
+                hour: '',
+                minutes: '',
+                seconds: ''
+            };
+            if (typeof this.format === 'object') {
+                return Object.assign(defaultOptions, this.format)
+            } else {
+                return defaultOptions
+            }
+        },
+
+        preveDate () {
+            // 将用户给定的时间转化为时间对象
+            return this.setTimeBoundary('startTime')
+        },
+
+        nextDate () {
+            // 将用户给定的时间转化为时间对象
+            return this.setTimeBoundary('endTime')
+        },
+
+        dateList () {
+            switch (this.type) {
+                case 'datetime':
+                    this.timeTable = ['Y', 'M', 'D', 'HH', 'MM'];
+                    break
+                
+                case 'time':
+                    this.timeTable = ['HH', 'MM'];
+                    break
+
+                case 'date':
+                    this.timeTable = ['Y', 'M', 'D'];
+                    break
+                default:
+                    this.timeTable = this.type.split('/');
+            }
+
+            // 生成2个前后时间的边界，用于picker生成选择列表
+            this.startDateObj = this.getTimeBoundary('preveDate');
+            this.endDateObj = this.getTimeBoundary('nextDate', true);
+
+            return this.getDateLists()
+        },
+
+        disDateObj () {
+            let obj = {};
+            let loop = (str, label) => {
+                // _DT = dateTime
+                let _DT = str.split(/\s/);
+                let [_Y, _M, _D] = _DT[0].split('/');
+                let _time = _DT[1] || '';
+                let [_HH, _MM, _SS] = _time.split(':');
+
+                if (!Reflect.has(obj, _Y)) {
+                    obj[_Y] = _M ? {} : label;
+                }
+
+                if (_M && !Reflect.has(obj[_Y], _M)) {
+                    obj[_Y][_M] = _D ? {} : label;
+                }
+
+                if (_D && !Reflect.has(obj[_Y][_M], _D)) {
+                    obj[_Y][_M][_D] = _HH ? {} : label || str;
+                }
+
+                if (_HH && !Reflect.has(obj[_Y][_M][_D], _HH)) {
+                    obj[_Y][_M][_D][_HH] = _MM ? {} : label;
+                }
+
+                if (_MM && !Reflect.has(obj[_Y][_M][_D][_HH], _MM)) {
+                    obj[_Y][_M][_D][_HH][_MM] = _SS ? {} : label;
+                }
+
+                if (_SS && !Reflect.has(obj[_Y][_M][_D][_HH][_MM], _SS)) {
+                    obj[_Y][_M][_D][_HH][_MM] = _SS ? {} : label;
+                }
+            };
+
+            for (let key in this.disDate) {
+                let label = this.disDate[key];
+
+                if (key.includes('-')) {
+                    if (key.includes(' ')) {
+                        if (key.includes(':')) {
+                            let [_startDate, _endTime] = key.split('-');
+                            let [_padStart, _startTime] = _startDate.split(/\s/);
+                            let [_startHour, _startMinutes] = _startTime.split(':');
+                            let [_endHour, _endMinutes] = _endTime.split(':');
+
+                            for (let h = _startHour; h <= _endHour; h++) {
+                                let _SM = h == _startHour ? _startMinutes : 0;
+                                let _EM = h == _endHour ? _endMinutes : 59;
+                                for (let m = _SM; m <= _EM; m++) {
+                                    loop(_padStart+` ${h}:${m}`, label);
+                                }
+                            }
+                        } else {
+                            let [_HD, _ED] = key.split('-');
+                            // _ST = string
+                            let [_ST, _SD] = _HD.split(' ');
+
+                            for (let i = _SD; i <= _ED; i++) {
+                                loop(_ST+' '+i, label);
+                            }
+                        }
+                    } else {
+                        let [_SD, _ED] = key.split('-');
+                        let _SDArr = _SD.split('/');
+
+                        switch (_SDArr.length) {
+                            case 1:
+                                for (let i = _SD; i <= _ED; i++) {
+                                    loop(String(i), label);
+                                }
+                                break;
+                            case 2:
+                                for (let i = _SDArr[1]; i <= _ED; i++) {
+                                    loop(`${_SDArr[0]}/${i}`, label);
+                                }
+                                break;
+                            case 3:
+                                for (let i = Number(_SDArr[2]); i <= _ED; i++) {
+                                    loop(`${_SDArr[0]}/${_SDArr[1]}/${i}`, label);
+                                }
+                        }
+                    }
+                } else {
+                    loop(key, this.disDate[key]);
+                }
+            }
+
+            return obj
+        }
+    },
+    methods: {
+        /**
+         * 处理时间边界
+         * @param {string} type 指定处理开始前还是结束时间边界
+         */
+        getTimeBoundary (type, isEnd = false) {
+            let obj = {
+                year: 1970,
+                month: isEnd ? 12 : 1,
+                date: isEnd ? 32 : 1,
+                hour: isEnd ? 23 : 0,
+                minutes: isEnd ? 59 : 0,
+                seconds: isEnd ? 59 : 0
+            };
+
+            if (this[type]) {
+                // 获取指定时间的对象
+                let _dateObj = this.getDateObj(this[type]);
+                obj = Object.assign({}, obj, _dateObj);
+            } else {
+                // 当前时间前后默认10年选择
+                obj.year = this.getDateObj().year + (isEnd ? 10 : -10);
+            }
+
+            return obj
+        },
+        /**
+         * 返回时间对象
+         * @param {Date} time 时间字符串
+         */
+        getDateObj (time = new Date) {
+            return {
+                year: time.getFullYear(),
+                month: time.getMonth() + 1,
+                date: time.getDate(),
+                hour: time.getHours(),
+                minutes: time.getMinutes(),
+                seconds: time.getSeconds(),
+                day: time.getDay()
+            }
+        },
+
+        /**
+         * 获取时间
+         * @param {string} 时间，格式：12:30
+         * @returns {object} 返回时间对象
+         */
+        getTimeObj (val) {
+            let obj = {
+                hour: 0,
+                minutes: 0
+            };
+
+            if (val) {
+                let [hour, minutes] = val.split(':');
+
+                obj = Object.assign({}, obj, {
+                    hour: Number(hour), 
+                    minutes: Number(minutes)
+                });
+            }
+
+            return obj
+        },
+
+        getDateLists () {
+            let start = 1; 
+            let end = 32;
+
+            return this.timeTable.map(type => {
+                switch (type) {
+                    case 'Y':
+                        return this.getList(this.startDateObj.year, this.endDateObj.year, 'year')
+                    case 'M':
+                        start = this.dateObj.year <= this.startDateObj.year ? this.startDateObj.month : 1;
+                        
+                        if (this.dateObj.year === this.endDateObj.year) {
+                            end = this.endDateObj.month;
+                            if (this.dateObj.month >= this.endDateObj.month) {
+                                this.dateObj.month = end;
+                            }
+                        } else {
+                            end = 12; 
+                        }
+
+                        return this.getList(start, end, 'month');
+                    case 'D':
+                        return this.computedBoundary('date')
+                    case 'HH':
+                        return this.computedBoundary('hour')
+                    case 'MM':
+                        return this.computedBoundary('minutes')
+                    case 'SS':
+                        return this.getList(0, 59, 'seconds')
+                }
+            })
+        },
+
+        getList (start, end, type) {
+            let result = [];
+            for (let i = start; i <= end; i++) {
+                let label = '';
+                let disabled = false;
+
+                if (typeof this.format === 'function') {
+                    let _obj = this.format(type, i);
+
+                    label = String(_obj.label);
+                    disabled = _obj.disabled;
+                } else {
+                    label = i + this.iFormat[type];
+    
+                    if (['hour','minutes', 'seconds'].includes(type)) {
+                        if (i <= 9) {
+                            label = `0${label}`;
+                        }
+                    }
+                }
+
+                // disabled
+                let {year, month, date, hour, minutes} = this.dateObj;
+
+                switch (type) {
+                    case 'year':
+                        try {
+                            disabled = this.disDateObj[i];
+                            disabled = typeof disabled === 'string';
+                        } catch (e) {}
+                        break;
+                    case 'month':
+                        try {
+                            disabled = this.disDateObj[year][i];
+                            disabled = typeof disabled === 'string';
+                        } catch (e) {}
+                        break;
+                    case 'date':
+                        try {
+                            disabled = this.disDateObj[year][month][i];
+                            if (typeof disabled === 'string') {
+                                label = `${i} ${disabled}`;
+                            }
+                            disabled = typeof disabled === 'string';
+                        } catch (e) {}
+                        break;
+                    case 'hour':
+                        try {
+                            disabled = this.disDateObj[year][month][date][i];
+                            if (typeof disabled === 'object') {
+                                disabled = Object.keys(disabled).length === 60;
+                            } else {
+                                if (typeof disabled === 'string') {
+                                    label = i+` ${disabled}`;
+                                    disabled = true;
+                                }
+                            }
+                        } catch (e) {}
+                        break;
+                    case 'minutes':
+                        try {
+                            disabled = this.disDateObj[year][month][date][hour][i];
+                            if (typeof disabled === 'string') {
+                                label = i+ ` ${disabled}`;
+                                disabled = true;
+                            }
+                        } catch (e) {}
+                        break;
+
+                }
+                result.push({
+                    label,
+                    value: i,
+                    disabled
+                });
+            }
+            return result
+        },
+
+        /**
+         * 更新事件
+         * @param {object} item 更新内容
+         * @param {number} index 更新的索引
+         */
+        update (item, index) {
+            this.dateObj[this.escapeTabel[this.timeTable[index]]] = item.value;
+
+            // 判断当前月中是否有目前选择的
+            let date = new Date(this.dateObj.year, this.dateObj.month, 0).getDate();
+            // 如果当前月没有目前选择的，我们更新为当前月最大的
+            if (date < this.dateObj.date) {
+                this.dateObj.date = date;
+            }
+
+            this.dateObj = Object.assign({}, this.dateObj);
+        },
+
+        /**
+         * 设置时间的前后边界
+         * @param {string} type 取值对象
+         */
+        setTimeBoundary (type) {
+            // 如果用户设置了时间的取值范围
+            if (this[type]) {
+                let _t = this.getTimeObj(this[type]);
+                return new Date(1970, 0, 1, _t.hour, _t.minutes)
+            } else {
+                // 返回开始与结束时间
+                return this[`${type.slice(0, -4)}Date`]
+            }
+        },
+
+        getTimeNo (obj, type) {
+            let arr = [obj.year, obj.month];
+
+            switch (type) {
+                case 'hour':
+                    arr.push(obj.date);
+                    break;
+                case 'minutes':
+                    arr.push(obj.date, obj.hour);
+            }
+
+            return new Date(...arr).getTime()
+
+        },
+
+        /**
+         * 计算小时与分钟的边界选择列表
+         * @returns 返回 picker 组件列表数组
+         */
+        computedBoundary (type) {
+            let start = 0;
+            let end = 0;
+            
+            switch (type) {
+                case 'hour': end = 23; break;
+                case 'minutes': end = 59; break;
+                case 'date':
+                    start = 1;
+                    end = new Date(this.dateObj.year, this.dateObj.month, 0).getDate();
+
+                    break;
+            }
+
+            let _STime = this.getTimeNo(this.startDateObj, type);
+            let _ETime = this.getTimeNo(this.endDateObj, type);
+            let _NTime = this.getTimeNo(this.dateObj, type);
+
+            if (_NTime === _STime) {
+                start = this.startDateObj[type];
+
+                if (this.dateObj[type] <= this.startDateObj[type]) {
+                    this.dateObj[type] = start;
+                }
+            }
+
+            if (_NTime === _ETime) {
+                end = this.endDateObj[type];
+
+                if (this.dateObj[type] >= this.endDateObj[type]) {
+                    this.dateObj[type] = end;
+                }
+            }
+
+            return this.getList(start, end, type)
+        }
+    }
+};
+
+/* script */
+const __vue_script__$5 = script$5;
+
+/* template */
+var __vue_render__$5 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "div",
+    { staticClass: "v5-datepicker-mod" },
+    [
+      _c("v5-picker", {
+        attrs: { data: _vm.dateList, disformat: "" },
+        on: { update: _vm.update },
+        model: {
+          value: _vm.date,
+          callback: function($$v) {
+            _vm.date = $$v;
+          },
+          expression: "date"
+        }
+      })
+    ],
+    1
+  )
+};
+var __vue_staticRenderFns__$5 = [];
+__vue_render__$5._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$5 = undefined;
+  /* scoped */
+  const __vue_scope_id__$5 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$5 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$5 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var V5Datepicker = normalizeComponent_1(
+    { render: __vue_render__$5, staticRenderFns: __vue_staticRenderFns__$5 },
+    __vue_inject_styles__$5,
+    __vue_script__$5,
+    __vue_scope_id__$5,
+    __vue_is_functional_template__$5,
+    __vue_module_identifier__$5,
     undefined,
     undefined
   );
@@ -967,7 +1489,7 @@ __vue_render__$4._withStripped = true;
 //
 //
 
-var script$5 = {
+var script$6 = {
     name: 'v5-field',
     // 用于辅助验证子组件内容
     // https://cn.vuejs.org/v2/api/#provide-inject
@@ -1056,10 +1578,10 @@ var script$5 = {
 };
 
 /* script */
-            const __vue_script__$5 = script$5;
-            
+const __vue_script__$6 = script$6;
+
 /* template */
-var __vue_render__$5 = function() {
+var __vue_render__$6 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -1102,7 +1624,7 @@ var __vue_render__$5 = function() {
                                 domProps: { value: _vm.value },
                                 on: {
                                   change: function($event) {
-                                    _vm.updateSelect($event);
+                                    return _vm.updateSelect($event)
                                   }
                                 }
                               },
@@ -1150,7 +1672,7 @@ var __vue_render__$5 = function() {
                               domProps: { value: _vm.value },
                               on: {
                                 input: function($event) {
-                                  _vm.$emit("input", $event.target.value);
+                                  return _vm.$emit("input", $event.target.value)
                                 }
                               }
                             })
@@ -1188,53 +1710,30 @@ var __vue_render__$5 = function() {
     2
   )
 };
-var __vue_staticRenderFns__$5 = [];
-__vue_render__$5._withStripped = true;
+var __vue_staticRenderFns__$6 = [];
+__vue_render__$6._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$5 = undefined;
+  const __vue_inject_styles__$6 = undefined;
   /* scoped */
-  const __vue_scope_id__$5 = undefined;
+  const __vue_scope_id__$6 = undefined;
   /* module identifier */
-  const __vue_module_identifier__$5 = undefined;
+  const __vue_module_identifier__$6 = undefined;
   /* functional template */
-  const __vue_is_functional_template__$5 = false;
-  /* component normalizer */
-  function __vue_normalize__$5(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/field/field.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
+  const __vue_is_functional_template__$6 = false;
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var V5Field = __vue_normalize__$5(
-    { render: __vue_render__$5, staticRenderFns: __vue_staticRenderFns__$5 },
-    __vue_inject_styles__$5,
-    __vue_script__$5,
-    __vue_scope_id__$5,
-    __vue_is_functional_template__$5,
-    __vue_module_identifier__$5,
+  var V5Field = normalizeComponent_1(
+    { render: __vue_render__$6, staticRenderFns: __vue_staticRenderFns__$6 },
+    __vue_inject_styles__$6,
+    __vue_script__$6,
+    __vue_scope_id__$6,
+    __vue_is_functional_template__$6,
+    __vue_module_identifier__$6,
     undefined,
     undefined
   );
@@ -1265,7 +1764,7 @@ __vue_render__$5._withStripped = true;
 //
 //
 
-var script$6 = {
+var script$7 = {
     name: 'v5-form',
 
     props: {
@@ -1298,10 +1797,10 @@ var script$6 = {
 };
 
 /* script */
-            const __vue_script__$6 = script$6;
-            
+const __vue_script__$7 = script$7;
+
 /* template */
-var __vue_render__$6 = function() {
+var __vue_render__$7 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -1354,81 +1853,6 @@ var __vue_render__$6 = function() {
     2
   )
 };
-var __vue_staticRenderFns__$6 = [];
-__vue_render__$6._withStripped = true;
-
-  /* style */
-  const __vue_inject_styles__$6 = undefined;
-  /* scoped */
-  const __vue_scope_id__$6 = undefined;
-  /* module identifier */
-  const __vue_module_identifier__$6 = undefined;
-  /* functional template */
-  const __vue_is_functional_template__$6 = false;
-  /* component normalizer */
-  function __vue_normalize__$6(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/form/form.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
-  /* style inject */
-  
-  /* style inject SSR */
-  
-
-  
-  var V5Form = __vue_normalize__$6(
-    { render: __vue_render__$6, staticRenderFns: __vue_staticRenderFns__$6 },
-    __vue_inject_styles__$6,
-    __vue_script__$6,
-    __vue_scope_id__$6,
-    __vue_is_functional_template__$6,
-    __vue_module_identifier__$6,
-    undefined,
-    undefined
-  );
-
-//
-//
-//
-//
-
-var script$7 = {
-    name: 'v5-hello',
-    data () {
-        return {
-            mes: 'Hello V5'
-        }
-    }
-};
-
-/* script */
-            const __vue_script__$7 = script$7;
-            
-/* template */
-var __vue_render__$7 = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c("h1", [_vm._v(_vm._s(_vm.mes))])
-};
 var __vue_staticRenderFns__$7 = [];
 __vue_render__$7._withStripped = true;
 
@@ -1440,36 +1864,13 @@ __vue_render__$7._withStripped = true;
   const __vue_module_identifier__$7 = undefined;
   /* functional template */
   const __vue_is_functional_template__$7 = false;
-  /* component normalizer */
-  function __vue_normalize__$7(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/hello/hello.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var v5Hello = __vue_normalize__$7(
+  var V5Form = normalizeComponent_1(
     { render: __vue_render__$7, staticRenderFns: __vue_staticRenderFns__$7 },
     __vue_inject_styles__$7,
     __vue_script__$7,
@@ -1484,20 +1885,29 @@ __vue_render__$7._withStripped = true;
 //
 //
 //
+//
+//
 
 var script$8 = {
-    name: 'v5-icon'
+    name: 'v5-hello',
+    data () {
+        return {
+            mes: 'Hello V5'
+        }
+    }
 };
 
 /* script */
-            const __vue_script__$8 = script$8;
-            
+const __vue_script__$8 = script$8;
+
 /* template */
 var __vue_render__$8 = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c("i", { class: ["v5-icon"] })
+  return _c("div", { staticClass: "v5-hello-mod" }, [
+    _c("h1", [_vm._v(_vm._s(_vm.mes))])
+  ])
 };
 var __vue_staticRenderFns__$8 = [];
 __vue_render__$8._withStripped = true;
@@ -1510,42 +1920,66 @@ __vue_render__$8._withStripped = true;
   const __vue_module_identifier__$8 = undefined;
   /* functional template */
   const __vue_is_functional_template__$8 = false;
-  /* component normalizer */
-  function __vue_normalize__$8(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/icon/icon.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var V5Icon = __vue_normalize__$8(
+  var v5Hello = normalizeComponent_1(
     { render: __vue_render__$8, staticRenderFns: __vue_staticRenderFns__$8 },
     __vue_inject_styles__$8,
     __vue_script__$8,
     __vue_scope_id__$8,
     __vue_is_functional_template__$8,
     __vue_module_identifier__$8,
+    undefined,
+    undefined
+  );
+
+//
+//
+//
+//
+
+var script$9 = {
+    name: 'v5-icon'
+};
+
+/* script */
+const __vue_script__$9 = script$9;
+
+/* template */
+var __vue_render__$9 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c("i", { class: ["v5-icon"] })
+};
+var __vue_staticRenderFns__$9 = [];
+__vue_render__$9._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$9 = undefined;
+  /* scoped */
+  const __vue_scope_id__$9 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$9 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$9 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var V5Icon = normalizeComponent_1(
+    { render: __vue_render__$9, staticRenderFns: __vue_staticRenderFns__$9 },
+    __vue_inject_styles__$9,
+    __vue_script__$9,
+    __vue_scope_id__$9,
+    __vue_is_functional_template__$9,
+    __vue_module_identifier__$9,
     undefined,
     undefined
   );
@@ -1565,7 +1999,7 @@ __vue_render__$8._withStripped = true;
 //
 //
 
-var script$9 = {
+var script$a = {
     name: 'v5-layer',
     props: {
         // 控制弹层显隐
@@ -1599,7 +2033,7 @@ var script$9 = {
     },
     watch: {
         show (val) {
-            this.styles.zIndex =  Number(String(new Date().getTime()).slice(-7));
+            this.styles.zIndex =  Number(String(Date.now()).slice(-7));
         },
         duration: {
             handler (val) {
@@ -1612,10 +2046,10 @@ var script$9 = {
 };
 
 /* script */
-            const __vue_script__$9 = script$9;
-            
+const __vue_script__$a = script$a;
+
 /* template */
-var __vue_render__$9 = function() {
+var __vue_render__$a = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -1629,7 +2063,7 @@ var __vue_render__$9 = function() {
           if ($event.target !== $event.currentTarget) {
             return null
           }
-          _vm.clickEvt();
+          return _vm.clickEvt()
         }
       }
     },
@@ -1641,53 +2075,30 @@ var __vue_render__$9 = function() {
     2
   )
 };
-var __vue_staticRenderFns__$9 = [];
-__vue_render__$9._withStripped = true;
+var __vue_staticRenderFns__$a = [];
+__vue_render__$a._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$9 = undefined;
+  const __vue_inject_styles__$a = undefined;
   /* scoped */
-  const __vue_scope_id__$9 = undefined;
+  const __vue_scope_id__$a = undefined;
   /* module identifier */
-  const __vue_module_identifier__$9 = undefined;
+  const __vue_module_identifier__$a = undefined;
   /* functional template */
-  const __vue_is_functional_template__$9 = false;
-  /* component normalizer */
-  function __vue_normalize__$9(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/layer/layer.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
+  const __vue_is_functional_template__$a = false;
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var V5Layer = __vue_normalize__$9(
-    { render: __vue_render__$9, staticRenderFns: __vue_staticRenderFns__$9 },
-    __vue_inject_styles__$9,
-    __vue_script__$9,
-    __vue_scope_id__$9,
-    __vue_is_functional_template__$9,
-    __vue_module_identifier__$9,
+  var V5Layer = normalizeComponent_1(
+    { render: __vue_render__$a, staticRenderFns: __vue_staticRenderFns__$a },
+    __vue_inject_styles__$a,
+    __vue_script__$a,
+    __vue_scope_id__$a,
+    __vue_is_functional_template__$a,
+    __vue_module_identifier__$a,
     undefined,
     undefined
   );
@@ -1700,7 +2111,7 @@ __vue_render__$9._withStripped = true;
 //
 //
 
-var script$a = {
+var script$b = {
     name: 'v5-marquee',
     props: {
         // 滚动速度
@@ -1762,10 +2173,10 @@ var script$a = {
 };
 
 /* script */
-            const __vue_script__$a = script$a;
-            
+const __vue_script__$b = script$b;
+
 /* template */
-var __vue_render__$a = function() {
+var __vue_render__$b = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -1791,53 +2202,30 @@ var __vue_render__$a = function() {
     )
   ])
 };
-var __vue_staticRenderFns__$a = [];
-__vue_render__$a._withStripped = true;
+var __vue_staticRenderFns__$b = [];
+__vue_render__$b._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$a = undefined;
+  const __vue_inject_styles__$b = undefined;
   /* scoped */
-  const __vue_scope_id__$a = undefined;
+  const __vue_scope_id__$b = undefined;
   /* module identifier */
-  const __vue_module_identifier__$a = undefined;
+  const __vue_module_identifier__$b = undefined;
   /* functional template */
-  const __vue_is_functional_template__$a = false;
-  /* component normalizer */
-  function __vue_normalize__$a(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/marquee/marquee.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
+  const __vue_is_functional_template__$b = false;
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var V5Marquee = __vue_normalize__$a(
-    { render: __vue_render__$a, staticRenderFns: __vue_staticRenderFns__$a },
-    __vue_inject_styles__$a,
-    __vue_script__$a,
-    __vue_scope_id__$a,
-    __vue_is_functional_template__$a,
-    __vue_module_identifier__$a,
+  var V5Marquee = normalizeComponent_1(
+    { render: __vue_render__$b, staticRenderFns: __vue_staticRenderFns__$b },
+    __vue_inject_styles__$b,
+    __vue_script__$b,
+    __vue_scope_id__$b,
+    __vue_is_functional_template__$b,
+    __vue_module_identifier__$b,
     undefined,
     undefined
   );
@@ -2018,7 +2406,7 @@ var Scroll = {
                 x: evt.touches[0].pageX
             };
             
-            this.sTime = + new Date();
+            this.sTime = Date.now();
             // 设置过滤为0s
             this.styles.transitionDuration = '0s';
             
@@ -2063,7 +2451,7 @@ var Scroll = {
             }
 
             let moveY = evt.changedTouches[0].pageY - this.start.y;
-            let time = + new Date() - this.sTime;
+            let time = Date.now() - this.sTime;
 
             // 加数度
             let speed = moveY / time;
@@ -2266,7 +2654,7 @@ var Scroll = {
 
 //
 
-var script$b = {
+var script$c = {
     name: 'v5-picker-item',
     mixins: [Scroll],
     props: {
@@ -2308,102 +2696,73 @@ var script$b = {
 };
 
 /* script */
-            const __vue_script__$b = script$b;
-            
+const __vue_script__$c = script$c;
+
 /* template */
-var __vue_render__$b = function() {
+var __vue_render__$c = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
-  return _c("div", { staticStyle: { width: "100%" } }, [
-    _c("div", { staticClass: "v5-picker-item" }, [
-      _c(
-        "ul",
-        { staticClass: "v5-picker-ul", style: _vm.styles },
-        _vm._l(_vm.data, function(item, index) {
-          return _c(
-            "li",
-            {
-              key: index,
-              attrs: { disabled: item.disabled },
-              on: {
-                touchmove: function($event) {
-                  _vm.touchmove($event);
-                },
-                touchstart: function($event) {
-                  _vm.touchstart($event, index);
-                },
-                touchend: function($event) {
-                  _vm.touchend($event, index);
-                }
+  return _c("div", { staticClass: "v5-picker-item" }, [
+    _c(
+      "ul",
+      { staticClass: "v5-picker-ul", style: _vm.styles },
+      _vm._l(_vm.data, function(item, index) {
+        return _c(
+          "li",
+          {
+            key: index,
+            attrs: { disabled: item.disabled },
+            on: {
+              touchmove: function($event) {
+                return _vm.touchmove($event)
+              },
+              touchstart: function($event) {
+                return _vm.touchstart($event, index)
+              },
+              touchend: function($event) {
+                return _vm.touchend($event, index)
               }
-            },
-            [
-              _vm._v(
-                "\n                " + _vm._s(item.label) + "\n            "
-              )
-            ]
-          )
-        }),
-        0
-      )
-    ])
+            }
+          },
+          [_vm._v("\n            " + _vm._s(item.label) + "\n        ")]
+        )
+      }),
+      0
+    )
   ])
 };
-var __vue_staticRenderFns__$b = [];
-__vue_render__$b._withStripped = true;
+var __vue_staticRenderFns__$c = [];
+__vue_render__$c._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$b = undefined;
+  const __vue_inject_styles__$c = undefined;
   /* scoped */
-  const __vue_scope_id__$b = undefined;
+  const __vue_scope_id__$c = undefined;
   /* module identifier */
-  const __vue_module_identifier__$b = undefined;
+  const __vue_module_identifier__$c = undefined;
   /* functional template */
-  const __vue_is_functional_template__$b = false;
-  /* component normalizer */
-  function __vue_normalize__$b(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/picker/child.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
+  const __vue_is_functional_template__$c = false;
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var PickerItem = __vue_normalize__$b(
-    { render: __vue_render__$b, staticRenderFns: __vue_staticRenderFns__$b },
-    __vue_inject_styles__$b,
-    __vue_script__$b,
-    __vue_scope_id__$b,
-    __vue_is_functional_template__$b,
-    __vue_module_identifier__$b,
+  var PickerItem = normalizeComponent_1(
+    { render: __vue_render__$c, staticRenderFns: __vue_staticRenderFns__$c },
+    __vue_inject_styles__$c,
+    __vue_script__$c,
+    __vue_scope_id__$c,
+    __vue_is_functional_template__$c,
+    __vue_module_identifier__$c,
     undefined,
     undefined
   );
 
 //
 
-var script$c = {
+var script$d = {
     name: 'v5-picker',
     components: { PickerItem },
     props: {
@@ -2536,10 +2895,10 @@ var script$c = {
 };
 
 /* script */
-            const __vue_script__$c = script$c;
-            
+const __vue_script__$d = script$d;
+
 /* template */
-var __vue_render__$c = function() {
+var __vue_render__$d = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -2556,53 +2915,30 @@ var __vue_render__$c = function() {
     1
   )
 };
-var __vue_staticRenderFns__$c = [];
-__vue_render__$c._withStripped = true;
+var __vue_staticRenderFns__$d = [];
+__vue_render__$d._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$c = undefined;
+  const __vue_inject_styles__$d = undefined;
   /* scoped */
-  const __vue_scope_id__$c = undefined;
+  const __vue_scope_id__$d = undefined;
   /* module identifier */
-  const __vue_module_identifier__$c = undefined;
+  const __vue_module_identifier__$d = undefined;
   /* functional template */
-  const __vue_is_functional_template__$c = false;
-  /* component normalizer */
-  function __vue_normalize__$c(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/picker/picker.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
+  const __vue_is_functional_template__$d = false;
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var V5Picker = __vue_normalize__$c(
-    { render: __vue_render__$c, staticRenderFns: __vue_staticRenderFns__$c },
-    __vue_inject_styles__$c,
-    __vue_script__$c,
-    __vue_scope_id__$c,
-    __vue_is_functional_template__$c,
-    __vue_module_identifier__$c,
+  var V5Picker = normalizeComponent_1(
+    { render: __vue_render__$d, staticRenderFns: __vue_staticRenderFns__$d },
+    __vue_inject_styles__$d,
+    __vue_script__$d,
+    __vue_scope_id__$d,
+    __vue_is_functional_template__$d,
+    __vue_module_identifier__$d,
     undefined,
     undefined
   );
@@ -2624,7 +2960,7 @@ __vue_render__$c._withStripped = true;
 //
 //
 
-var script$d = {
+var script$e = {
     name: 'v5-sort-box',
     props: {
         sort: Array,
@@ -2699,10 +3035,10 @@ var script$d = {
 };
 
 /* script */
-            const __vue_script__$d = script$d;
-            
+const __vue_script__$e = script$e;
+
 /* template */
-var __vue_render__$d = function() {
+var __vue_render__$e = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -2720,7 +3056,7 @@ var __vue_render__$d = function() {
               key: sIndex,
               on: {
                 click: function($event) {
-                  _vm.sortList(item, sIndex);
+                  return _vm.sortList(item, sIndex)
                 }
               }
             },
@@ -2739,60 +3075,37 @@ var __vue_render__$d = function() {
     2
   )
 };
-var __vue_staticRenderFns__$d = [];
-__vue_render__$d._withStripped = true;
+var __vue_staticRenderFns__$e = [];
+__vue_render__$e._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$d = undefined;
+  const __vue_inject_styles__$e = undefined;
   /* scoped */
-  const __vue_scope_id__$d = undefined;
+  const __vue_scope_id__$e = undefined;
   /* module identifier */
-  const __vue_module_identifier__$d = undefined;
+  const __vue_module_identifier__$e = undefined;
   /* functional template */
-  const __vue_is_functional_template__$d = false;
-  /* component normalizer */
-  function __vue_normalize__$d(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/sortBox/sortBox.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
+  const __vue_is_functional_template__$e = false;
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var V5SortBox = __vue_normalize__$d(
-    { render: __vue_render__$d, staticRenderFns: __vue_staticRenderFns__$d },
-    __vue_inject_styles__$d,
-    __vue_script__$d,
-    __vue_scope_id__$d,
-    __vue_is_functional_template__$d,
-    __vue_module_identifier__$d,
+  var V5SortBox = normalizeComponent_1(
+    { render: __vue_render__$e, staticRenderFns: __vue_staticRenderFns__$e },
+    __vue_inject_styles__$e,
+    __vue_script__$e,
+    __vue_scope_id__$e,
+    __vue_is_functional_template__$e,
+    __vue_module_identifier__$e,
     undefined,
     undefined
   );
 
 //
 
-var script$e = {
+var script$f = {
     name: 'v5-swiper',
     mixins: [Scroll],
     props: {
@@ -2862,7 +3175,7 @@ var script$e = {
         },
 
         swiperAnimate (time = this.autoplay) {
-            this.timeEvent = setTimeout$1(() => {
+            this.timeEvent = setTimeout(() => {
                 if (this.current >= this.childSize) {
                     this.current = 0;
                     this.currentIndex = 0;
@@ -2907,10 +3220,10 @@ var script$e = {
 };
 
 /* script */
-            const __vue_script__$e = script$e;
-            
+const __vue_script__$f = script$f;
+
 /* template */
-var __vue_render__$e = function() {
+var __vue_render__$f = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -2951,90 +3264,6 @@ var __vue_render__$e = function() {
     2
   )
 };
-var __vue_staticRenderFns__$e = [];
-__vue_render__$e._withStripped = true;
-
-  /* style */
-  const __vue_inject_styles__$e = undefined;
-  /* scoped */
-  const __vue_scope_id__$e = undefined;
-  /* module identifier */
-  const __vue_module_identifier__$e = undefined;
-  /* functional template */
-  const __vue_is_functional_template__$e = false;
-  /* component normalizer */
-  function __vue_normalize__$e(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/swiper/swiper.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
-  /* style inject */
-  
-  /* style inject SSR */
-  
-
-  
-  var V5Swiper = __vue_normalize__$e(
-    { render: __vue_render__$e, staticRenderFns: __vue_staticRenderFns__$e },
-    __vue_inject_styles__$e,
-    __vue_script__$e,
-    __vue_scope_id__$e,
-    __vue_is_functional_template__$e,
-    __vue_module_identifier__$e,
-    undefined,
-    undefined
-  );
-
-//
-//
-//
-//
-//
-//
-
-var script$f = {
-    name: 'v5-swiper-item',
-    data () {
-        return {
-            styles: {
-                transform: 'translateX(0px)'
-            }
-        }
-    }
-};
-
-/* script */
-            const __vue_script__$f = script$f;
-            
-/* template */
-var __vue_render__$f = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "div",
-    { staticClass: "v5-swiper-item", style: _vm.styles },
-    [_vm._t("default")],
-    2
-  )
-};
 var __vue_staticRenderFns__$f = [];
 __vue_render__$f._withStripped = true;
 
@@ -3046,36 +3275,13 @@ __vue_render__$f._withStripped = true;
   const __vue_module_identifier__$f = undefined;
   /* functional template */
   const __vue_is_functional_template__$f = false;
-  /* component normalizer */
-  function __vue_normalize__$f(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/swiperItem/swiperItem.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var V5SwiperItem = __vue_normalize__$f(
+  var V5Swiper = normalizeComponent_1(
     { render: __vue_render__$f, staticRenderFns: __vue_staticRenderFns__$f },
     __vue_inject_styles__$f,
     __vue_script__$f,
@@ -3092,10 +3298,151 @@ __vue_render__$f._withStripped = true;
 //
 //
 //
+
+var script$g = {
+    name: 'v5-swiper-item',
+    data () {
+        return {
+            styles: {
+                transform: 'translateX(0px)'
+            }
+        }
+    }
+};
+
+/* script */
+const __vue_script__$g = script$g;
+
+/* template */
+var __vue_render__$g = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "div",
+    { staticClass: "v5-swiper-item", style: _vm.styles },
+    [_vm._t("default")],
+    2
+  )
+};
+var __vue_staticRenderFns__$g = [];
+__vue_render__$g._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$g = undefined;
+  /* scoped */
+  const __vue_scope_id__$g = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$g = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$g = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var V5SwiperItem = normalizeComponent_1(
+    { render: __vue_render__$g, staticRenderFns: __vue_staticRenderFns__$g },
+    __vue_inject_styles__$g,
+    __vue_script__$g,
+    __vue_scope_id__$g,
+    __vue_is_functional_template__$g,
+    __vue_module_identifier__$g,
+    undefined,
+    undefined
+  );
+
+//
+//
+//
+//
 //
 //
 
-var script$g = {
+var script$h = {
+    name: 'v5-button',
+    data () {
+        return {
+            show: false
+        }
+    },
+    methods: {
+        alertEvt () {
+            // this.$v5Alert()
+        }
+    }
+};
+
+/* script */
+const __vue_script__$h = script$h;
+
+/* template */
+var __vue_render__$h = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _vm._m(0)
+};
+var __vue_staticRenderFns__$h = [
+  function() {
+    var _vm = this;
+    var _h = _vm.$createElement;
+    var _c = _vm._self._c || _h;
+    return _c("div", { staticClass: "v5-alert-mod" }, [
+      _c("h1", [_vm._v("hello")])
+    ])
+  }
+];
+__vue_render__$h._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$h = undefined;
+  /* scoped */
+  const __vue_scope_id__$h = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$h = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$h = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var Com = normalizeComponent_1(
+    { render: __vue_render__$h, staticRenderFns: __vue_staticRenderFns__$h },
+    __vue_inject_styles__$h,
+    __vue_script__$h,
+    __vue_scope_id__$h,
+    __vue_is_functional_template__$h,
+    __vue_module_identifier__$h,
+    undefined,
+    undefined
+  );
+
+let extendModel = Vue.extend(Com);
+let instance;
+
+const v5Alert = function(opts) {
+    instance = new extendModel({
+        data: opts
+    });
+    document.body.appendChild(instance.$mount().$el);
+    console.log(instance);
+    return instance
+};
+
+//
+//
+//
+//
+//
+//
+//
+//
+
+var script$i = {
     name: 'v5-loading-bar',
     props: {
         value: {
@@ -3130,10 +3477,10 @@ var script$g = {
 };
 
 /* script */
-            const __vue_script__$g = script$g;
-            
+const __vue_script__$i = script$i;
+
 /* template */
-var __vue_render__$g = function() {
+var __vue_render__$i = function() {
   var _vm = this;
   var _h = _vm.$createElement;
   var _c = _vm._self._c || _h;
@@ -3155,71 +3502,48 @@ var __vue_render__$g = function() {
     )
   ])
 };
-var __vue_staticRenderFns__$g = [];
-__vue_render__$g._withStripped = true;
+var __vue_staticRenderFns__$i = [];
+__vue_render__$i._withStripped = true;
 
   /* style */
-  const __vue_inject_styles__$g = undefined;
+  const __vue_inject_styles__$i = undefined;
   /* scoped */
-  const __vue_scope_id__$g = undefined;
+  const __vue_scope_id__$i = undefined;
   /* module identifier */
-  const __vue_module_identifier__$g = undefined;
+  const __vue_module_identifier__$i = undefined;
   /* functional template */
-  const __vue_is_functional_template__$g = false;
-  /* component normalizer */
-  function __vue_normalize__$g(
-    template, style, script,
-    scope, functional, moduleIdentifier,
-    createInjector, createInjectorSSR
-  ) {
-    const component = (typeof script === 'function' ? script.options : script) || {};
-
-    // For security concerns, we use only base name in production mode.
-    component.__file = "/Users/zhuwenlong/Sites/V5/src/components/loadingBar/loadingBar.vue";
-
-    if (!component.render) {
-      component.render = template.render;
-      component.staticRenderFns = template.staticRenderFns;
-      component._compiled = true;
-
-      if (functional) component.functional = true;
-    }
-
-    component._scopeId = scope;
-
-    return component
-  }
+  const __vue_is_functional_template__$i = false;
   /* style inject */
   
   /* style inject SSR */
   
 
   
-  var Mode = __vue_normalize__$g(
-    { render: __vue_render__$g, staticRenderFns: __vue_staticRenderFns__$g },
-    __vue_inject_styles__$g,
-    __vue_script__$g,
-    __vue_scope_id__$g,
-    __vue_is_functional_template__$g,
-    __vue_module_identifier__$g,
+  var Mode = normalizeComponent_1(
+    { render: __vue_render__$i, staticRenderFns: __vue_staticRenderFns__$i },
+    __vue_inject_styles__$i,
+    __vue_script__$i,
+    __vue_scope_id__$i,
+    __vue_is_functional_template__$i,
+    __vue_module_identifier__$i,
     undefined,
     undefined
   );
 
 let modelConstructor = Vue.extend(Mode);
-let instance;
+let instance$1;
 let timer;
 
 const v5LoadingBar = () => {
-    instance = new modelConstructor;
-    document.body.appendChild(instance.$mount().$el);
+    instance$1 = new modelConstructor;
+    document.body.appendChild(instance$1.$mount().$el);
 };
 
 function step () {
     timer = setInterval(() => {
-        instance.value += Math.floor(Math.random() * 5);
+        instance$1.value += Math.floor(Math.random() * 5);
 
-        if (instance.value > 90) {
+        if (instance$1.value > 90) {
             clearInterval(timer
             );
         }
@@ -3230,31 +3554,31 @@ function step () {
 // 可以传入初始值，有初始值时，我们不模拟加载了
 v5LoadingBar.start = (val = 0) => {
     // 只生成一个加载状态
-    if (!instance) {
+    if (!instance$1) {
         v5LoadingBar();
     }
     
     // 默认设置
-    instance.value = val;
-    instance.show = true;
-    instance.error = false;
+    instance$1.value = val;
+    instance$1.show = true;
+    instance$1.error = false;
 
     if (!val) step();
 };
 
 v5LoadingBar.finish = () => {
-    instance.value = 100;
-    instance.show = false;
+    instance$1.value = 100;
+    instance$1.show = false;
 };
 
 v5LoadingBar.progress = val => {
-    instance.value = Number(val);
+    instance$1.value = Number(val);
 };
 
 v5LoadingBar.error = () => {
-    instance.error = true;
-    instance.value = 100;
-    instance.show = false;
+    instance$1.error = true;
+    instance$1.value = 100;
+    instance$1.show = false;
 };
 
 const components = [
@@ -3262,7 +3586,8 @@ const components = [
     v5Cascader,
     v5Cell,
     v5CellGroup,
-    v5Collapse,
+    V5Collapse,
+    V5Datepicker,
     V5Field,
     V5Form,
     v5Hello,
@@ -3275,14 +3600,15 @@ const components = [
     V5SwiperItem
 ];
 
-const install = Vue$$1 => {
+const install = Vue => {
     if (install.installed) return
     
     components.forEach(key => {
-        Vue$$1.component(key.name, key);
+        Vue.component(key.name, key);
     });
 
-    Vue$$1.prototype.$v5LoadingBar = v5LoadingBar;
+    Vue.prototype.$v5LoadingBar = v5LoadingBar;
+    Vue.prototype.$v5Alert = v5Alert;
 };
 
 if (typeof window !== 'undefined' && window.Vue) {
@@ -3295,4 +3621,4 @@ var index = {
 };
 
 export default index;
-export { install, v5Button, v5Cascader, v5Cell, v5CellGroup, v5Collapse, V5Field, V5Form, v5Hello, V5Icon, V5Layer, V5Marquee, V5Picker, V5SortBox, V5Swiper, V5SwiperItem };
+export { V5Collapse, V5Datepicker, V5Field, V5Form, V5Icon, V5Layer, V5Marquee, V5Picker, V5SortBox, V5Swiper, V5SwiperItem, install, v5Button, v5Cascader, v5Cell, v5CellGroup, v5Hello };
