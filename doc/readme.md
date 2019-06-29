@@ -1,93 +1,162 @@
-# 开发计划
+# V5
+
 [toc]
 
-## 基础组件
-
-### Icon 图标
-[图标库 - iconfont](http://iconfont.cn/manage/index?manage_type=myprojects&projectId=886927)  
-[使用文档](./base/icon.md)  
-
-**todo**  
-- [x] 完善示例中的内容 - `ymy` 2018-11-26  
-- [x] 添加使用文档 - `ymy` 2018-11-26  
-- [ ] 优化字体的引用方式，改成包内自带
-- [ ] 添加搜索的功能，方便查看图标
-- [ ] 添加步骤条组件- `exy` [开发中] 
+## 更新说明
+### 0.0.1-beta.10
+- 【弹层组件】优化弹层演示效果、更新说明文档
+- 【弹层组件】删除弹层对于动画属性的支持，新增加动画时间控制
 
 
-### Button 按钮
-[文档 base/button](./base/button.md)
+## 目录说明
+```bash
+V5
+|---- build 打包命令
+|---- dist 打包后文件
+|---- doc 使用文档
+|---- example 示例
+|---- src 组件开发目录
+  |---- components 组件库
+  |---- styles 组件的样式库
+  |---- index.js 组件引用
+```
 
+## 使用开发版本
+### 克隆 v5 项目到本地
+```sh
+# 因公司网络问题，建议使用 http 克隆
+git clone git@gitlab.hztianque.com:cell/V5.git
+```
 
-### Cell 单元格
-[使用文档](./base/cell.md)
+### 建立本地连接
+```sh
+cd V5
 
-**todo**
-- [ ] 添加对 router-link 支持
-- [x] 添加标题前图标功能
-- [ ] inner接收[String, Number]两种类型
-- [ ] 添加插槽
+yarn link
+```
 
-### Layer 弹层  
-[使用文档](./base/layer.md)   
-**todo**
-- [x] 添加使用文档- `ymy` 2018-11-26  
+### 在项目中使用
+```sh
+yarn link @ektx/v5
+```
 
+> 需要注意的是，此方法需要大家在每次安装了依赖后都要重新操作此步骤
 
-### LoadingBar
-[使用文档 base/loadingBar](./base/loadingBar.md)
+## 项目使用
+```bash
+# 在项目中使用开发版本
+yarn add git+ssh://git@gitlab.hztianque.com/cell/V5.git#dev
 
-### Marquee
-[使用文档 base/marquee](./base/marquee.md)
+# 使用发布版本
+yarn add @ektx/v5
+```
 
-**todo**
-- [ ] 添加上下滚动效果
-- [ ] 添加左右滚动效果
-- [ ] 添加鼠标悬停功能
+## 文档
 
+**使用文档在 doc/**
 
-### timer 计时器/定时器
-**todo**
-- [ ] 开始事件，开始时返回事件
-- [ ] 结束事件，结束时返回事件
-- [ ] 更新事件，每次时间变化返回事件
-- [ ] 启动事件，用于接受手动开始事件
-- [ ] 暂停事件，用于接受手动暂停事件
-- [ ] 重置事件，用于接受手重置事件
+## 打包
+```bash
+# 打包 js css
+yarn run build
 
+# 打包 js
+yarn run es6
 
-## 复合组件
-### Cascader 集联选择器
-[使用文档](./complex/cascader.md)
+# 打包 style
+yarn run style
+```
 
-### Cell-group 单元格组
-用于优化显示单元格集合的效果。
+> 打包后的文件在 **./dist** 目录
 
-> 只能用于包含 cell
+## 运行 Demo
+```bash
+cd example
 
-**todo*
-- [ ] 支持接受一个数组，在有数组时，自动组装cell
+# 安装依赖，如果已经安装请忽略
+yarn
 
+# 运行 Demo
+yarn run serve
+```
 
-### Collapse 折叠面板
-- 支持展开收缩功能
-- 支持自定义展开还是收缩
+## 项目贡献
 
-**todo**
+### 添加组件
 
-- [x] 优化箭头指示功能，在有to或href属性时，默认**右箭头图标**，用户可以定自己的图标 - `zwl` 2018-11-15
-- [x] 扩展open属性功能，对面板可以规定可以多个展开还是只能单个 - `zwl` 2018-11-15
-- [ ] 扩展支持唯一展开功能，点击收缩的时，自动展开，已经展开的如果是自己收缩，不是自己的展开收缩，反之自然
-- [ ] 添加内容动态扩展  
+#### 创建文件
+先从dev分支上创建一个自己的分支内容，然后在src目录中添加组件。
 
+我们以开发一个 hello 组件为例。
 
-### SortBox 排序盒子
-[使用文档](./complex/sortBox.md)   
+首先在 src/components 目录中添加一个 hello 文件夹(文件夹以驼峰命名)。
 
-**todo**
-- [x] 添加使用文档 - `ymy` 2018-11-26 
+然后，我们创建 hello.vue 和 index.js 文件。
 
+hello.vue 文件内容：
+```html
+<template>
+    <h1>{{mes}}</h1>
+</template>
 
-## 表单
+<script>
+export default {
+    name: 'v5-hello',
+    data () {
+        return {
+            mes: 'Hello V5'
+        }
+    }
+}
+</script>
+```
+在 vue 文件中，我们要注意的有：
+- 不要添加样式表或样式模块。
+- js 中的 name 格式是 `v5-文件名` 如果你的文件夹名是 helloWorld,名称应该是：`v5-hello-world`。
 
-### Form 表单
+index.js 内容：
+```js
+export { default } from './hello.vue'
+```
+
+#### 添加引用
+我们创建好了组件后，需要添加到 index.js 中才可以使用。
+
+打开 src/index.js 文件，我们要修改如下内容：
+```diff
+// 其它已经引入组件内容
++ import v5Hello from './components/hello/index.js'
+
+ const version = '0.0.1'
+ const components = [
+     // 其它引入组件内容
++    v5Hello,
+ ]
+
+...
+
+ export {
+    // 其它内容
++    v5Hello
+ }
+```
+
+添加完成后，我们就可以在 example 中写 demo 了，组件已经可以在它那使用了。
+
+> 这里要注意的是引入你的组件时，你写的位置要与你的文件夹排序一致，注意查看已经的引入与文件夹的位置关系。
+
+#### 添加样式
+有了组件，没有样式的话，还不是一个完整的组件。现在，我们 src/styles 目录中添加一个样式。
+
+在 **src/styles/components** 添加 *hello.scss*，然后打开同目录中的**index.scss**，添加你的组件引用。
+
+src/styles/components/index.scss:
+```diff
+  // 其它的组件样式
++ @import 'hello.scss';
+```
+
+现在，v5有了一个名为 `<v5-hello></v5-hello>` 的组件了。
+
+## 资源
+[图标库](http://iconfont.cn/manage/index?manage_type=myprojects&projectId=886927)
