@@ -1,1 +1,1 @@
-export { default } from './cell-group.vue'
+export { default } from './cellGroup.vue'
