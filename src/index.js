@@ -15,6 +15,7 @@ import V5SortBox from './components/sortBox/index.js'
 import V5Swiper from './components/swiper/index.js'
 import V5SwiperItem from './components/swiperItem/index.js'
 
+import v5Alert from './components/alert/index.js'
 import v5LoadingBar from './components/loadingBar/index.js'
 
 const components = [
@@ -44,6 +45,7 @@ const install = Vue => {
     })
 
     Vue.prototype.$v5LoadingBar = v5LoadingBar
+    Vue.prototype.$v5Alert = v5Alert
 }
 
 if (typeof window !== 'undefined' && window.Vue) {

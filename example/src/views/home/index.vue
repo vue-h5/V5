@@ -79,6 +79,11 @@ export default {
 					open: true,
 					children: [
 						{
+							title: 'Alert',
+							subTitel: '弹层对话框',
+							to: '/complex/alert'
+						},
+						{
 							title: 'Cascader',
 							subTitel: '集联选择器',
 							to: '/complex/cascader'
