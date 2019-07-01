@@ -20,8 +20,6 @@
 
 <script>
 import Scroll from '../../mixins/scroll.js'
-import { setTimeout, clearTimeout } from 'timers';
-import { throws } from 'assert';
 
 export default {
     name: 'v5-swiper',
