@@ -60,3 +60,5 @@ local.properties
 lerna-debug.log
 package-lock.json
 yarn.lock
+
+lib/
