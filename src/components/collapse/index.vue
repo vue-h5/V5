@@ -34,20 +34,48 @@ export default {
             show: false,
             style: {
                 height: 0
-            }
+            },
+            box: null
         }
     },
     mounted () {
+        this.box = this.$el.querySelector('.v5-collapse-inner')
+
         if (this.open) {
             this.toggle()
         }
+
+        this.box.addEventListener('transitionend', this.clearStyle, false)
     },
     methods: {
         toggle () {
-            let h = this.$el.querySelector('.v5-collapse-inner').scrollHeight
+            let h = this.box.scrollHeight
+
+            // open
+            if (this.show) {
+                requestAnimationFrame(() => {
+                    // 设置动画需要的高
+                    this.style.height = h + 'px'
+                    // 设置动画结束的位置
+                    requestAnimationFrame(() => {
+                        this.style.height = 0
+                    })
+                })
+            }
+            // close
+            else {
+                this.style.height = h + 'px'
+            }
+
             this.show = !this.show
-            this.style.height = this.show ? `${h}px` : 0;
+        },
+
+        clearStyle () {
+            if (this.show) this.style.height = null
         }
+    },
+    destroyed () {
+        this.box.removeEventListener('transitionend', this.clearStyle, false)
     }
 }
 </script>
