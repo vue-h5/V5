@@ -1,1 +1,1 @@
-export { default } from './field.vue'
+export { default } from './index.vue'

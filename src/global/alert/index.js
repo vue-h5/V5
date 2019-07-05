@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Com from './alert.vue'
+import Com from './index.vue'
 
 let extendModel = Vue.extend(Com)
 let instance

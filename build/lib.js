@@ -1,6 +1,6 @@
 const fs = require('fs-extra')
 const path = require('path')
-const { src, dest, series } = require('gulp')
+const { src, dest, series, parallel } = require('gulp')
 const sass = require('gulp-sass')
 const autoprefixer = require('gulp-autoprefixer')
 const rename = require('gulp-rename')
@@ -8,7 +8,7 @@ const rimraf = require('rimraf')
 
 sass.compiler = require('node-sass')
 
-function css() {
+function css(cb) {
     let files = fs.readdirSync('../src/styles/components')
 
     files.map(function (name) {
@@ -24,27 +24,71 @@ function css() {
             .pipe(rename('index.css'))
             .pipe(dest(`../lib/components/${fileName}`))
     })
-}
-
-function html (cb) {
-    let files = fs.readdirSync('../src/components')
-
-    files.map(file => {
-        return src(path.join('../src/components/', file, `${file}.vue`))
-            .pipe(rename('index.vue'))
-            .pipe(dest(`../lib/components/${file}`))
-    })
 
     cb()
 }
 
-function init (cb) {
+// 为 index.vue 添加 index.css
+async function appendCss () {
+    let files = fs.readdirSync('../lib/components')
 
-    rimraf('../lib', err => {
-        if (err) throw Error(err)
-        cb()
-    })
-
+    console.log(files)
+    // return Promise.resolve('hahah')
 }
 
-exports.default = series(init, html, css )
+function getFiles (dir) {
+    return new Promise((resolve, reject) => {
+        fs.readdir(dir, (err, files) => {
+            if (err) reject(err)
+
+            resolve({dir, files})
+        })
+    })
+}
+
+async function html (cb) {
+    let files = fs.readdirSync('../src/components')
+    let arr = []
+    let from = ''
+
+    // 获取所有文件信息
+    files.map(file => {
+        from = path.join('../src/components/', file)
+        arr.push(getFiles(from))
+    })
+
+    try {
+        const allWillCopyFiles = await Promise.all(arr)
+
+        allWillCopyFiles.forEach(data => {
+            data.files.forEach(file => {
+                // 过滤 index.js 文件
+                if (file !== 'index.js') {
+                    from = data.dir + '/' + file
+                    let to = '../lib' + from.slice(6)
+                    
+                    arr.push(fs.copy(from, to))
+                }
+            })
+        })
+
+        await Promise.all(arr)
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+function emptyDir (cb) {
+    return fs.emptyDir('../lib')
+}
+
+function copyMix(form, to) {
+    return fs.copy('../src/mixins', '../lib/mixins')
+}
+
+exports.default = series(
+    emptyDir, 
+    html, css,
+    copyMix,
+    appendCss
+)

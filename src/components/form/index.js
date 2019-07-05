@@ -1,1 +1,1 @@
-export { default } from './form.vue'
+export { default } from './index.vue'

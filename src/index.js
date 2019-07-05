@@ -15,8 +15,8 @@ import V5SortBox from './components/sortBox/index.js'
 import V5Swiper from './components/swiper/index.js'
 import V5SwiperItem from './components/swiperItem/index.js'
 
-import v5Alert from './components/alert/index.js'
-import v5LoadingBar from './components/loadingBar/index.js'
+import v5Alert from './global/alert/index.js'
+import v5LoadingBar from './global/loadingBar/index.js'
 
 const components = [
     v5Button,

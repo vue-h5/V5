@@ -1,1 +1,1 @@
-export { default } from './sortBox.vue'
+export { default } from './index.vue'

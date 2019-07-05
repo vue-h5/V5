@@ -1,1 +1,1 @@
-export { default } from './swiperItem.vue'
+export { default } from './index.vue'

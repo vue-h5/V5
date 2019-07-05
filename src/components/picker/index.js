@@ -1,1 +1,1 @@
-export { default } from './picker.vue'
+export { default } from './index.vue'

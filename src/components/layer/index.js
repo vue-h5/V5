@@ -1,1 +1,1 @@
-export { default } from './layer.vue'
+export { default } from './index.vue'

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import Mode from './loadingBar.vue'
+import Mode from './index.vue'
 
 let modelConstructor = Vue.extend(Mode)
 let instance

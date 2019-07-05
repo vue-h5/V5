@@ -1,1 +1,1 @@
-export { default } from './marquee.vue'
+export { default } from './index.vue'

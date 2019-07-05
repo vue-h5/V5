@@ -11,5 +11,15 @@ config.gypi
 CVS
 npm-debug.log
 *.zip
-example
-doc
+*example
+*doc
+*build
+*node_modules
+
+# yarn
+yarn-debug.log*
+yarn-error.log*
+
+
+# npm
+npm-debug.log*
