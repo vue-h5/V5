@@ -45,7 +45,7 @@ export default {
             this.toggle()
         }
 
-        this.box.addEventListener('transitionend', this.clearStyle, false)
+        this.box.addEventListener('transitionend', this.clearStyle)
     },
     methods: {
         toggle () {
@@ -75,7 +75,7 @@ export default {
         }
     },
     destroyed () {
-        this.box.removeEventListener('transitionend', this.clearStyle, false)
+        this.box.removeEventListener('transitionend', this.clearStyle)
     }
 }
 </script>
