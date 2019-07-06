@@ -48,7 +48,7 @@ function arr2camel(arr) {
  * 
  * 参考： https://webpack.docschina.org/api/module-methods/#import-
  */
-const loadView = view => import(/* webpackChunkName: "[request]" */ `@/views/${view}/index.vue`)
+const loadView = view => () => import(/* webpackChunkName: "[request]" */ `@/views/${view}/index.vue`)
 
 
 /**
