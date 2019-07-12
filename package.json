@@ -31,6 +31,7 @@
     "gulp-sass": "^4.0.2",
     "mini-css-extract-plugin": "^0.4.4",
     "node-sass": "^4.9.4",
+    "node-sass-import-once": "^1.2.0",
     "rimraf": "^2.6.3",
     "rollup": "^1.16.2",
     "rollup-plugin-commonjs": "^10.0.1",
