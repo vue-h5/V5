@@ -1,3 +1,5 @@
+@import '../animate.scss';
+
 @mixin transform($x, $y) {
     &.show {
         .v5-layer-inner {
@@ -13,12 +15,14 @@
     bottom: 0;
     right: 0;
     z-index: 1000;
-    background: rgba(0, 0, 0, 0);
-    visibility: hidden;
-    transition: background .4s ease-out;
+    background: rgba(0, 0, 0, .5);
+
+    @supports (backdrop-filter: blur(5px)) {
+        background: rgba(0, 0, 0, .3);
+        backdrop-filter: blur(10px);
+    }
 
     .v5-layer-inner {
-        
         transition: 
             transform .4s ease-out,
             background .4s ease-out;
@@ -55,15 +59,5 @@
             transform: translateX(-100%);
         }
         @include transform(0, 0)
-    }
-
-    &.show {
-        visibility: visible;
-        background: rgba(0, 0, 0, .5);
-
-        @supports (backdrop-filter: blur(5px)) {
-            background: rgba(0, 0, 0, .3);
-            backdrop-filter: blur(10px);
-        }
     }
 }

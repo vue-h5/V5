@@ -1,35 +1,32 @@
+@import '../animate.scss';
+
 .v5-button {
     display: inline-block;
     padding: .29em .8em .3em;
     font-size: 18px;
     color: #333;
-    border-radius: 3px;
     border: 1px solid transparent;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, .1);
+    border-radius: 5px;
     box-sizing: border-box;
     background: #fff;
     outline: none;
     cursor: pointer;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, .5);
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     user-select: none;
-    transition: box-shadow .3s ease-in-out;
 
     &.primary {
         color: #fff;
         background: #26a2ff;
-        box-shadow: 0 3px 5px rgba(38, 162, 255, .5);
     }
 
 
     &.danger {
         color: #fff;
         background: #F44336;
-        box-shadow: 0 3px 5px rgba(244, 67, 54, .3);
     }
     &.warn {
         color: #fff;
         background: #FFC107;
-        box-shadow: 0 3px 5px rgba(255, 193, 7, .5);
     }
 
 

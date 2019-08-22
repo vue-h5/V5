@@ -4,7 +4,7 @@
     border-bottom: 1px solid rgba(0, 0, 0, .1);
 
     &.separator {
-        padding: vw(8) 0;
+        padding: 5px 0;
         background: transparent;
         border: none;
     }
@@ -26,7 +26,7 @@
             display: block;
             align-self: center;
             padding: 0 0 0 15px;
-            max-width: 50vw;
+            max-width: 50%;
             color: #666;
             box-sizing: border-box;
     
@@ -35,7 +35,7 @@
                     content: '*';
                     position: absolute;
                     left: 0;
-                    padding: 0 vw(10);
+                    padding: 0 5px;
                     color: #f44336;
                 }
             }
@@ -52,7 +52,7 @@
             & > input,
             & > select {
                 height: 100%;
-                font-size: vw(32);
+                font-size: 14px;
                 border: none;
                 outline: none;
                 background: transparent;
@@ -87,7 +87,7 @@
 
     .v5-form-item-err {
         padding: 0 5px;
-        font-size: vw(24);
+        font-size: 12px;
         color: #f44336;
         text-align: right;
     }
