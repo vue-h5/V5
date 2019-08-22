@@ -21,19 +21,30 @@ function css(cb) {
             .pipe(autoprefixer({
                 overrideBrowserslist: ['last 2 versions', 'ie > 8']
             }))
-            .pipe(rename('index.css'))
+            .pipe(rename('layout.css'))
             .pipe(dest(`../lib/components/${fileName}`))
     })
 
     cb()
 }
 
-// 为 index.vue 添加 index.css
+// 为 index.vue 添加 layout.css
 async function appendCss () {
     let files = fs.readdirSync('../lib/components')
+    let all = []
+    let appendData = '\n<style src="./layout.css"></style>'
 
-    console.log(files)
-    // return Promise.resolve('hahah')
+    files.forEach(file => {
+        if (fs.existsSync(`../lib/components/${file}/layout.css`)) {
+            all.push(appendFile(`../lib/components/${file}/index.vue`, appendData))
+        }
+    })
+
+    try {
+        await Promise.all(all)
+    } catch (err) {
+        console.log('Append Css Error:', err)
+    }
 }
 
 function getFiles (dir) {
@@ -42,6 +53,19 @@ function getFiles (dir) {
             if (err) reject(err)
 
             resolve({dir, files})
+        })
+    })
+}
+
+function appendFile (file, data) {
+    return new Promise((resolve, reject) => {
+        fs.appendFile(file, data, 'utf8', err => {
+            if (err) {
+                reject(err)
+                return
+            }
+
+            resolve()
         })
     })
 }
