@@ -5,7 +5,7 @@
         <p>基础效果</p>
         <v5-button @click="show = !show">{{show ? '关闭' : '打开'}}</v5-button>
 
-        <v5-layer class="demo-1" :show="show" @click="toggle">
+        <v5-layer class="demo-1" :show.sync="show" @click="toggle">
             <h1>Hello Layer</h1>
 
             <v5-button type="primary" @click="show = !show">关闭</v5-button>
@@ -26,9 +26,8 @@
 
         <v5-layer 
             class="demo-1" 
-            :show="positionShow" 
+            :show.sync="positionShow" 
             :position="positionVal" 
-            @click.self="positionShow = !positionShow"
         >
             <h1>Hello World</h1>
 
@@ -41,9 +40,8 @@
 
         <v5-layer 
             class="demo-1" 
-            :show="customize" 
+            :show.sync="customize" 
             :position="positionVal" 
-            @click.self="customize = !customize"
         >
             <div class="customize-box" slot="inner">
                 <h1>Hello World</h1>
@@ -68,7 +66,7 @@ export default {
     },
     methods: {
         toggle () {
-            this.show = !this.show
+            console.log('show', this.show)
         }
     }
 }
@@ -80,9 +78,9 @@ export default {
     justify-content: center;
     align-items: center;
 
-    /deep/ .v5-layer-inner {
-        width: 100%;
-        height: 100%;
+    .v5-layer-inner {
+        width: 80vw;
+        height: 40vh;
         text-align: center;
         background: #fff;
     }
