@@ -24,9 +24,15 @@
 </template>
 
 <script>
+import v5Field from '../field'
+import v5Button from '../button'
+
 export default {
     name: 'v5-form',
-
+    components: {
+        v5Field,
+        v5Button
+    },
     props: {
         data: {
             type: Array,

@@ -48,8 +48,8 @@
 
         <h3>圆角</h3>
         <v5-button type="primary" radius="0">圆角-0</v5-button>
-        <v5-button type="primary">圆角-默认(3)</v5-button>
-        <v5-button type="primary" radius="5">圆角-5</v5-button>
+        <v5-button type="primary" radius="3">圆角(3)</v5-button>
+        <v5-button type="primary">圆角-5</v5-button>
         <v5-button type="primary" radius="round">圆角-round</v5-button>
         
         <h3>图标</h3>
