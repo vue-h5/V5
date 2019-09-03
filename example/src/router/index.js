@@ -59,7 +59,9 @@ async function registered(r) {
     // 过滤已经存在的1级目录
     if (helpObj.hasOwnProperty(r)) return
 
-    let path = r.slice(1, -10)
+    let path = r.endsWith('default.vue') ? 
+        r.slice(1) : 
+        r.slice(1, -10)
 
     if (r.endsWith('route.js')) {
         let { default: main } = await requireRouter(r)
@@ -76,9 +78,19 @@ async function registered(r) {
 
             // 路由内容
             let route = {
-                name: arr2camel(pathArr),
-                path: pathArr[arrLength - 1],
                 component: () => requireRouter(r)
+            }
+            
+            if (r.endsWith('default.vue')) {
+                route = {
+                    name: '',
+                    path: '/'
+                }
+            } else {
+                route = {
+                    name: arr2camel(pathArr),
+                    path: pathArr[arrLength - 1]
+                }
             }
 
             // 判断辅助函数中有没有父级内容
@@ -128,7 +140,7 @@ auto(require.context( // eslint-disable-line
     true,
     // 路由匹配规则
     // 对于是以 index.vue 或是 route.js 结尾的文件
-    /(index\.vue$)|(route\.js$)/,
+    /(index\.vue$)|(default\.vue)|(route\.js$)/,
     // 启动懒加载
     'lazy'
 ))
