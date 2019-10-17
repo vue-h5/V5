@@ -22,26 +22,6 @@ function auto(ctx) {
     })
 }
 
-// 数组转驼峰写法 abs-sjka
-// ['', 'abc', 'c89', '6edF'] => abcC896edf
-function arr2camel(arr) {
-    if (Array.isArray(arr)) {
-        // 过滤第一个非法数组内容
-        if (!/$[0-9a-zA-Z]/.test(arr[0])) {
-            [, ...arr] = arr
-        }
-        /* eslint-disable */
-        return arr.join('-')
-            .toLowerCase()
-            .replace(/(-\w)/g, (match, $1) => {
-                return $1.slice(1).toUpperCase()
-            })
-        /* eslint-enable */
-    } else {
-        throw Error('You should gave a Array')
-    }
-}
-
 /**
  * 路由懒加载
  * @param {string} view 页面地址
@@ -59,9 +39,7 @@ async function registered(r) {
     // 过滤已经存在的1级目录
     if (helpObj.hasOwnProperty(r)) return
 
-    let path = r.endsWith('default.vue') ? 
-        r.slice(1) : 
-        r.slice(1, -10)
+    let path = r.slice(1, -10)
 
     if (r.endsWith('route.js')) {
         let { default: main } = await requireRouter(r)
@@ -78,19 +56,17 @@ async function registered(r) {
 
             // 路由内容
             let route = {
+                /**
+                 * 名称规则：父级目录-子级目录
+                 * 例子：/user/aboutMe -> user-aboutMe
+                 */
+                name: pathArr.filter(Boolean).join('-'),
+                /**
+                 * path规则：当前文件夹名小写，驼峰的前面加-转小写
+                 * 例子：aboutMe -> about-me
+                 */
+                path: pathArr[arrLength - 1].replace(/([A-Z])/g, '-$1').toLowerCase(),
                 component: () => requireRouter(r)
-            }
-            
-            if (r.endsWith('default.vue')) {
-                route = {
-                    name: '',
-                    path: '/'
-                }
-            } else {
-                route = {
-                    name: arr2camel(pathArr),
-                    path: pathArr[arrLength - 1]
-                }
             }
 
             // 判断辅助函数中有没有父级内容
@@ -140,12 +116,32 @@ auto(require.context( // eslint-disable-line
     true,
     // 路由匹配规则
     // 对于是以 index.vue 或是 route.js 结尾的文件
-    /(index\.vue$)|(default\.vue)|(route\.js$)/,
+    /(index\.vue$)|(route\.js$)/,
     // 启动懒加载
     'lazy'
 ))
 
-// 注册路由
+/**
+ * routes数据结构
+ * [
+ *    {
+ *      name: 'home',
+ *      path: '/',
+ *      compoent: fun
+ *    },
+ *    {
+ *      name: 'user',
+ *      path: '/',
+ *      compoent: fun,
+ *      children: [{
+ *          name: 'user-aboutMe',
+ *          path: 'about-me',
+ *          compoent: fun
+ *      }]
+ *    },
+ * ]
+ */
+console.log(Object.values(routes))
 const myRouter = new Router({
     routes: Object.values(routes)
 })
