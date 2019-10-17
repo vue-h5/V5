@@ -141,7 +141,6 @@ auto(require.context( // eslint-disable-line
  *    },
  * ]
  */
-console.log(Object.values(routes))
 const myRouter = new Router({
     routes: Object.values(routes)
 })
