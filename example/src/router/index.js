@@ -38,8 +38,8 @@ const loadView = view => () => import(/* webpackChunkName: "[request]" */ `@/vie
 async function registered(r) {
     // 过滤已经存在的1级目录
     if (helpObj.hasOwnProperty(r)) return
-
-    let path = r.slice(1, -10)
+    // 获取文件地址
+    let path = r.endsWith('default.vue') ? r.slice(1) : r.slice(1, -10)
 
     if (r.endsWith('route.js')) {
         let { default: main } = await requireRouter(r)
@@ -56,17 +56,23 @@ async function registered(r) {
 
             // 路由内容
             let route = {
+                component: () => requireRouter(r)
+            }
+            
+            if (r.endsWith('default.vue')) {
+                route.name = ''
+                route.path = '/'
+            } else {
                 /**
                  * 名称规则：父级目录-子级目录
                  * 例子：/user/aboutMe -> user-aboutMe
                  */
-                name: pathArr.filter(Boolean).join('-'),
+                route.name = pathArr.filter(Boolean).join('-')
                 /**
                  * path规则：当前文件夹名小写，驼峰的前面加-转小写
                  * 例子：aboutMe -> about-me
                  */
-                path: pathArr[arrLength - 1].replace(/([A-Z])/g, '-$1').toLowerCase(),
-                component: () => requireRouter(r)
+                route.path = pathArr[arrLength - 1].replace(/([A-Z])/g, '-$1').toLowerCase()
             }
 
             // 判断辅助函数中有没有父级内容
@@ -116,7 +122,7 @@ auto(require.context( // eslint-disable-line
     true,
     // 路由匹配规则
     // 对于是以 index.vue 或是 route.js 结尾的文件
-    /(index\.vue$)|(route\.js$)/,
+    /(index\.vue$)|(default\.vue$)|(route\.js$)/,
     // 启动懒加载
     'lazy'
 ))
